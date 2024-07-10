@@ -25,26 +25,27 @@ body {
 .project {
     width: 8vw;
     height: 8vw;
-    cursor: pointer;
 }
 
 .project, .project div .project button {
     margin-left: 1vw;
+    cursor: pointer;
     transition: all 200ms cubic-bezier(0,1,1,1);
 }
 
 #projects div button {
+    text-align: center;
     color: white;
-    
+    cursor: pointer;
     border: 0;
     background-color: rgba(0, 0, 0, 0.75);
-    font-size: 1.3vw;
+    font-size: 1.1vw;
     border-radius: 0;
     position: absolute;
     margin-top: 6.7vw;
     width: 8vw;
     height: 1.3vw;
-    line-height: 1.3vw;
+    line-height: 1.1vw;
 }
 
 .project:hover {
