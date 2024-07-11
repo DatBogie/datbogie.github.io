@@ -24,6 +24,6 @@ function redir(id) {
     };
 
     setTimeout(function() {
-        window.location.replace("https://datbogie.github.io/"+id);
+        window.location.replace("https://datbogie.github.io/"+id+"#s");
     }, 100);
 };
