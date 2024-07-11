@@ -1,13 +1,29 @@
-function ClickerHTML() {
-    let x = document.getElementById("ClickerHTML");
-    if (x) {
-        x.style.scale = 20;
+function redir(id) {
+    console.log(id);
+    let _x = document.getElementById(id);
+    if (_x) {
+        let block = document.createElement("div");
+        document.body.appendChild(block);
+        block.style.position = "fixed";
+        block.style.top = 0;
+        block.style.width = "100vw";
+        block.style.height = "100vh";
+        block.style.pointerEvents = "all";
+        block.style.zIndex = 1;
+        block.style.backgroundColor = "rgba(0,0,0,0)";
+        block.style.transition = 'all 200ms cubic-bezier(0,1,1,1)'
+        window.getComputedStyle(block).transition;
+        block.style.backdropFilter = 'blur(10px)';
+        let x = _x.cloneNode();
+        _x.parentElement.appendChild(x);
+        x.style.top = "0%";
+        window.getComputedStyle(x).transition;
+        x.style.scale = 6;
         x.style.opacity = 0;
         x.style.position = "fixed";
-        x.style.zIndex = 1;
     };
 
     setTimeout(function() {
-        window.location.replace("https://datbogie.github.io/ClickerHTML");
-    }, 200);
+        window.location.replace("https://datbogie.github.io/"+id);
+    }, 100);
 };
