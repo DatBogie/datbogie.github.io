@@ -1,5 +1,25 @@
 body {
-    background-color: rgb(24, 24, 24);
+    margin: 0;
+    background-color: rgb(29, 29, 29);
+}
+.player {
+    background-color: rgb(110, 70, 0);
+    border-radius: 50%;
+    width: 25vw;
+    height: 25vw;
+    left: calc((50vw - 12.5vw) - 10vw);
+    top: calc(50vh - 12.5vw);
+    position: absolute;
+    cursor: pointer;
+    transition-property: all, scale;
+    transition-duration: 200ms, 100ms;
+    transition-timing-function: cubic-bezier(0,1,1,1), cubic-bezier(.39,1.89,1,1);
+    border-width: 1vw;
+    border-style: solid;
+    border-color: black;
+}
+.player:hover {
+    background-color: rgb(158, 104, 11);
 }
 .display {
     cursor: default;
@@ -9,53 +29,112 @@ body {
     color: white;
 }
 
-#title {
-    font-size: 4vh;
-    text-align: center;
-}
-
-#projects {
-    display: flex;
-    justify-content: center;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    height: 75vh;
-}
-
-.project {
-    width: 8vw;
-    height: 8vw;
-}
-
-.project, .project div .project button {
-    margin-left: 1vw;
-    cursor: pointer;
-    transition: all 200ms cubic-bezier(0,1,1,1);
-}
-
-#projects img {
-    transition: all 200ms cubic-bezier(0,1,1,1);
-}
-
-#projects div button {
-    text-align: center;
-    color: white;
-    cursor: pointer;
-    border: 0;
-    background-color: rgba(0, 0, 0, 0.75);
-    font-size: 1.1vw;
-    border-radius: 0;
+#loading {
+    display: none;
+    z-index: 2;
     position: absolute;
-    margin-top: 6.7vw;
-    width: 8vw;
-    height: 1.3vw;
-    line-height: 1.1vw;
+    text-align: center;
+    line-height: 100vh;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.63);
+    transition: all 0ms linear;
+    font-size: 10vw;
+    backdrop-filter: blur(5px);
 }
 
-.project:hover {
+#prompt {
+    padding: 0;
+    border-radius: .5vw;
+    display: flex;
+    position: fixed;
+    margin-left: calc(50vw - (50vw/2));
+    margin-top: calc(50vh - (50vh/2));
+    width: 50vw;
+    height: 50vh;
+    background-color: rgba(126, 126, 126,.95);
+    backdrop-filter: blur(5px);
+    z-index: 1;
+    align-items: center;
+    justify-content: center;
+    /* Close By Default */
+    scale: 4;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#prI {
+    position: absolute;
+    width: 50%;
+    height: 5%;
+    margin-top: 12vh;
+}
+
+#prT {
+    margin-bottom: 27vh;
+    font-family: sans-serif;
+    font-size: 8vh;
+    transition: all 200ms cubic-bezier(0,1,1,1);
+    color: white;
+    position: absolute;
+}
+
+#prompt button {
+    text-align: center;
+    width: 12%;
+    height: 7%;
+    margin: 1%;
+    margin-top: 37vh;
+    background-color: rgb(230, 230, 230);
+    color: black;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-size: .5em;
+    transition: all 200ms cubic-bezier(0,1,1,1);
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 7%;
+}
+
+#shop button {
+    width: 100%;
+    height: 10%;
+    background-color: rgb(230, 230, 230);
+    color: black;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-size: 2vh;
+    transition: all 200ms cubic-bezier(0,1,1,1);
+}
+#shop button:hover, #save button:hover, #prompt button:hover {
     scale: 1.1;
+    background-color: rgb(255, 255, 255);
+}
+#shop button:active, #save button:active, #prompt button:active {
+    scale: .9;
+    background-color: rgb(200, 200, 200);
 }
 
-.project:active {
-    scale: .9;
+#save {
+    width: 20vw;
+    height: 7vh;
+    margin-top: -7vh;
+    background-color: rgb(126, 126, 126);
+    overflow-x: hidden;
+    overflow-y: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#save button {
+    margin-top: auto;
+    width: 95%;
+    height: 100%;
+    background-color: rgb(230, 230, 230);
+    color: black;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-size: 2vh;
+    transition: all 200ms cubic-bezier(0,1,1,1);
 }
