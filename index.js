@@ -4,11 +4,12 @@ function redir(id) {
     let isRepo = false;
     let hash = "";
     if (_x) {
-        if (_x.type == "repo") {
+        console.log("type:"+_x.type)
+        if (_x.dataset.type == "repo") {
             isRepo = true;
         }
-        if (_x.hash != null) {
-            hash = _x.hash;
+        if (_x.dataset.hash != null) {
+            hash = _x.dataset.hash;
         }
         let block = document.createElement("div");
         document.body.appendChild(block);
