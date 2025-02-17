@@ -2,11 +2,14 @@ function redir(id) {
     console.log(id);
     let _x = document.getElementById(id);
     let isRepo = false;
+    let isOther = false;
     let hash = "";
     if (_x) {
         console.log("type:"+_x.type)
         if (_x.dataset.type == "repo") {
             isRepo = true;
+        } elseif (_x.dataset.type == "site" {
+            isOther = true;
         }
         if (_x.dataset.hash != null) {
             hash = _x.dataset.hash;
@@ -33,7 +36,9 @@ function redir(id) {
     };
 
     setTimeout(function() {
-        if (!isRepo) {
+        if (isOther) {
+            window.location.replace(id);
+        } elseif (!isRepo) {
             window.location.replace("https://datbogie.github.io/"+id+hash);
         } else {
             window.location.replace("https://github.com/datbogie/"+id);
