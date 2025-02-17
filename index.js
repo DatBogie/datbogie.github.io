@@ -8,7 +8,7 @@ function redir(id) {
         console.log("type:"+_x.type)
         if (_x.dataset.type == "repo") {
             isRepo = true;
-        } elseif (_x.dataset.type == "site") {
+        } else if (_x.dataset.type == "site") {
             isOther = true;
         }
         if (_x.dataset.hash != null) {
