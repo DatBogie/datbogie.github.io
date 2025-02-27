@@ -36,12 +36,13 @@ function redir(id) {
     };
 
     setTimeout(function() {
+        console.log(isOther);
         if (isOther) {
             window.location.replace(id);
         } else if (!isRepo) {
-            window.location.replace("https://datbogie.github.io/"+id+hash);
+            // window.location.replace("https://datbogie.github.io/"+id+hash);
         } else {
-            window.location.replace("https://github.com/datbogie/"+id);
+            // window.location.replace("https://github.com/datbogie/"+id);
         }
     }, 100);
 };
