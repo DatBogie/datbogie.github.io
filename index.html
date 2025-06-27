@@ -1,59 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Dat Bogie's Projects</title>
+    <title>Dat Bogie</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="title" class="display">
-        <h1>Dat Bogie's Projects</h1>
-        <hr>
-    </div>
-    <div id="projects" class="display">
-        <div class="project" title="Click to open" onclick="redir('ClickerHTML')">
-            <button><b>ClickerHTML</b></button>
-            <div style="width: 100%; height: 100%; background-color: rgb(0, 0, 0);">
-                <img id="ClickerHTML" data-hash="#s" style="object-fit: cover; width: 100%; height: 100%;" src="https://raw.githubusercontent.com/DatBogie/ClickerHTML/main/media/images/screenshot_7_8_24.webp">
-                <!-- <iframe style="border: 0; width: 100%; height: 100%; pointer-events: none;" src="https://datbogie.github.io/ClickerHTML"></iframe> -->
-            </div>
-        </div>
-        <div class="project" title="Click to open" onclick="redir('ClickerHTML-dev')">
-            <button style="font-size: .875vw; line-height: .875vw;"><b>ClickerHTML-dev</b></button>
-            <div style="width: 100%; height: 100%; background-color: rgb(0, 0, 0);">
-                <img id="ClickerHTML-dev" data-hash="#s" style="object-fit: cover; width: 100%; height: 100%;" src="https://raw.githubusercontent.com/DatBogie/ClickerHTML-dev/main/media/images/screenshot_7_8_24-1.png">
-                <!-- <iframe style="border: 0; width: 100%; height: 100%; pointer-events: none;" src="https://datbogie.github.io/ClickerHTML-dev"></iframe> -->
-            </div>
-        </div>
-        <div class="project" title="Click to open" onclick="redir('PyaiiTTS')">
-            <button style="font-size: .875vw; line-height: .875vw;"><b>PyaiiTTS</b></button>
-            <div style="width: 100%; height: 100%; background-color: rgb(0, 0, 0);">
-                <img id="PyaiiTTS" data-type="repo" style="object-fit: cover; width: 100%; height: 100%;" src="https://raw.githubusercontent.com/DatBogie/PyaiiTTS/refs/heads/main/.web-assets/PyaiiTTS-Logo.png">
-                <!-- <iframe style="border: 0; width: 100%; height: 100%; pointer-events: none;" src="https://datbogie.github.io/ClickerHTML-dev"></iframe> -->
-            </div>
-        </div>
-        <div class="project" title="Click to open" onclick="redir('AnimatedCord')">
-            <button style="font-size: .875vw; line-height: .875vw;"><b>AnimatedCord</b></button>
-            <div style="width: 100%; height: 100%; background-color: rgb(0, 0, 0);">
-                <img id="AnimatedCord" data-type="repo" style="object-fit: cover; width: 100%; height: 100%;" src="https://raw.githubusercontent.com/DatBogie/AnimatedCord/refs/heads/main/AnimatedCordLogo.png">
-                <!-- <iframe style="border: 0; width: 100%; height: 100%; pointer-events: none;" src="https://datbogie.github.io/ClickerHTML-dev"></iframe> -->
-            </div>
-        </div>
-        <div class="project" title="Click to open" onclick="redir('SmoothCord')">
-            <button style="font-size: .875vw; line-height: .875vw;"><b>SmoothCord</b></button>
-            <div style="width: 100%; height: 100%; background-color: rgb(0, 0, 0);">
-                <img id="SmoothCord" data-type="repo" style="object-fit: cover; width: 100%; height: 100%;" src="https://raw.githubusercontent.com/DatBogie/SmoothCord/refs/heads/main/SmoothCordLogo.png">
-                <!-- <iframe style="border: 0; width: 100%; height: 100%; pointer-events: none;" src="https://datbogie.github.io/ClickerHTML-dev"></iframe> -->
-            </div>
-        </div>
-        <div class="project" title="Click to open" onclick="redir('https://bit.ly/datbogie')">
-            <button style="font-size: .875vw; line-height: .875vw;"><b>Google Site</b></button>
-            <div style="width: 100%; height: 100%; background-color: rgb(0, 0, 0);">
-                <img id="https://bit.ly/datbogie" data-type="site" style="object-fit: cover; width: 100%; height: 100%;" src="https://avatars.githubusercontent.com/u/89746947?s=400&u=78be1be4d4df7df57af6bcb76d511836fc418cde&v=4">
-                <!-- <iframe style="border: 0; width: 100%; height: 100%; pointer-events: none;" src="https://datbogie.github.io/ClickerHTML-dev"></iframe> -->
-            </div>
+    <div id="hide-pointer"></div>
+    <img src="cursor.svg" class="cursor" width="35px">
+    <div class="display", id="tabbar">
+        <div class="display" id="tabbar-bg">
+            <button id="t-1" class="display tabbtn">Home</button>
+            <button id="t-2" class="display tabbtn">ADOFAI</button>
+            <button id="t-3" class="display tabbtn">Games</button>
+            <button id="t-4" class="display tabbtn">Software</button>
         </div>
     </div>
-    <iframe src="https://www.guilded.gg/canvas_index.html?route=%2Fcanvas%2Fembed%2Fteamcard%2FR5ADW6kR&size=large" width="553" height="262" frameborder="0" scrolling="no"></iframe>
+    <div class="display tabpage", id="tab.t-1">
+        <div id="title" class="display">
+            <h1>Home</h1>
+            <hr class="expanding-hr">
+        </div>
+        <h2>About Me</h2>
+        <p>
+            Hello world! I'm Dat Bogie, an amateur software dev, game dev, and ADOFAI VFXer!<br>
+            I go by both he/him and she/her; use whichever you prefer.<br>
+            I identify as Pansexual and Bigender 🏳️‍🌈 .<br>
+            I live in the United States, and am in my junior year of High School.
+        </p>
+        <h2>About This Site</h2>
+        <p>
+            This site contains information about all of my projects; from games and software, to ADOFAI levels and more.<br>
+            Click through the tabs at the top to explore!
+        </p>
+        <br><br>
+        <p>
+            Color palette: <a href="https://catppuccin.com/palette/">Catppuccin Macchiato</a>.<br>
+            Everything here spaghetti-coded by <a href="https://github.com/DatBogie">me</a>.
+        </p>
+        <hr class="expanding-hr">
+    </div>
+    <div class="display tabpage", id="tab.t-2">
+        <div id="title" class="display">
+            <h1>ADOFAI</h1>
+            <hr class="expanding-hr">
+        </div>
+        <blockquote>
+            A Dance of Fire and Ice is a strict rhythm game. Keep your focus as you guide two orbiting planets along a winding path without breaking their perfect equilibrium. 
+        </blockquote>
+        <p>
+            <i>― ADOFAI's <a href="https://store.steampowered.com/app/977950/A_Dance_of_Fire_and_Ice/">Steam Page</a></i>
+        </p>
+        <p>
+            ADOFAI is one of my favorite games of all time, and certainly my favorite rhythm game of all time.
+            It also happens to include my favorite level editor of all time; it's simple and intuitive, yet immensely powerful.
+            People are able to create absolutely breathtaking visuals with it. I hope one day to be among them.
+        </p>
+        <p>
+            But, for now, my rather mediocre–decent-enough levels will have to do. Here they are, for your viewing and playing pleasure.
+        </p>
+        <div style="gap: 14px;">
+            <button id="open-adofai">Open ADOFAI Level Browser (Legacy)</button>
+            <button id="skip-adofai" disabled>Skip to Gallery</button>
+        </div>
+        <hr class="expanding-hr">
+    </div>
+    <div class="display tabpage", id="tab.t-3">
+        <div id="title" class="display">
+            <h1>Games</h1>
+            <hr class="expanding-hr">
+        </div>
+        <p>
+            [Placeholder]
+        </p>
+        <hr class="expanding-hr">
+    </div>
+    <div class="display tabpage", id="tab.t-4">
+        <div id="title" class="display">
+            <h1>Software</h1>
+            <hr class="expanding-hr">
+        </div>
+        <p>
+            [Placeholder]
+        </p>
+        <hr class="expanding-hr">
+    </div>
 </body>
 <script src="index.js"></script>
 </html>

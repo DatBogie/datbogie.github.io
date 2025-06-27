@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Montserrat">
+    <title>Dat Bogie's ADOFAI Levels</title>
+    <style>
+        body {
+            font-family: Montserrat;
+            font-size: 20px;
+            font-weight: 400;
+        }
+        input {
+            border: 0px;
+            border-radius: .25vw;
+            background-color: rgb(60, 60, 60);
+            color: #fff;
+            margin: auto 3px;
+            transition-duration: .125s;
+            transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 2);
+            scale: 100%;
+            font-size: inherit;
+            font: inherit;
+        }
+        input:hover {
+            background-color: #fff;
+            color: #000;
+            /* box-shadow: 0px 0px 1px 1px #fff; */
+            /* border: 1px solid rgb(255, 255, 255); */
+            /* scale: 105%; */
+            transform: scaleX(1.05);
+            rotate: -0.5deg;
+        }
+        button {
+            border: 0px;
+            border-radius: .25vw;
+            color: #fff;
+            background-color: rgb(60, 60, 60);
+            cursor: pointer;
+            transition-duration: .125s;
+            transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 2);
+            scale: 100%;
+            font-size: inherit;
+            font: inherit;
+        }
+        button:hover {
+            background-color: #fff;
+            color: #000;
+            box-shadow: 0px 0px 1px 1px #fff;
+            /*border: 1px solid rgb(255, 255, 255);*/
+            scale: 105%;
+            rotate: -1deg;
+        }
+        button:active {
+            background-color: #ddd;
+            color: #000;
+            box-shadow: 0px 0px 2px 2px #ddd;
+            /*border: 1px solid #ddd;*/
+            scale: 85%;
+            rotate: 1deg;
+        }
+        .wrapper {
+            /* display: inline-grid; */
+            grid-template-columns: 1fr 1fr;
+            display: flex;
+            align-items: center;
+            margin: auto;
+            justify-content: center;
+            text-align: center;
+        }
+        .wrapper0 {
+            /* display: inline-grid; */
+            /* grid-template-columns: 1fr 1fr; */
+            /* display: flex; */
+            align-items: center;
+            margin: auto;
+            justify-content: center;
+            text-align: center;
+            border: 0px;
+            border-radius: 1vw;
+            transition-duration: .1;
+            transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 2);
+            transform: translate(-50%,-50%) scale(0);
+            transition: transform .15s cubic-bezier(0.175, 0.885, 0.32, 1.25);
+            /* scale: 0; */
+        }
+        #levelsContainer {
+            text-align: center;
+        }
+        #levelsContainer a {
+            border: 0px;
+            display: inline-block;
+            /* position: absolute; */
+            margin: 3px 3px;
+            padding: 0px 3px;
+            text-decoration: none;
+            border-radius: .25vw;
+            background-color: rgb(60, 60, 60);
+            color: #fff;
+            text-align: center;
+            transition-duration: .125s;
+            transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 2);
+            scale: 100%;
+        }
+        #levelsContainer a:hover {
+            background-color: #fff;
+            color: #000;
+            box-shadow: 0px 0px 1px 1px #fff;
+            /*border: 1px solid rgb(255, 255, 255);*/
+            scale: 105%;
+            rotate: -0.5deg;
+        }
+        #levelsContainer a:active {
+            background-color: #ddd;
+            color: #000;
+            box-shadow: 0px 0px 2px 2px #ddd;
+            /*border: 1px solid #ddd;*/
+            scale: 85%;
+            rotate: 0.5deg;
+        }
+        h1 {
+            color: #fff;
+        }
+        h3 {
+            color: rgb(200, 200, 200);
+        }
+        body, html {
+            margin: 0;
+        }
+        footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #222;
+            margin: 0;
+            width: 100vw;
+        }
+        footer button {
+            background-color: rgba(0, 0, 0, 0);
+            width: 50px;
+            height: 50px;
+            align-content: center;
+            float: none;
+        }
+        footer button img {
+            width: 100%;
+            height: auto;
+            transition-duration: .125s;
+            transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 2);
+        }
+        footer button img:hover {
+            filter: brightness(0);
+            scale: 125%;
+        }
+    </style>
+</head>
+
+<body style="background-color: rgb(8, 14, 18);">
+
+<h1 style="text-align: center; font-size: 36px;">Dat Bogie's ADOFAI Levels</h1>
+<hr>
+<h3 style="font-weight: normal; text-align: center;">Use this page to download and filter through my ADOFAI customs!<br>Click on a level to download it. Hovering over it shows you its full name and tags!<br>You can search by name or with tags using the following format: <span style="background-color: #222; font-size: inherit; font-family: 'Courier New', Courier, monospace;">tag:[tag1_name]:[tag1_value]|tag:[tag2_name]:[tag2_value]</span></h3>
+
+<div class="wrapper">
+    <button name="ClearSearchBtn" id="clearSearch">Clear</button>
+    <input type="text" name="SearchTxt" id="searchBox" cols="30" rows="1">
+    <div></div>
+    <button name="SearchBtn" id="searchBtn">Search</button>
+</div>
+
+<div name="LevelsContainer" id="levelsContainer">
+    <br>
+</div>
+
+<hr>
+<div class="wrapper">
+    <button name="DownloadAllBtn" id="downAll">Download All</button>
+</div>
+
+<!-- Footer -->
+<footer style="position: fixed; bottom: 0; width: 100%;">
+    <button id="yt">
+        <img src="https://ssl.gstatic.com/atari/images/sociallinks/youtube_white_36dp.png">
+    </button>
+    <button id="tw">
+        <img src="https://ssl.gstatic.com/atari/images/sociallinks/twitter_white_36dp.png">
+    </button>
+    <button id="st">
+        <img src="https://i.ibb.co/Fq0Wtb5/steam-logo-shape.png">
+    </button>
+    <button id="rb">
+        <img src="https://i.ibb.co/Jdb8N4M/250841-after.png">
+    </button>
+</footer>
+
+</body>
+
+<!-- Confirm -->
+<div id="conf" class="wrapper0" style="display:block; width: 50vw; height: 35vh; position: fixed; top: 50%; left: 50%; background-color: rgb(55, 55, 55);">
+    <p id="confTxt" style="color: #fff; font-size: 3vw; height: 10vh;">Are you sure you want to download all levels?</p>
+    <button id="cconfirm" style="width: 35%; height: 25%; font-size: 2vw;">
+        Yes
+    </button>
+    <button id="ccancel" style="width: 35%; height: 25%; font-size: 2vw;">
+        No
+    </button>
+</div>
+
+</html>
+
+<script>
+    document.body.onload = addLevels;
+
+    function naiveSearch(str, word){
+        var count = 0;
+        for(var i = 0; i < str.length; i++){
+            for(var j = 0; j < word.length; j++){
+                if(word[j] !== str[i+j]) break;
+                if(j === word.length - 1) count++;
+            }
+        }
+        return count;
+    }
+
+    const Levels = {
+    
+            "Bang (Remastered Level)":{link:"1qktrdxv_LyRUsevtuCtSed1iAIYceM5b",artist:"AJR",quality:"true"},
+            "Rain":{link:"1g89VcvEYOKY3tlAsQIq7Ok7_Fd4NHuwY",artist:"artifyber",quality:"true"},
+            
+            "Play BEAUZ Remix":{link:"1dC0itAp67zEHR9Rc892-tT1Q-AiWNPc9",artist:"Monstercat",quality:"true"},
+
+            "Synth":{link:"1TmCnBL6DVWi20aEdjtyw11AGRHKgOz_w",artist:"Ageless Muse",media:"roblox",quality:"false"},
+            
+            "Inertia":{link:"1HAytHa0y-rVoR9ESclshJBhZsEA-_B-t",artist:"BEAUZ",quality:"true"},
+            "Turning Out Pt III":{link:"1gdvBRsN8CspoixzY7Aip8mUgUE7a1oV1",artist:"AJR",quality:"true"},
+            "2085":{link:"1532c1P7EQ-fBrpeDklsuRs1aoKK5sb_0",artist:"AJR",quality:"true"},
+            "Bang":{link:"1wVIxPV8Zbb_Rck2ZXBnc1sNE175xv2P0",artist:"AJR",quality:"false"},
+            "Hole in the Bottom of My Brain":{link:"1zMV5wb0qrV67M5GSgBr4LNokeyOoGRsv",artist:"AJR",quality:"true"},
+            "I Won't":{link:"1fkoOrRIfu3Fg_lgDC4iiMNBWLKv461f-",artist:"AJR",quality:"false"},
+            "The DJ Is Crying for Help":{link:"15oFBEtNaMTWg9VzbLVl59VtrjGoUfJMC",artist:"AJR",quality:"true"},
+            "The Dumb Song":{link:"1acN4EjkqEaxIMEJ5QwM4okRRyZdZLOo_",artist:"AJR",quality:"false"},
+
+            "The Spectre":{link:"1UJtV70siFjvKTJn1fKuVT61p9f8393CC",artist:"Alan Walker",quality:"false"},
+
+            "Arcade Weekend":{link:"1UJsfeTJn9TW97Ryzjr51auHUboycZiaN",artist:"Alec Lee Justice",media:"roblox",quality:"false"},
+            "Final Boss (a)":{link:"1foK5NCtqPFH8ioy66J2_88TN7KaBruwU",artist:"Roblox",media:"roblox",quality:"false"}, // unknown artist
+
+            "Just a Theory":{link:"1GbtG-_q8QIdMbs6Dso5LnZp_KxGXdvBa",artist:"Ash Dreemurr",media:"game theory",quality:"false"},
+
+            "Beneath the Towering Castle":{link:"1LurqYLpVKzuvEY4s-GvHUSxebdacw82V",artist:"Camellia",quality:"true",media:"dweller's empty path"},
+            "Colossal Evil":{link:"1Bj5snhylUiNInZcgXFKCj7XLJdyVMlHB",artist:"Camellia",media:"dweller's empty path",quality:"false"},
+            "Inside the Castle":{link:"1tlBN0Q2gU6MFawEKpTm7vYrtAQTauwxu",artist:"Camellia",media:"dweller's empty path",quality:"false"},
+            "Somewhere in a Forest":{link:"1dzyne_avn5G058G2bsGFpZKbYl26Whkv",artist:"Camellia",media:"dweller's empty path",quality:"false"},
+            "Trailer Theme":{link:"1e8Z8JgnrFrXCPtwZEieF_F8wMivDFPGE",artist:"Camellia",media:"dweller's empty path",quality:"false"},
+            "Volcanic Palace":{link:"1xOYRD9uK-WV6wpf5w9i9HsyTKMKzBTJA",artist:"Camellia",quality:"true",media:"dweller's empty path",quality:"false"},
+
+            "whats in the trunk":{link:"1tdar_pFlzgqVlL3VFFu7Qs5osbdWcKSy",artist:"dashie",quality:"false"},
+
+            "HUE 5HIFT":{link:"1d6LO5f7zmoK7mHJYQkRYM_EPs_on9bTh",artist:"e_ku",media:"beat saber",quality:"false"},
+
+            "Airborne Robots":{link:"1ZsJIF-oQ96pJuoaeNYj_EmJGb6-Kqx8s",artist:"F-777",quality:"true",media:"geometry dash"},
+
+            "Good Intentions":{link:"110Ty89dX5_u90_t90yl4tKwqDm6lfw9I",artist:"Fitz and the Tantrums",quality:"true"},
+            "Heaven":{link:"1XiaCH91yXwab3llllIxJcuZtIkAo4xgg",artist:"Fitz and the Tantrums",quality:"false"},
+
+            "Breakout":{link:"1X-FnewHTxkFeeh86OQwK0wjSP8G8-YJW",artist:"FromSoftware",media:"3d dot game heroes",quality:"false"},
+
+            "Break In":{link:"1sue-WwYJ7SJdPt2gfo6RditJ2GN32POa",artist:"Garret Williamson",quality:"false"},
+
+            "Heads Will Roll (A-Trak Version JVH-C Remix)":{link:"1QUGAVobyusI29Coc4GpCWmenYNj_kusI",artist:"JVH-C",quality:"false"},
+
+            "Dopamine Highscore":{link:"1ZfjFfFau5UAeZyYnaws_xMyU6pSvW4LX",artist:"LeGrande",quality:"false"},
+
+            "Montero (Marching Cover)":{link:"1rI50ZgDABLk6A0UDehMX-74AtapUPLJC",artist:"Lil Nas X",quality:"false"},
+
+            "if god didnt want us to snort worms he wouldnt have made them cylindrical!":{link:"1B56cY1_65XnLh1pNMXgf11ladJw8YlZN",artist:"MIMIDEATH",quality:"false"},
+
+            "i cant help myself":{link:"1nI6J86mhHmvuXi9KQ3zeauE1aziI3fMN",artist:"nacho",quality:"false"},
+
+            "Lavender Town":{link:"1RKzY0RNoXJzScNqZsbENfwbnwFCPk6MB",artist:"Nintendo",media:"pokemon",quality:"false"},
+
+            "Green Hill Zone":{link:"17GbpQ59aTdwpKpyu0VjBDI9hSHrMTx4W",artist:"SEGA",media:"sonic",quality:"false"},
+            "Wacky Workbench":{link:"1__l23r3Nz34hGutuuMYB0vpGfGohpSmo",artist:"SEGA",media:"sonic",quality:"false"},
+
+            "gay fast and loud":{link:"1SBbqpNWjIHbf6LhrNBpfWLShidx0RuDS",artist:"sxth2",quality:"false"},
+
+            "Eggman's Announcement but in the form of a song":{link:"1fNI63OJWL5f5eboGFPt7tozab4axEUN6",artist:"TheSpike777",quality:"true",media:"sonic"},
+
+            "I Secretly Love U":{link:"1v00tnPCqzVtHUdJKZ0fzxKwHFhCWM57E",artist:"Ujico",media:"snail's house",quality:"false"},
+
+            "Howling Gale":{link:"10qp84-AdFZClDlpfP243Bs-DDtgcU9Jj",artist:"Riya",quality:"true"},
+            "Final Hope":{link:"1svAbbrYzb68vXZeb6o_6yaGRQL9khOTi",artist:"Riya",media:"ADOFAI",quality:"true"},
+
+            "Deadlocked":{link:"1BISEAHT8ZitQlo2wvCLCFhkEoe4gp0Kp",artist:"F-777",quality:"true"},
+
+            "Monorail":{link:"1HpmF8YRgdkbiHBMnzB763ZmJkjv_SofR",artist:"Inverted Silence",quality:"true"},
+
+            "Memes":{link:"1vkA5LNBJ3Jy7JDEQgng00klpyjmeDGqI",artist:"Niviro",quality:"true"},
+
+            "Untitled Track 2":{link:"1iXDYWqWTGWOcdnXb4m7LsWSEYIBY-j6i",artist:"Bettelgeusse29",quality:"true"},
+
+            "A Song of Fire and Ice":{link:"1cevHkNI4JdEez0FZcKZ0GUp6jRGlITGF",artist:"Ramin Djawadi",quality:"true"},
+
+            "献花の番人":{link:"1hhMV0z0uEwDu4FRNMuHE4pnYQImPiqxz",artist:"黒魔/Chroma",quality:"true"},
+
+            // Deltarune
+            "A CYBER'S WORLD":{link:"15ImUTvr-qrn-ghtwQbtmp8kas5lMKOnl",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "A Town Called Hometown":{link:"1x2B0H4XuVLOmVE6T9KXL4CQHr_ctgjb6",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Acid Tunnel of Love":{link:"1mTFI_JODslJNvnsUVX6hDaHeOc54ndAW",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Another Him":{link:"1iEND8pDENCj9cx1OBC6l1Y8ZDtgDDzkp",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "April 2012":{link:"1BIoS_OB8NDgkSCz2XQRiehzq-2gz_MUz",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Attack of the Killer Queen":{link:"1IVylK5Q9JefcX7yX7W2GCyqwgSbS70ax",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Before the Story":{link:"1TZLewZb4A3q0vgdBJp5rLg9LT6YyoAYp",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "BIG SHOT":{link:"1a0AkE0nqXwfkG0o_NNlORZ7Xjkskg_P7",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Bluebird of Misfortune":{link:"1aaPXMztKcyf6CUWNtjupJ3bnrZ1TqPO_",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Chaos King":{link:"1-V30nIwS0oROeM-offZKG763GOFnF0Ne",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Darkness Falls":{link:"14MC3osSm8PxI0ijGZbBZEpfQ6AKTrtck",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Dogcheck":{link:"1Dc4u9sFYoYm8PUC0S0nnmHTdxRwzcPg6",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Don't Forget":{link:"1JNXVpxxy1VfIr6h9OjoUcayeYmNMC2lb",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Faint Courage":{link:"1tiqH0EHOKcWHQ7N8zYqqYxa7zpusxhZn",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Field of Hopes and Dreams":{link:"1FCrPrmtGkZsHi6uINI8evVZfZsm9qINJ",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Knock You Down !!":{link:"1tlBN0Q2gU6MFawEKpTm7vYrtAQTauwxu",artist:"Toby Fox",quality:"true",media:"deltarune"},
+            "My Castle Town":{link:"18c4aq7e5OCK8orRq6U_RKbQJJIpPYYAC",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Rude Buster":{link:"1BhdPlFb8GqzS9ehLvoGczgDEsghcbzJM",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Scarlet Forest":{link:"1q8e1HFqi8aaf8njPlelkLXlNwcp-XvIu",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Smart Race":{link:"1fo_sRVyr72DesZCDUldCOmJb-fKc7kQv",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "sneaking":{link:"19fnqPxXjtmW1FyU1TyuD76YqrOzpq2-6",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "The Circus":{link:"1TJ66fjh3r5bkDDL4NfcfvzR_SN6-LLiC",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "THE WORLD REVOLVING":{link:"1JUuFE30dOqyn4KXJ5xULWfJQhMznilTo",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Title Screen Alarm":{link:"1GZCDBNZhx2uO7W5f2NZx4YNr_rL9eg0z",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Until Next Time":{link:"1Zpfff9ySyrmXp_RAYiuStJUSk_H2zt2g",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Vs. Lancer":{link:"1lfqCAgfqGYN1kXHB_ETBC37cl_nNwMmu",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "Vs. Susie":{link:"1RGqWLTUVwH8grs6isHgFK8tky4HQnN4B",artist:"Toby Fox",media:"deltarune",quality:"false"},
+            "You Can Always Come Home":{link:"1TT2pl5is08W66umxl8D6p-mmuZbUM5iO",artist:"Toby Fox",media:"deltarune",quality:"false"},
+
+            // UNDERTALE
+            "Amalgam":{link:"1KTvvUrirBn8JhG40DRRi2uFcjgqcjMCC",artist:"Toby Fox",quality:"true",media:"undertale"},
+            "Bonetrousle":{link:"1bQ8ILjpVE4YmBBLA6-4josXMtg_Ip_Bm",artist:"Toby Fox",media:"undertale",quality:"false"},
+            "CORE":{link:"1JmvGL-jP0_aC5fBnRpv37tlHmWwXxPZ1",artist:"Toby Fox",quality:"true",media:"undertale"},
+            "Death By Glamour":{link:"1x7p0-_zBRn1sJsGyHVVqB16SAg5ylyYG",artist:"Toby Fox",quality:"true",media:"undertale"},
+            "Spider Dance":{link:"1-3Ynd9lkaLx1h_QHWDlzOtaqNpnLijMa",artist:"Toby Fox",quality:"false",media:"undertale"},
+
+            "Louvre Museum Invasion":{link:"1UaAHB3wKGT_OVpJrs20KVcBSZ4CwaoXJ",artist:"SEGA",quality:"true",media:"Rhythm Thief"},
+
+            "mean song":{link:"1hXhTGMswmMaCeEHtIx6f-TS-yH1yGWSZ",artist:"weikoo",quality:"true"},
+
+            "Prologue (プロローグ)":{link:"11as83DgdMXYX1IwhBIiJDFWgo7Ilnlxj",artist:"AAAA",quality:"true"},
+
+            "café de Mao":{link:"1ufKHwpRnxlztfBnqnT9QqMOagyXAWoWf",artist:"AAAA",quality:"true",alpha:"true"},
+
+            "Labyrinth in Kowloon: Walled World":
+{link:"1VFgB6yqX0DXNFl4xEtUvsVfDpZ8vq37h",artist:"Camellia",quality:"true"},
+
+            "New Guest":
+{link:"1dcP7OOs9tTl01_98WcoS9aPFeWoxhSa6",artist:"RoDy.cOde",quality:"true"}
+
+	}
+
+    const LevelTags = [
+        "artist",
+        "quality",
+        "media",
+        "name",
+        "beta",
+        "alpha"
+        // "seizure",
+    ]
+
+    function truncateStr(str,_len) {
+        if (str && str.length > _len) {
+            return str.substring(0,_len) + "..."
+        } else if (str) {
+            return str
+        } else {
+            return null
+        }
+    }
+    
+    function addLevels() {
+        
+        document.getElementById("searchBtn")
+        // console.log("Levels:")
+        for (var [name, data] of Object.entries(Levels)) {
+            link = "https://drive.google.com/uc?export=download&id=" + data["link"]
+            // console.log(name, link)
+            element = document.createElement("a")
+            element.innerText = truncateStr(name,24)
+            element.href = link
+            element.id = name + "Btn"
+            document.getElementById("levelsContainer").appendChild(element)
+            element.appendChild(document.createElement("br"))
+            var titleStr = ""
+            for (var [index, tag] of Object.entries(LevelTags)) {
+                if (data[tag]) {
+                    if (titleStr.length < 1) {
+                        titleStr += "\ttag:" + tag + ":" + data[tag]
+                    } else {
+                        titleStr += "\n\ttag:" + tag + ":" + data[tag]
+                    }
+                }
+            }
+            titleStr += "\n\ttag:name:" + name.toLowerCase()
+            titleStr = name + " - " + data.artist + "\nTags: {\n" + titleStr + "\n}"
+            element.title = titleStr
+
+            newData = data
+            newData.name = name.toLowerCase()
+            Levels[name] = newData
+        }
+    }
+
+    function _confirm(msg) {
+        var txt = document.getElementById('confTxt')
+        txt.innerText = msg
+        var conf = document.getElementById('cconfirm')
+        var canc = document.getElementById('ccancel')
+        // document.getElementById('conf').style.display = "block"
+        document.getElementById('conf').style.transition = 'transform .15s cubic-bezier(0.175, 0.885, 0.32, 1.25)'
+        document.getElementById('conf').style.transform = 'translate(-50%,-50%) scale(1)'
+    }
+
+    function search() {
+        // Search/Filter
+        var query = document.getElementById("searchBox").value
+        var tags = {}
+        var count = 0
+        
+        if (query == "") {
+            for (var [name, data] of Object.entries(Levels)) {
+                document.getElementById(name + "Btn").style.display = "inline-block" //visibility = "visible"
+            }
+            return
+        }
+
+        // Get tag(s)
+        for (var [index,tag] of Object.entries(LevelTags)) {
+            if (query.indexOf("tag:"+tag) != -1) {
+                tempVal = query.substring(query.indexOf("tag:"+tag+":")+("tag:"+tag+":").length,query.length).toLowerCase()
+                console.log(tempVal,tempVal.indexOf("|"))
+                if (tempVal.indexOf("|") != -1) {
+                    tempVal = tempVal.substring(0,tempVal.indexOf("|"))
+                    console.log(tempVal,tempVal.indexOf("|"))
+                }
+                console.log("Tag Val: " + tempVal)
+                tags[tag] = tempVal
+                // alert("tags." + tag + ": " + tags[tag])
+                // query.search()
+            }
+        }
+
+        // console.log(Object.keys(tags))
+        if (Object.keys(tags).length > 0) {
+            // for (var [name, data] of Object.entries(Levels)) {
+            //     document.getElementById(name + "Btn").style.display = "block"
+            // }
+
+            for (var [tag,tagVal] of Object.entries(tags)) {
+                for (var [name, data] of Object.entries(Levels)) {
+                     if (data[tag] && !naiveSearch(data[tag].toLowerCase(),tags[tag].toLowerCase())) {
+                        // Hide
+                        document.getElementById(name + "Btn").style.display = "none"
+                     } else if (data[tag] && naiveSearch(data[tag].toLowerCase(),tags[tag].toLowerCase()) && document.getElementById(name + "Btn").style.display != "none") {
+                        document.getElementById(name + "Btn").style.display = "inline-block"
+                     }
+
+                    // if (data[tag] && naiveSearch(data[tag].toLowerCase(),tags[tag].toLowerCase())) {
+                    //     count ++
+                    //     // console.log("Found for " + name + "!")
+                    //     document.getElementById(name + "Btn").style.display = "inline-block" //visibility = "visible"
+                    //     // levelElementData.name = true
+                    // } else {
+                    //     // levelElementData.name = false
+                    //     // console.log(tag,data)
+                    //     document.getElementById(name + "Btn").style.display = "none" //visibility = "hidden"
+                    // }
+                }
+            }
+        } else {
+            for (var [name, data] of Object.entries(Levels)) {
+                if (naiveSearch(name.toLowerCase(),query.toLowerCase())) {
+                    count ++
+                    // console.log("Found for " + name + "!")
+                    document.getElementById(name + "Btn").style.display = "inline-block" //visibility = "visible"
+                    // levelElementData.name = true
+                } else {
+                    // levelElementData.name = false
+                    document.getElementById(name + "Btn").style.display = "none" //visibility = "hidden"
+                }
+            }
+        }
+
+        console.log("Found " + count.toString() + " result(s).")
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("searchBtn").addEventListener("click", search);
+        document.getElementById('cconfirm').addEventListener('click', function() {
+            for (var [name, data] of Object.entries(Levels)) {
+                if (document.getElementById(name + "Btn").style.display != "none") {
+                    console.log(name + " is visible!")
+                    open("https://drive.google.com/uc?export=download&id=" + data.link)
+                    // toDown.push(data.link)
+                }
+            }
+            // document.getElementById('conf').style.display = "none"
+            document.getElementById('conf').style.transition = 'transform .15s cubic-bezier(.75,-0.81,.98,1)'
+            document.getElementById('conf').style.transform = 'translate(-50%,-50%) scale(0)'
+        })
+        document.getElementById('ccancel').addEventListener('click', function() {
+            document.getElementById('conf').style.transition = 'transform .15s cubic-bezier(.75,-0.81,.98,1)'
+            document.getElementById('conf').style.transform = 'translate(-50%,-50%) scale(0)'
+        })
+        document.getElementById("searchBox").addEventListener("keypress", function(e) {
+            if (e.key == 'Enter') {
+                search()
+            }
+        })
+        document.getElementById("clearSearch").addEventListener("click", function() {
+            document.getElementById("searchBox").value = ""
+            for (var [name, data] of Object.entries(Levels)) {
+                document.getElementById(name + "Btn").style.display = "inline-block"
+            }
+        })
+        document.getElementById("downAll").addEventListener("click", function() {
+            // Download all currently visible levels
+            _confirm("Download all visible levels?")
+        })
+        document.getElementById("yt").addEventListener("click",function() {
+            open("https://www.youtube.com/@datbogie")
+        })
+        document.getElementById("tw").addEventListener("click",function() {
+            open("https://www.x.com/@bogiedat")
+        })
+        document.getElementById("st").addEventListener("click",function() {
+            open("https://steamcommunity.com/id/DatBogie/myworkshopfiles/")
+        })
+        document.getElementById("rb").addEventListener("click",function() {
+            open("https://www.roblox.com/users/479943271/profile")
+        })
+        // for (var [name, data] of Object.entries(Levels)) {
+        //     document.getElementById(name + "Btn").addEventListener("mouseenter", function() {
+                
+        //     })
+        // }
+    });
+</script>

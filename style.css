@@ -1,46 +1,209 @@
-body {
-    background-color: rgb(24, 24, 24);
+* {
+    cursor: none !important;
+    font-family: "Nunito", serif;
 }
+
+.tabpage {
+    display: none;
+    /* transition: opacity 1s ease-out; */
+    /* animation-name: tabpage; */
+    animation-duration: 1s;
+    animation-timing-function: ease;
+}
+
+@keyframes tabpage {
+    from {
+        opacity: 0%;
+        padding-top: 12.5px;
+    } to {
+        opacity: 100%;
+        padding-top: 0px;
+    }
+}
+
+.tabpage div:has(button) {
+    margin-left: 25%;
+    margin-right: 25%;
+    display: flex;
+    justify-content: center;
+}
+
+#tabbar {
+    width: 100vw;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tabbar-bg {
+    background-color: #181926;
+    border-radius: 50px;
+    /* width: 50%; */
+    height: calc(100% - 7px);
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    padding-left: 3.5px;
+    padding-right: 3.5px;
+    gap: 3.5px;
+    /* margin-left: 50%; */
+    /* margin-right: 50%; */
+    width: auto;
+}
+
+.tabpage > h2 {
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.tabpage > div > button {
+    border-radius: 50px;
+    background-color: #181926;
+    color: #cad3f5;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #b7bdf800;
+    height: calc(100% - 7px);
+    transition: scale 200ms ease, border-color 200ms ease, background-color 200ms ease;
+    font-size: 1.5rem;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+.tabpage > div > button:hover:not(button:disabled) {
+    scale: 1.05;
+    transition: scale 200ms ease, background-color 200ms ease;
+    border-color: #b7bdf8ff;
+}
+
+.tabpage > div > button:active:not(button:disabled) {
+    scale: .95;
+}
+
+.tabpage > div > button:disabled {
+    background-color: #24273a;
+    text-decoration: line-through;
+}
+
+#tabbar-bg button {
+    border-radius: 50px;
+    background-color: #24273a;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #b7bdf800;
+    height: calc(100% - 7px);
+    transition: scale 200ms ease, border-color 200ms ease, background-color 200ms ease;
+}
+
+#tabbar-bg button:hover {
+    scale: 1.05;
+    transition: scale 200ms ease, background-color 200ms ease;
+    border-color: #b7bdf8ff;
+}
+
+#tabbar-bg button:active {
+    scale: .95;
+}
+
+#tabbar-bg .selected {
+    background-color: #5b6078;
+}
+
+/* Why firefox, why??? */
+#hide-pointer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    cursor: none !important;
+    z-index: -1000;
+}
+
+body {
+    background-color: #24273a;
+    color: #cad3f5;
+    font-family: "Nunito", serif;
+    font-optical-sizing: auto;
+    margin-left: 0;
+    margin-right: 0;
+    opacity: 0%;
+    margin-top: 25px;
+}
+
+h1 {
+    font-weight: 900;
+}
+
+hr {
+    margin-left: 25%;
+    margin-right: 25%;
+    color: #cad3f5;
+}
+
+.expanding-hr {
+    margin-left: 25%;
+    margin-right: 25%;
+    /* transition: margin-left 1.25s ease, margin-right 1.25s ease; */
+    animation-duration: 1.25s;
+    animation-timing-function: ease;
+}
+
+@keyframes hr-expand {
+    from {
+        margin-left: 50%;
+        margin-right: 50%;
+    } to {
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+}
+
+/* .expanding-hr.start {
+    margin-left: 25%;
+    margin-right: 25%;
+} */
+
 .display {
-    cursor: default;
-    font-family: sans-serif;
-    font-size: 3vh;
-    transition: all 200ms cubic-bezier(0,1,1,1);
-    color: white;
+    font-family: "Nunito", serif;
+    font-size: 1.5rem;
+    /* transition: all 200ms cubic-bezier(0,1,1,1); */
+    color: #cad3f5;
 }
 
 #title {
-    font-size: 4vh;
+    font-size: 2rem;
     text-align: center;
 }
 
-#projects {
+/* #projects {
     display: flex;
     justify-content: center;
     overflow-x: hidden;
     overflow-y: scroll;
     height: 75vh;
-}
+} */
 
-.project {
+/* .project {
     width: 8vw;
     height: 8vw;
-}
+} */
 
-.project, .project div .project button {
+/* .project, .project div .project button {
     margin-left: 1vw;
-    cursor: pointer;
     transition: all 200ms cubic-bezier(0,1,1,1);
-}
+} */
 
-#projects img {
+/* #projects img {
     transition: all 200ms cubic-bezier(0,1,1,1);
-}
+} */
 
-#projects div button {
+/* #projects div button {
     text-align: center;
     color: white;
-    cursor: pointer;
     border: 0;
     background-color: rgba(0, 0, 0, 0.75);
     font-size: 1.1vw;
@@ -58,4 +221,32 @@ body {
 
 .project:active {
     scale: .9;
+} */
+
+.cursor {
+    position: fixed;
+    transition: all 200ms cubic-bezier(0,1,1,1);
+    pointer-events: none;
+    display: none;
+    z-index: 100;
+}
+
+blockquote {
+    border-left: 4px solid #cad3f5;
+    padding-left: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color: #181926;
+}
+
+a {
+    color: #04a5e5;
+}
+
+p {
+    text-align: left;
+    margin-left: 25%;
+    margin-right: 25%;
 }
