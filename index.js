@@ -68,18 +68,18 @@ window.addEventListener("load",function() {
     const cur = document.querySelector(".cursor");
     setInterval(function() {
         if (xVel < 0) {
-            xVel+=7;
+            xVel+=700;
             if (xVel > 0) {
                 xVel = 0;
             }
         } else {
-            xVel-=7;
+            xVel-=700;
             if (xVel < 0) {
                 xVel = 0
             }
         }
         cur.style.rotate = xVel+"deg";
-    },1);
+    },100);
     document.body.style.transition = "margin-top 1s ease, opacity 1s ease-out";
     document.body.style.marginTop = "8px";
     document.body.style.opacity = "100%";
