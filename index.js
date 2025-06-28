@@ -107,7 +107,7 @@ window.addEventListener("mousemove",function(m) {
     cur.style.top = m.y-yOffset + "px";
     cur.style.display = "block";
 
-    xVel += (m.x-lastX)/2;
+    xVel += (m.x-lastX)/12;
     if (xVel > 90) {
         xVel = 90;
     } else if (xVel < -90) {
