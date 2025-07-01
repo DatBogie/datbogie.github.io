@@ -28,7 +28,7 @@
             Hello world! I'm Dat Bogie, an amateur software dev, game dev, and ADOFAI VFXer!<br>
             I go by both he/him and she/her; use whichever you prefer.<br>
             I identify as Pansexual and Bigender 🏳️‍🌈 .<br>
-            I live in the United States, and am in my junior year of High School.
+            I live in the United States, and am in my junior year of high school.
         </p>
         <h2>About This Site</h2>
         <p>
@@ -38,7 +38,8 @@
         <br><br>
         <p>
             Color palette: <a href="https://catppuccin.com/palette/">Catppuccin Macchiato</a>.<br>
-            Everything here spaghetti-coded by <a href="https://github.com/DatBogie">me</a>.
+            Everything here spaghetti-coded by <a href="https://github.com/DatBogie">me</a>.<br>
+            Card rotating effect: <a href="https://armandocanals.com/posts/CSS-transform-rotating-a-3D-object-perspective-based-on-mouse-position.html">Armando Canals</a>.
         </p>
         <hr class="expanding-hr">
     </div>
@@ -61,9 +62,21 @@
         <p>
             But, for now, my rather mediocre–decent-enough levels will have to do. Here they are, for your viewing and playing pleasure.
         </p>
-        <div style="gap: 14px;">
+        <div>
             <button id="open-adofai">Open ADOFAI Level Browser (Legacy)</button>
             <button id="skip-adofai" disabled>Skip to Gallery</button>
+        </div>
+        <hr class="expanding-hr">
+        <div>
+            <button id="dl-adofai">Download Selected Level</button>
+        </div>
+        <div class="card-container" id="level-cards">
+            <div class="level-card" id="level-card-template">
+                <div><div class="card-highlight"></div></div>
+                <b class="title">Title</b><br><span class="subtext">Artist</span><hr>
+                <img src="https://placehold.co/1000x1000/png" class="level-icon">
+                <div class="card-tags"></div>
+            </div>
         </div>
         <hr class="expanding-hr">
     </div>

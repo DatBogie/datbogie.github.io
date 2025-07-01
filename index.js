@@ -1,52 +1,3 @@
-// function redir(id) {
-//     console.log(id);
-//     let _x = document.getElementById(id);
-//     let isRepo = false;
-//     let isOther = false;
-//     let hash = "";
-//     if (_x) {
-//         console.log("type:"+_x.type)
-//         if (_x.dataset.type == "repo") {
-//             isRepo = true;
-//         } else if (_x.dataset.type == "site") {
-//             isOther = true;
-//         }
-//         if (_x.dataset.hash != null) {
-//             hash = _x.dataset.hash;
-//         }
-//         let block = document.createElement("div");
-//         document.body.appendChild(block);
-//         block.style.position = "fixed";
-//         block.style.top = 0;
-//         block.style.width = "100vw";
-//         block.style.height = "100vh";
-//         block.style.pointerEvents = "all";
-//         block.style.zIndex = 1;
-//         block.style.backgroundColor = "rgba(0,0,0,0)";
-//         block.style.transition = 'all 200ms cubic-bezier(0,1,1,1)'
-//         window.getComputedStyle(block).transition;
-//         block.style.backdropFilter = 'blur(10px)';
-//         let x = _x.cloneNode();
-//         _x.parentElement.appendChild(x);
-//         x.style.top = "0%";
-//         window.getComputedStyle(x).transition;
-//         x.style.scale = 6;
-//         x.style.opacity = 0;
-//         x.style.position = "fixed";
-//     };
-
-//     setTimeout(function() {
-//         console.log(isOther);
-//         if (isOther) {
-//             window.location.replace(id);
-//         } else if (!isRepo) {
-//             window.location.replace("https://datbogie.github.io/"+id+hash);
-//         } else {
-//             window.location.replace("https://github.com/datbogie/"+id);
-//         }
-//     }, 100);
-// };
-
 var xVel = 0;
 var lastX = 0;
 
@@ -98,6 +49,89 @@ window.addEventListener("load",function() {
             document.getElementById("tab."+selectedTab).style.display = "block";
             document.getElementById("tab."+selectedTab).style.animationName = "tabpage";
         });
+    });
+
+    var levelData = [];
+    var levelTags = {};
+    fetch("leveldata.csv").then().then((raw)=>{
+        raw.text().then((text)=>{
+            const heading = text.split("\n")[0].split(",");
+            const data = text.split("\n").slice(1,-1); // Remember: newline @ EOF
+            data.forEach((row)=>{
+                var rowData = {};
+                for (const [i, v] of row.split(",").entries()) {
+                    if (heading[i] != "Tags") {
+                        rowData[heading[i]] = v.replaceAll("$comma",",");
+                    } else {
+                        rowData[heading[i]] = v.replaceAll("$comma",",").split("|");
+                        v.replaceAll("$comma",",").split("|").forEach((tag)=>{
+                            if (levelTags[tag] == null) levelTags[tag] = {};
+                        });
+                    }
+                };
+                levelData.push(rowData);
+            });
+            const cardTemplate = document.getElementById("level-card-template");
+            levelData.forEach((level)=>{
+                const card = cardTemplate.cloneNode(true);
+                const title = card.querySelector(".title");
+                var titleText = level["Name"];
+                title.title = titleText;
+                title.textContent = titleText;
+                const artist = card.querySelector(".subtext");
+                var artistText = level["Artist"].replaceAll("|",", ");
+                artist.title = artistText;
+                artist.textContent = artistText;
+                const icon = card.querySelector(".level-icon");
+                var iconSrc = "assets/adofai-levels/"+level["Name"]+"-1.png";
+                icon.src = iconSrc;
+                card.addEventListener("click",()=>{
+                    const oldSel = document.querySelector(".level-card-selected");
+                    if (oldSel != null)
+                        oldSel.classList.remove("level-card-selected");
+                    if (oldSel != card)
+                        card.classList.add("level-card-selected");
+                });
+                const perspective = 250;
+                card.addEventListener("mousemove",(m)=>{
+                    let constraint = 85;
+                    window.requestAnimationFrame(()=>{
+                        let rect = card.getBoundingClientRect();
+                        let rotX = -(m.y - rect.y - (rect.height / 2)) / constraint;
+                        let rotY = (m.x - rect.x - (rect.width / 2)) / constraint;
+                        let out = "perspective("+perspective+"px) rotateX("+rotX+"deg) rotateY("+rotY+"deg)";
+                        card.style.transform = out;
+                    });
+                    const highlight = card.querySelector(".card-highlight");
+                    if (highlight) {
+                        highlight.style.opacity = "35%";
+                        let rect = card.querySelector("div:has(.card-highlight)").getBoundingClientRect();
+                        let radius = highlight.offsetWidth / 2;
+                        highlight.style.left = (m.x - rect.x - radius) + "px";
+                        highlight.style.top  = (m.y - rect.y - radius) + "px";
+                        // highlight.style.left = m.x-(rect.x+(rect.width/2))+"px";
+                        // highlight.style.top = m.y-(rect.y+(rect.height/2))+"px";
+                    }
+                });
+                card.addEventListener("mouseleave",()=>{
+                    card.style.transform = "perspective("+perspective+"px)";
+                    const highlight = card.querySelector(".card-highlight");
+                    if (highlight)
+                        highlight.style.opacity = "0%";
+                });
+                cardTemplate.parentElement.appendChild(card);
+            });
+            cardTemplate.remove();
+        });
+    }).catch((error)=>{
+        alert("An error occured whilst trying to load `leveldata.csv`: '"+error.toString()+"'\nPlease report this at 'https://github.com/DatBogie/datbogie.github.io/issues'!");
+    });
+
+    document.getElementById("dl-adofai").addEventListener("click",()=>{
+        const selLevel = document.getElementById("level-cards").querySelector(".level-card-selected");
+        const title = selLevel.querySelector(".title");
+        const artist = selLevel.querySelector(".subtext");
+        alert("Download "+title.textContent+" by "+artist.textContent+"...");
     });
 });
 
