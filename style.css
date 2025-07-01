@@ -278,6 +278,10 @@ p {
     z-index: 2;
 }
 
+.level-card:hover {
+    z-index: 3;
+}
+
 .level-icon {
     width: 100%;
     object-position: center;
@@ -311,6 +315,7 @@ p {
     height: 10%;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
+    min-height: 15px;
 }
 
 .card-tag {

@@ -8,6 +8,17 @@ var justLoaded = true;
 
 var selectedTab = "t-1";
 
+const perspective = 250; // px
+
+function easeOutElastic(x) {
+    const c4 = (2 * Math.PI) / 4;
+    return x === 0
+    ? 0
+    : x === 1
+    ? 1
+    : Math.pow(2, -10 * x) * Math.sin((x * 10 - .75) * c4) + 1;
+}
+
 window.addEventListener("load",function() {
     document.getElementById("open-adofai").addEventListener("click",function() {
         window.open("adofai-level-browser-legacy.html");
@@ -91,10 +102,26 @@ window.addEventListener("load",function() {
                         oldSel.classList.remove("level-card-selected");
                     if (oldSel != card)
                         card.classList.add("level-card-selected");
+                    
+                    const dur = 800;
+                    const start = this.performance.now();
+                    const initScale = .85;
+                    card.style.scale = initScale;
+                    function step(time) {
+                        let elapsed = time - start;
+                        let prog = Math.min(elapsed / dur, 1);
+                        let eased = easeOutElastic(prog);
+                        card.style.scale = initScale + (1-initScale) * eased;
+                        if (prog < 1) {
+                            window.requestAnimationFrame(step);
+                        } else {
+                            card.style.scale = 1;
+                        }
+                    }
+                    window.requestAnimationFrame(step);
                 });
-                const perspective = 250;
                 card.addEventListener("mousemove",(m)=>{
-                    let constraint = 85;
+                    const constraint = 85;
                     window.requestAnimationFrame(()=>{
                         let rect = card.getBoundingClientRect();
                         let rotX = -(m.y - rect.y - (rect.height / 2)) / constraint;
@@ -128,15 +155,54 @@ window.addEventListener("load",function() {
     });
 
     document.getElementById("dl-adofai").addEventListener("click",()=>{
-        const selLevel = document.getElementById("level-cards").querySelector(".level-card-selected");
-        const title = selLevel.querySelector(".title");
-        const artist = selLevel.querySelector(".subtext");
+        let selLevel = document.getElementById("level-cards").querySelector(".level-card-selected");
+        let title = selLevel.querySelector(".title");
+        let artist = selLevel.querySelector(".subtext");
         alert("Download "+title.textContent+" by "+artist.textContent+"...");
+    });
+
+    const expand = document.getElementById("expand-adofai");
+    expand.addEventListener("click",()=>{
+        let levelCards = document.getElementById("level-cards");
+        if (expand.textContent == "Expand View") {
+            expand.textContent = "Collapse View";
+            levelCards.style.gridTemplateColumns = "repeat(6,1fr)";
+            levelCards.style.marginLeft = "0";
+            levelCards.style.marginRight = "0";
+            
+        } else {
+            expand.textContent = "Expand View";
+            levelCards.style.gridTemplateColumns = "repeat(3, 1fr)";
+            levelCards.style.gridAutoColumns = "unset";
+            levelCards.style.marginLeft = "25%";
+            levelCards.style.marginRight = "25%";
+        }
+    });
+
+    const compact = document.getElementById("compact-adofai");
+    compact.addEventListener("click",()=>{
+        let levelCards = document.getElementById("level-cards");
+        if (compact.textContent == "Compact View") {
+            compact.textContent = "Normal View";
+            levelCards.querySelectorAll(".level-card").forEach((card)=>{
+                card.style.aspectRatio = "unset";
+                card.querySelector("hr").style.display = "none";
+                card.querySelector(".level-icon").style.display = "none";
+            });
+            
+        } else {
+            compact.textContent = "Compact View";
+            levelCards.querySelectorAll(".level-card").forEach((card)=>{
+                card.style.aspectRatio = "1";
+                card.querySelector("hr").style.display = "block";
+                card.querySelector(".level-icon").style.display = "unset";
+            });
+        }
     });
 });
 
 window.addEventListener("mousemove",function(m) {
-    const cur = document.querySelector(".cursor");
+    let cur = document.querySelector(".cursor");
     cur.style.left = m.x-xOffset + "px";
     cur.style.top = m.y-yOffset + "px";
     cur.style.display = "block";
@@ -160,11 +226,11 @@ window.addEventListener("mousemove",function(m) {
 });
 
 window.addEventListener("mousedown",function() {
-    const cur = this.document.querySelector(".cursor");
+    let cur = this.document.querySelector(".cursor");
     cur.style.scale = .85;
 });
 
 window.addEventListener("mouseup",function() {
-    const cur = this.document.querySelector(".cursor");
+    let cur = this.document.querySelector(".cursor");
     cur.style.scale = 1;
 });
