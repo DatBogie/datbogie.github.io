@@ -8,8 +8,6 @@ var justLoaded = true;
 
 var selectedTab = "t-1";
 
-const perspective = 250; // px
-
 function easeOutElastic(x) {
     const c4 = (2 * Math.PI) / 4;
     return x === 0
@@ -120,8 +118,9 @@ window.addEventListener("load",function() {
                     }
                     window.requestAnimationFrame(step);
                 });
+                const perspective = 500; // px
                 card.addEventListener("mousemove",(m)=>{
-                    const constraint = 85;
+                    const constraint = 45;
                     window.requestAnimationFrame(()=>{
                         let rect = card.getBoundingClientRect();
                         let rotX = -(m.y - rect.y - (rect.height / 2)) / constraint;
