@@ -99,6 +99,22 @@ function easeOutElastic(x) {
 }
 
 window.addEventListener("load",function() {
+    const links = document.querySelectorAll(".link, .functional-link");
+    links.forEach((link)=>{
+        link.addEventListener("click",()=>{
+            embedOpen(link.dataset.href);
+        });
+        var targetted = false;
+        link.addEventListener("mousedown",(e)=>{
+            if (e.button != 1) return;
+            targetted = true;
+        });
+        link.addEventListener("mouseup",(e)=>{
+            if (e.button != 1 || !targetted) return;
+            targetted = false;
+            open(link.dataset.href);
+        });
+    });
     document.getElementById("if-open").addEventListener("click",() => {
         const url = document.querySelector(".if-popup").querySelector("#if-url").textContent;
         open(url);
@@ -123,9 +139,9 @@ window.addEventListener("load",function() {
             document.getElementById("if-url").textContent = "";
         },Number(getComputedStyle(popup).animationDuration.slice(0,-1))*1000);
     });
-    document.getElementById("open-adofai").addEventListener("click",function() {
-        embedOpen("adofai-level-browser-legacy.html");
-    });
+    // document.getElementById("open-adofai").addEventListener("click",function() {
+    //     embedOpen("adofai-level-browser-legacy.html");
+    // });
     document.querySelectorAll(".expanding-hr").forEach((el)=>{
         el.style.animationName = "hr-expand";
     });
@@ -262,6 +278,16 @@ window.addEventListener("load",function() {
                 card.querySelector("#dl").addEventListener("click",()=>{
                     embedOpen(dl);
                 });
+                var triggered = false;
+                card.querySelector("#dl").addEventListener("mousedown",(e)=>{
+                    if (e.button != 1) return;
+                    triggered = true;
+                });
+                card.querySelector("#dl").addEventListener("mouseup",(e)=>{
+                    if (e.button != 1 || !triggered) return;
+                    triggered = false;
+                    open(dl);
+                });
                 cardTemplate.parentElement.appendChild(card);
             });
             cardTemplate.remove();
@@ -270,10 +296,22 @@ window.addEventListener("load",function() {
         alert("An error occured whilst trying to load `leveldata.csv`: '"+error.toString()+"'\nPlease report this at 'https://github.com/DatBogie/datbogie.github.io/issues'!");
     });
 
+    var dltriggered = false;
+    document.getElementById("dl-adofai").addEventListener("mousedown",(e)=>{
+        if (e.button != 1) return;
+        dltriggered = true;
+    });
+    document.getElementById("dl-adofai").addEventListener("mouseup",(e)=>{
+        if (e.button != 1 || !dltriggered) return;
+        dltriggered = false;
+        const selLevel = document.getElementById("level-cards").querySelector(".level-card-selected");
+        if (!selLevel) return;
+        const dl = selLevel.querySelector("#dl");
+        open(dl.dataset.dl)
+    });
     document.getElementById("dl-adofai").addEventListener("click",()=>{
         const selLevel = document.getElementById("level-cards").querySelector(".level-card-selected");
-        const title = selLevel.querySelector(".title");
-        const artist = selLevel.querySelector(".subtext");
+        if (!selLevel) return;
         const dl = selLevel.querySelector("#dl");
         embedOpen(dl.dataset.dl);
     });

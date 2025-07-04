@@ -376,7 +376,7 @@ blockquote {
     background-color: var(--crust);
 }
 
-a {
+a, .link {
     /* color: #04a5e5; */
     color: var(--accent);
     border-color: #b7bdf800;
@@ -385,9 +385,10 @@ a {
     transition-property: border-color padding background-color;
     transition-duration: 200ms;
     transition-timing-function: ease;
+    text-decoration-line: underline;
 }
 
-a:hover {
+a:hover, .link:hover {
     padding-left: 3.5px;
     padding-right: 3.5px;
     background-color: #b7bef817;
