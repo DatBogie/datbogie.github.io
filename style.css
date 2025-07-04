@@ -28,9 +28,172 @@
     --accent: var(--lavender);
 }
 
-* {
+*:not(.if-popup):not(.if-popup *) {
     cursor: none !important;
     font-family: "Nunito", serif;
+}
+
+.blur-bg {
+    z-index: 1000;
+    position: fixed;
+    backdrop-filter: blur(5px);
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    animation-timing-function: ease;
+    animation-duration: 700ms;
+}
+
+.blur-bg-closing {
+    backdrop-filter: unset;
+}
+
+@keyframes blur-bg-open {
+    from {
+        backdrop-filter: unset;
+    } to {
+        backdrop-filter: blur(5px);
+    }
+}
+
+/* Add open in new tab button to popup */
+
+@keyframes blur-bg-close {
+    from {
+        backdrop-filter: blur(5px);
+        pointer-events: none;
+    } to {
+        backdrop-filter: unset;
+        pointer-events: none;
+    }
+}
+
+.if-popup {
+    position: fixed;
+    width: 75vw;
+    height: 75vh;
+    background-color: var(--crust);
+    left: calc(50vw - (75vw / 2));
+    top: calc(50vh - (75vh / 2));
+    border: .15vw solid var(--accent);
+    border-radius: 1vw;
+    z-index: 1001;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    cursor: default;
+    animation-timing-function: ease;
+    animation-duration: .5s;
+    display: none;
+}
+
+.if-closing {
+    width: 0vw;
+    height: 0vh;
+}
+
+@keyframes if-popup-close {
+    0% {
+        width: 75vw;
+        height: 75vh;
+        left: calc(50vw - (75vw / 2));
+        top: calc(50vh - (75vh / 2));
+    } 50% {
+        width: 75vw;
+        height: 0vh;
+        left: calc(50vw - (75vw / 2));
+        top: 50vh;
+    } 100% {
+        width: 0vw;
+        height: 0vw;
+        left: 50vw;
+        top: 50vh;
+    }
+}
+
+@keyframes if-popup-open {
+    100% {
+        width: 75vw;
+        height: 75vh;
+        left: calc(50vw - (75vw / 2));
+        top: calc(50vh - (75vh / 2));
+    } 50% {
+        width: 75vw;
+        height: 0vh;
+        left: calc(50vw - (75vw / 2));
+        top: 50vh;
+    } 0% {
+        width: 0vw;
+        height: 0vw;
+        left: 50vw;
+        top: 50vh;
+    }
+}
+
+.if-bar {
+    width: 75vw;
+    height: 5vh;
+    position: absolute;
+    display: flex;
+    align-items: center;
+}
+
+.if-bar > button {
+    border-radius: 50%;
+    width: 5vh;
+    height: 5vh;
+    scale: .5;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    transition: scale 200ms ease-out;
+}
+
+#if-close {
+    background-color: var(--red);
+}
+
+#if-open {
+    background-color: var(--green);
+}
+
+.if-bar > button:hover {
+    scale: .535;
+}
+
+.if-bar > button:active {
+    scale: .465;
+}
+
+.if-bar #if-url {
+    background-color: var(--base);
+    border-radius: 1vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    font-family: "Nunito", serif;
+    padding-top: .5vh;
+    padding-bottom: .5vh;
+}
+
+.if-bar * {
+    font-size: 1vw;
+}
+
+.if-bar > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75vw;
+    height: 5vh;
+    position: absolute;
+}
+
+.if-popup > iframe {
+    width: 75vw;
+    height: 70vh;
+    border: none;
+    display: block;
+    padding-top: 5vh;
 }
 
 .tabpage {
@@ -39,6 +202,8 @@
     /* animation-name: tabpage; */
     animation-duration: 1s;
     animation-timing-function: ease;
+    margin-left: 25%;
+    margin-right: 25%;
 }
 
 @keyframes tabpage {
@@ -52,8 +217,6 @@
 }
 
 .tabpage > div:has(button) {
-    margin-left: 25%;
-    margin-right: 25%;
     display: flex;
     justify-content: center;
     gap: 14px;
@@ -78,14 +241,7 @@
     padding-left: 3.5px;
     padding-right: 3.5px;
     gap: 3.5px;
-    /* margin-left: 50%; */
-    /* margin-right: 50%; */
     width: auto;
-}
-
-.tabpage > h2 {
-    margin-left: 25%;
-    margin-right: 25%;
 }
 
 .tabpage > div > button {
@@ -143,7 +299,6 @@
     background-color: #5b6078;
 }
 
-/* Why firefox, why??? */
 #hide-pointer {
     position: fixed;
     top: 0;
@@ -169,18 +324,13 @@ h1 {
     font-weight: 900;
 }
 
-.tabpage > hr {
-    margin-left: 25%;
-    margin-right: 25%;
-}
-
 hr {
     color: var(--text);
 }
 
 .expanding-hr {
-    margin-left: 25%;
-    margin-right: 25%;
+    margin-left: 0%;
+    margin-right: 0%;
     /* transition: margin-left 1.25s ease, margin-right 1.25s ease; */
     animation-duration: 1.25s;
     animation-timing-function: ease;
@@ -191,8 +341,8 @@ hr {
         margin-left: 50%;
         margin-right: 50%;
     } to {
-        margin-left: 25%;
-        margin-right: 25%;
+        margin-left: 0%;
+        margin-right: 0%;
     }
 }
 
@@ -221,8 +371,8 @@ blockquote {
     padding-left: 1em;
     padding-top: 1em;
     padding-bottom: 1em;
-    margin-left: 25%;
-    margin-right: 25%;
+    margin-left: 0;
+    margin-right: 0;
     background-color: var(--crust);
 }
 
@@ -245,15 +395,12 @@ a:hover {
 
 p {
     text-align: left;
-    margin-left: 25%;
-    margin-right: 25%;
 }
 
 .card-container {
     display: grid;
     justify-content: center;
-    margin-left: 25%;
-    margin-right: 25%;
+    align-items: center;
     grid-template-columns: repeat(3, 1fr);
     column-gap: 7px;
     row-gap: 0px;
@@ -263,14 +410,15 @@ p {
     border-radius: 25px;
     background-color: var(--crust);
     margin-top: 7px;
-    padding: 28px;
+    /* padding: 28px; */
+    padding: 9%;
     aspect-ratio: 1;
     min-width: 0;
     border-width: 2px;
     border-style: solid;
     border-color: #b7bdf800;
     transition: border-color 200ms ease, transform 200ms ease-out;
-    z-index: auto;
+    z-index: unset;
 }
 
 .level-card-selected {
@@ -287,6 +435,7 @@ p {
     object-position: center;
     aspect-ratio: 1;
     object-fit: cover;
+    display: block;
 }
 
 .title {
@@ -313,9 +462,18 @@ p {
     background-color: var(--base);
     width: 100%;
     height: 10%;
+    border-radius: 0;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
     min-height: 15px;
+    display: inline-block;
+}
+
+.card-tags.collapsed {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-radius: 25px;
+    height: 13%;
 }
 
 .card-tag {
@@ -352,4 +510,41 @@ code {
     font-family: monospace;
     font-size: 1rem;
     background-color: var(--crust);
+}
+
+.level-card div:has(> .div-button) {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    padding-top: 7px;
+    min-height: 15px;
+    width: 100%;
+}
+
+.level-card .div-button {
+    pointer-events: all;
+    border-radius: 50px;
+    background-color: var(--base);
+    color: var(--text);
+    border-width: 2px;
+    border-style: solid;
+    border-color: #b7bdf800;
+    transition: scale 200ms ease, border-color 200ms ease, background-color 200ms ease;
+    font-size: 1.3rem;
+    padding-left: 3.5px;
+    padding-right: 3.5px;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 50%;
+}
+
+.level-card .div-button:hover {
+    scale: 1.05;
+    transition: scale 200ms ease, background-color 200ms ease;
+    border-color: var(--accent);
+}
+
+.level-card .div-button:active {
+    scale: .95;
 }

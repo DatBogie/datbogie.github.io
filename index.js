@@ -8,6 +8,87 @@ var justLoaded = true;
 
 var selectedTab = "t-1";
 
+function embedOpen(url) {
+    const blur = document.querySelector(".blur-bg");
+    blur.style.animationName = "blur-bg-open";
+    blur.style.display = "block";
+
+    const popup = document.querySelector(".if-popup");
+    popup.style.animationName = "if-popup-open";
+    popup.style.display = "block";
+    const urlBar = document.getElementById("if-url");
+    urlBar.textContent = url;
+    const iframe = popup.querySelector("iframe");
+    iframe.src = url;
+
+    if (url.indexOf("drive.usercontent.google") == -1) return;
+    const doc = (iframe.contentDocument || iframe.contentWindow.document);
+    const style = doc.createElement("style");
+    style.textContent =
+    `body {
+        background-color: #24273a;
+    }
+    div {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        background-color: #24273a;
+        color: #cad3f5;
+        margin-left: 2vw;
+        margin-right: 2vw;
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+        font-size: 2rem;
+        font-family: "Nunito", serif;
+    }
+    span {
+        opacity: 0%;
+        transition: opacity 200ms ease;
+    }
+    p {
+        font-size: 1rem;
+    }`;
+    doc.head.appendChild(style);
+
+    const link0 = doc.createElement("link");
+    link0.textContent = `<link rel="preconnect" href="https://fonts.googleapis.com">`;
+    const link1 = doc.createElement("link");
+    link1.textContent = `<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>`;
+    const link2 = doc.createElement("link");
+    link2.textContent = `<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">`;
+
+    const div = doc.createElement("div");
+    div.id = "dl-loading";
+    div.innerHTML = `<i>Preparing your download</i><span id="1">.</span><span id="2">.</span><span id="3">.</span><br><p>Some levels take longer to download than others.<br>Please be patient!</p>`;
+    doc.body.appendChild(div);
+
+    const script = doc.createElement("script");
+    script.textContent =
+    `const a = document.getElementById("1");
+    const b = document.getElementById("2");
+    const c = document.getElementById("3");
+    var active = -1;
+    setInterval(()=>{
+        a.style.opacity = "100%";
+        setTimeout(()=>{
+            b.style.opacity = "100%"
+        },100);
+        setTimeout(()=>{
+            c.style.opacity = "100%"
+        },200);
+        setTimeout(()=>{
+            a.style.opacity = "0%";
+        },600);
+        setTimeout(()=>{
+            b.style.opacity = "0%";
+        },700);
+        setTimeout(()=>{
+            c.style.opacity = "0%";
+        },800);
+    },1200);`;
+    doc.body.appendChild(script);
+}
+
 function easeOutElastic(x) {
     const c4 = (2 * Math.PI) / 4;
     return x === 0
@@ -18,14 +99,43 @@ function easeOutElastic(x) {
 }
 
 window.addEventListener("load",function() {
+    document.getElementById("if-open").addEventListener("click",() => {
+        const url = document.querySelector(".if-popup").querySelector("#if-url").textContent;
+        open(url);
+        document.getElementById("if-close").click();
+    });
+    document.getElementById("if-close").addEventListener("click",() => {
+        const blur = document.querySelector(".blur-bg");
+        blur.style.animationName = "blur-bg-close";
+        blur.classList.add("blur-bg-closing");
+        setTimeout(() => {
+            blur.style.display = "none";
+            blur.classList.remove("blur-bg-closing");
+        },Number(getComputedStyle(blur).animationDuration.slice(0,-1))*1000);
+
+        const popup = document.querySelector(".if-popup");
+        popup.style.animationName = "if-popup-close";
+        popup.classList.add("if-closing");
+        setTimeout(() => {
+            popup.style.display = "none";
+            popup.classList.remove("if-closing");
+            popup.querySelector("iframe").src = "";
+            document.getElementById("if-url").textContent = "";
+        },Number(getComputedStyle(popup).animationDuration.slice(0,-1))*1000);
+    });
     document.getElementById("open-adofai").addEventListener("click",function() {
-        window.open("adofai-level-browser-legacy.html");
+        embedOpen("adofai-level-browser-legacy.html");
     });
     document.querySelectorAll(".expanding-hr").forEach((el)=>{
-        // el.classList.add("start");
         el.style.animationName = "hr-expand";
     });
     const cur = document.querySelector(".cursor");
+    document.querySelector(".if-popup").addEventListener("mouseenter",() => {
+        cur.style.display = "none";
+    });
+    document.querySelector(".if-popup").addEventListener("mouseleave",() => {
+        cur.style.display = "block";
+    });
     setInterval(function() {
         if (xVel < 0) {
             xVel+=700;
@@ -94,7 +204,11 @@ window.addEventListener("load",function() {
                 const icon = card.querySelector(".level-icon");
                 var iconSrc = "assets/adofai-levels/"+level["Name"]+"-1.png";
                 icon.src = iconSrc;
-                card.addEventListener("click",()=>{
+                const download = card.querySelector("#dl")
+                var dl = "https://drive.usercontent.google.com/download?id="+level["DLCode"];
+                download.dataset.dl = dl;
+                card.addEventListener("click",(e)=>{
+                    if (e.target.classList.contains("div-button")) return;
                     const oldSel = document.querySelector(".level-card-selected");
                     if (oldSel != null)
                         oldSel.classList.remove("level-card-selected");
@@ -120,7 +234,7 @@ window.addEventListener("load",function() {
                 });
                 const perspective = 500; // px
                 card.addEventListener("mousemove",(m)=>{
-                    const constraint = 45;
+                    const constraint = 45 * (this.window.innerWidth/1920);
                     window.requestAnimationFrame(()=>{
                         let rect = card.getBoundingClientRect();
                         let rotX = -(m.y - rect.y - (rect.height / 2)) / constraint;
@@ -145,6 +259,9 @@ window.addEventListener("load",function() {
                     if (highlight)
                         highlight.style.opacity = "0%";
                 });
+                card.querySelector("#dl").addEventListener("click",()=>{
+                    embedOpen(dl);
+                });
                 cardTemplate.parentElement.appendChild(card);
             });
             cardTemplate.remove();
@@ -154,10 +271,11 @@ window.addEventListener("load",function() {
     });
 
     document.getElementById("dl-adofai").addEventListener("click",()=>{
-        let selLevel = document.getElementById("level-cards").querySelector(".level-card-selected");
-        let title = selLevel.querySelector(".title");
-        let artist = selLevel.querySelector(".subtext");
-        alert("Download "+title.textContent+" by "+artist.textContent+"...");
+        const selLevel = document.getElementById("level-cards").querySelector(".level-card-selected");
+        const title = selLevel.querySelector(".title");
+        const artist = selLevel.querySelector(".subtext");
+        const dl = selLevel.querySelector("#dl");
+        embedOpen(dl.dataset.dl);
     });
 
     const expand = document.getElementById("expand-adofai");
@@ -166,15 +284,15 @@ window.addEventListener("load",function() {
         if (expand.textContent == "Expand View") {
             expand.textContent = "Collapse View";
             levelCards.style.gridTemplateColumns = "repeat(6,1fr)";
-            levelCards.style.marginLeft = "0";
-            levelCards.style.marginRight = "0";
+            levelCards.style.marginLeft = "-45%";
+            levelCards.style.marginRight = "-45%";
             
         } else {
             expand.textContent = "Expand View";
             levelCards.style.gridTemplateColumns = "repeat(3, 1fr)";
             levelCards.style.gridAutoColumns = "unset";
-            levelCards.style.marginLeft = "25%";
-            levelCards.style.marginRight = "25%";
+            levelCards.style.marginLeft = "unset";
+            levelCards.style.marginRight = "unset";
         }
     });
 
@@ -187,6 +305,7 @@ window.addEventListener("load",function() {
                 card.style.aspectRatio = "unset";
                 card.querySelector("hr").style.display = "none";
                 card.querySelector(".level-icon").style.display = "none";
+                card.querySelector(".card-tags").classList.add("collapsed");
             });
             
         } else {
@@ -194,7 +313,8 @@ window.addEventListener("load",function() {
             levelCards.querySelectorAll(".level-card").forEach((card)=>{
                 card.style.aspectRatio = "1";
                 card.querySelector("hr").style.display = "block";
-                card.querySelector(".level-icon").style.display = "unset";
+                card.querySelector(".level-icon").style.display = "block";
+                card.querySelector(".card-tags").classList.remove("collapsed");
             });
         }
     });

@@ -8,9 +8,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="blur-bg"></div>
     <div id="hide-pointer"></div>
     <img src="cursor.svg" class="cursor" width="35px">
-    <div class="display", id="tabbar">
+    <div class="if-popup">
+        <div class="if-bar">
+            <button id="if-close"></button>
+            <div>
+                <span id="if-url"></span>
+            </div>
+            <button id="if-open"></button>
+        </div>
+        <iframe></iframe>
+    </div>
+    <div class="display" id="tabbar">
         <div class="display" id="tabbar-bg">
             <button id="t-1" class="display tabbtn">Home</button>
             <button id="t-2" class="display tabbtn">ADOFAI</button>
@@ -18,7 +29,7 @@
             <button id="t-4" class="display tabbtn">Software</button>
         </div>
     </div>
-    <div class="display tabpage", id="tab.t-1">
+    <div class="display tabpage" id="tab.t-1">
         <div id="title" class="display">
             <h1>Home</h1>
             <hr class="expanding-hr">
@@ -45,7 +56,7 @@
         </p>
         <hr class="expanding-hr">
     </div>
-    <div class="display tabpage", id="tab.t-2">
+    <div class="display tabpage" id="tab.t-2">
         <div id="title" class="display">
             <h1>ADOFAI</h1>
             <hr class="expanding-hr">
@@ -66,7 +77,7 @@
         </p>
         <div>
             <button id="open-adofai">Open ADOFAI Level Browser (Legacy)</button>
-            <button id="skip-adofai" disabled>Skip to Gallery</button>
+            <button id="skip-adofai" disabled style="display: none;">Skip to Gallery</button>
         </div>
         <hr class="expanding-hr">
         <div>
@@ -80,11 +91,15 @@
                 <b class="title">Title</b><br><span class="subtext">Artist</span><hr>
                 <img src="https://placehold.co/1000x1000/png" class="level-icon">
                 <div class="card-tags"></div>
+                <div>
+                    <div class="div-button" id="dl" title="Download">Download</div>
+                    <!-- <div class="div-button" id="exp" title="Expand">Expand</div> -->
+                </div>
             </div>
         </div>
         <hr class="expanding-hr">
     </div>
-    <div class="display tabpage", id="tab.t-3">
+    <div class="display tabpage" id="tab.t-3">
         <div id="title" class="display">
             <h1>Games</h1>
             <hr class="expanding-hr">
@@ -94,7 +109,7 @@
         </p>
         <hr class="expanding-hr">
     </div>
-    <div class="display tabpage", id="tab.t-4">
+    <div class="display tabpage" id="tab.t-4">
         <div id="title" class="display">
             <h1>Software</h1>
             <hr class="expanding-hr">
