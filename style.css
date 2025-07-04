@@ -216,7 +216,7 @@
     }
 }
 
-.tabpage > div:has(button) {
+.tabpage > div:has(button), .tabpage > div:has(input) {
     display: flex;
     justify-content: center;
     gap: 14px;
@@ -273,6 +273,29 @@
 .tabpage > div > button:disabled {
     background-color: var(--base);
     text-decoration: line-through;
+}
+
+.tabpage > div > input {
+    border-radius: 50px;
+    background-color: var(--crust);
+    color: var(--text);
+    border-width: 2px;
+    border-style: solid;
+    border-color: #b7bdf800;
+    height: calc(100% - 7px);
+    width: 100%;
+    transition: border-color 200ms ease, background-color 200ms ease;
+    font-size: 1.5rem;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    text-align: center;
+}
+
+.tabpage > div > input:hover {
+    transition: scale 200ms ease, background-color 200ms ease;
+    border-color: var(--accent);
 }
 
 #tabbar-bg button {

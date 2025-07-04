@@ -356,6 +356,20 @@ window.addEventListener("load",function() {
             });
         }
     });
+
+    document.getElementById("level-search").addEventListener("input",(e)=>{
+        console.log("test");
+        const term = e.target.value.toLowerCase();
+        document.getElementById("level-cards").querySelectorAll(".level-card").forEach((card)=>{
+            if (term == "") {card.style.display = "block"; return};
+            const title = card.querySelector(".title").textContent.toLowerCase();
+            const artist = card.querySelector(".subtext").textContent.toLowerCase();
+            if (title.indexOf(term) != -1 || artist.indexOf(term) != -1)
+                card.style.display = "block";
+            else
+                card.style.display = "none";
+        });
+    });
 });
 
 window.addEventListener("mousemove",function(m) {
