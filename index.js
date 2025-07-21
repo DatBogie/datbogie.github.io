@@ -224,7 +224,8 @@ window.addEventListener("load",function() {
                 artist.title = artistText;
                 artist.textContent = artistText;
                 const icon = card.querySelector(".level-icon");
-                var iconSrc = "assets/adofai-levels/"+level["Name"]+"-1.png";
+                // var iconSrc = "assets/adofai-levels/"+level["Name"]+"-1.png";
+                var iconSrc = "https://assets.datbogie.org/"+level["Name"]+"-1.png";
                 icon.src = iconSrc;
                 const download = card.querySelector("#dl")
                 var dl = "https://drive.usercontent.google.com/download?id="+level["DLCode"];
