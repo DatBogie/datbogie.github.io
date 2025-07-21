@@ -1,3 +1,5 @@
+// import JSZip from "./modules/jszip";
+
 var xVel = 0;
 var lastX = 0;
 
@@ -227,16 +229,22 @@ window.addEventListener("load",function() {
                 // var iconSrc = "assets/adofai-levels/"+level["Name"]+"-1.png";
                 var iconSrc = "https://assets.datbogie.org/"+level["Name"]+"-1.png";
                 icon.src = iconSrc;
-                const download = card.querySelector("#dl")
+                const download = card.querySelector("#dl");
+                const newDownload = card.querySelector("#dl-new");
                 var dl = "https://drive.usercontent.google.com/download?id="+level["DLCode"];
+                var dl_new = "https://assets.datbogie.org/levels/"+level["Name"]+".zip";
                 download.dataset.dl = dl;
+                newDownload.dataset.dl = dl_new;
                 card.addEventListener("click",(e)=>{
                     if (e.target.classList.contains("div-button")) return;
-                    const oldSel = document.querySelector(".level-card-selected");
-                    if (oldSel != null)
-                        oldSel.classList.remove("level-card-selected");
-                    if (oldSel != card)
+                    const oldSel = document.querySelectorAll(".level-card-selected");
+                    // if (oldSel != null)
+                    //     oldSel.classList.remove("level-card-selected");
+                    if ([...oldSel].includes(card)) {
+                        card.classList.remove("level-card-selected");
+                    } else {
                         card.classList.add("level-card-selected");
+                    }
                     
                     const dur = 800;
                     const start = this.performance.now();
@@ -285,12 +293,24 @@ window.addEventListener("load",function() {
                 card.querySelector("#dl").addEventListener("click",()=>{
                     embedOpen(dl);
                 });
+                card.querySelector("#dl-new").addEventListener("click",()=>{
+                    open(dl_new);
+                });
                 var triggered = false;
                 card.querySelector("#dl").addEventListener("mousedown",(e)=>{
                     if (e.button != 1) return;
                     triggered = true;
                 });
                 card.querySelector("#dl").addEventListener("mouseup",(e)=>{
+                    if (e.button != 1 || !triggered) return;
+                    triggered = false;
+                    open(dl);
+                });
+                card.querySelector("#dl-new").addEventListener("mousedown",(e)=>{
+                    if (e.button != 1) return;
+                    triggered = true;
+                });
+                card.querySelector("#dl-new").addEventListener("mouseup",(e)=>{
                     if (e.button != 1 || !triggered) return;
                     triggered = false;
                     open(dl);
@@ -311,16 +331,36 @@ window.addEventListener("load",function() {
     document.getElementById("dl-adofai").addEventListener("mouseup",(e)=>{
         if (e.button != 1 || !dltriggered) return;
         dltriggered = false;
-        const selLevel = document.getElementById("level-cards").querySelector(".level-card-selected");
+        const selLevel = document.getElementById("level-cards").querySelectorAll(".level-card-selected");
         if (!selLevel) return;
-        const dl = selLevel.querySelector("#dl");
+        const dl = selLevel.querySelector("#dl-new");
         open(dl.dataset.dl)
     });
-    document.getElementById("dl-adofai").addEventListener("click",()=>{
-        const selLevel = document.getElementById("level-cards").querySelector(".level-card-selected");
-        if (!selLevel) return;
-        const dl = selLevel.querySelector("#dl");
-        embedOpen(dl.dataset.dl);
+    document.getElementById("dl-adofai").addEventListener("click",async()=>{
+        const selLevels = document.getElementById("level-cards").querySelectorAll(".level-card-selected");
+        if (!selLevels) return;
+
+        const zip = new JSZip();
+
+        for (const selLevel of selLevels) {
+            const dl = selLevel.querySelector("#dl-new");
+            const url = dl.dataset.dl;
+            try {
+                const response = await fetch(url);
+                const blob = await response.blob();
+                zip.file(selLevel.querySelector(".title").textContent, blob);
+            } catch(err) {
+                alert(`Failed to fetch ${url}: ${err}`);
+            }
+            // open(dl.dataset.dl);
+        }
+        zip.generateAsync({ type: "blob" }).then((content)=>{
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(content);
+            a.download = "ADOFAI Levels.zip";
+            a.click();
+            a.remove();
+        });
     });
 
     const expand = document.getElementById("expand-adofai");
