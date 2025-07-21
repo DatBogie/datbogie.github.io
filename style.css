@@ -219,6 +219,9 @@
 .tabpage > div:has(button), .tabpage > div:has(input) {
     display: flex;
     justify-content: center;
+}
+
+.tabpage > div:has(button):not(:has(input)) {
     gap: 14px;
 }
 
@@ -291,6 +294,22 @@
     padding-top: 7px;
     padding-bottom: 7px;
     text-align: center;
+}
+
+.tabpage > div:has(.first-el) > *:not(.first-el):not(.last-el) {
+    border-radius: 0;
+}
+
+.tabpage > div > .first-el {
+    border-radius: 0;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+
+.tabpage > div > .last-el {
+    border-radius: 0;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
 }
 
 .tabpage > div > input:hover {

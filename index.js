@@ -115,6 +115,12 @@ window.addEventListener("load",function() {
             open(link.dataset.href);
         });
     });
+    document.querySelectorAll(".tabpage").forEach((tab)=>{
+        tab.querySelectorAll("div:has(input)").forEach((div)=>{
+            div.firstElementChild.classList.add("first-el");
+            div.lastElementChild.classList.add("last-el");
+        });
+    });
     document.getElementById("if-open").addEventListener("click",() => {
         const url = document.querySelector(".if-popup").querySelector("#if-url").textContent;
         open(url);
@@ -357,9 +363,7 @@ window.addEventListener("load",function() {
         }
     });
 
-    document.getElementById("level-search").addEventListener("input",(e)=>{
-        console.log("test");
-        const term = e.target.value.toLowerCase();
+    function filterByText(term) {
         document.getElementById("level-cards").querySelectorAll(".level-card").forEach((card)=>{
             if (term == "") {card.style.display = "block"; return};
             const title = card.querySelector(".title").textContent.toLowerCase();
@@ -369,6 +373,15 @@ window.addEventListener("load",function() {
             else
                 card.style.display = "none";
         });
+    };
+
+    document.getElementById("level-search").addEventListener("input",(e)=>{
+        const term = e.target.value.toLowerCase();
+        filterByText(term);
+    });
+    document.getElementById("level-search-clear").addEventListener("click",() => {
+        document.getElementById("level-search").value = "";
+        filterByText("");
     });
 });
 
