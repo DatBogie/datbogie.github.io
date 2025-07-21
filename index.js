@@ -340,27 +340,31 @@ window.addEventListener("load",function() {
         const selLevels = document.getElementById("level-cards").querySelectorAll(".level-card-selected");
         if (!selLevels) return;
 
-        const zip = new JSZip();
+        if (selLevels.length > 1) {
+            const zip = new JSZip();
 
-        for (const selLevel of selLevels) {
-            const dl = selLevel.querySelector("#dl-new");
-            const url = dl.dataset.dl;
-            try {
-                const response = await fetch(url);
-                const blob = await response.blob();
-                zip.file(selLevel.querySelector(".title").textContent, blob);
-            } catch(err) {
-                alert(`Failed to fetch ${url}: ${err}`);
+            for (const selLevel of selLevels) {
+                const dl = selLevel.querySelector("#dl-new");
+                const url = dl.dataset.dl;
+                try {
+                    const response = await fetch(url);
+                    const blob = await response.blob();
+                    zip.file(selLevel.querySelector(".title").textContent, blob);
+                } catch(err) {
+                    alert(`Failed to fetch ${url}: ${err}`);
+                }
+                // open(dl.dataset.dl);
             }
-            // open(dl.dataset.dl);
+            zip.generateAsync({ type: "blob" }).then((content)=>{
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(content);
+                a.download = "ADOFAI Levels.zip";
+                a.click();
+                a.remove();
+            });
+        } else {
+            open(selLevels[0].querySelector("#dl-new").dataset.dl);
         }
-        zip.generateAsync({ type: "blob" }).then((content)=>{
-            const a = document.createElement("a");
-            a.href = URL.createObjectURL(content);
-            a.download = "ADOFAI Levels.zip";
-            a.click();
-            a.remove();
-        });
     });
 
     const expand = document.getElementById("expand-adofai");
