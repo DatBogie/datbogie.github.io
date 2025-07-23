@@ -579,7 +579,7 @@ code {
     text-align: center;
     text-overflow: ellipsis;
     overflow: hidden;
-    width: 50%;
+    /* width: 50%; */
 }
 
 .level-card .div-button:hover {

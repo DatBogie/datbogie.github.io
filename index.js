@@ -1,4 +1,4 @@
-// import JSZip from "./modules/jszip";
+import { getLevelData } from "./modules/utils.js";
 
 var xVel = 0;
 var lastX = 0;
@@ -100,6 +100,49 @@ function easeOutElastic(x) {
     : Math.pow(2, -10 * x) * Math.sin((x * 10 - .75) * c4) + 1;
 }
 
+const observer = new MutationObserver((mL)=>{
+    mL.forEach((m)=>{
+        if (m.type == "childList" && m.addedNodes.length > 0) {
+            m.addedNodes.forEach((n)=>{
+                if (n.nodeType == Node.ELEMENT_NODE) {
+                    var links;
+                    if (n.classList?.contains("functional-link")) {
+                        links = [n];
+                    } else {
+                        let _links = n.querySelectorAll(".functional-link");
+                        if (_links.length > 0) {
+                            links = _links
+                        }
+                    }
+                    if (!links) return;
+                    links.forEach((link)=>{
+                        if (link.dataset.disableclick != "true") {
+                            link.addEventListener("click",()=>{
+                                embedOpen(link.dataset.href);
+                            });
+                        }
+                        var targetted = false;
+                        link.addEventListener("mousedown",(e)=>{
+                            if (e.button != 1) return;
+                            targetted = true;
+                        });
+                        link.addEventListener("mouseup",(e)=>{
+                            if (e.button != 1 || !targetted) return;
+                            targetted = false;
+                            open(link.dataset.href);
+                        });
+                    });
+                }
+            });
+        }
+    });
+});
+
+observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+});
+
 window.addEventListener("load",function() {
     const links = document.querySelectorAll(".link, .functional-link");
     links.forEach((link)=>{
@@ -194,134 +237,104 @@ window.addEventListener("load",function() {
         });
     });
 
-    var levelData = [];
-    var levelTags = {};
-    fetch("leveldata.csv").then().then((raw)=>{
-        raw.text().then((text)=>{
-            const heading = text.split("\n")[0].split(",");
-            const data = text.split("\n").slice(1,-1); // Remember: newline @ EOF
-            data.forEach((row)=>{
-                var rowData = {};
-                for (const [i, v] of row.split(",").entries()) {
-                    if (heading[i] != "Tags") {
-                        rowData[heading[i]] = v.replaceAll("$comma",",");
+    const _levelData = getLevelData(function(levelData){
+        const cardTemplate = document.getElementById("level-card-template");
+        levelData.forEach((level)=>{
+            const card = cardTemplate.cloneNode(true);
+            const title = card.querySelector(".title");
+            var titleText = level["Name"];
+            title.title = titleText;
+            title.textContent = titleText;
+            const artist = card.querySelector(".subtext");
+            var artistText = level["Artist"].replaceAll("|",", ");
+            artist.title = artistText;
+            artist.textContent = artistText;
+            const icon = card.querySelector(".level-icon");
+            // var iconSrc = "assets/adofai-levels/"+level["Name"]+"-1.png";
+            var iconSrc = "https://assets.datbogie.org/"+level["Name"]+"-1.png";
+            icon.src = iconSrc;
+            const download = card.querySelector("#dl");
+            const newDownload = card.querySelector("#dl-new");
+            const expBtn = card.querySelector("#exp");
+            var dl = "https://drive.usercontent.google.com/download?id="+level["DLCode"];
+            var dl_new = "https://assets.datbogie.org/levels/"+level["Name"]+".zip";
+            var exp = "./level-view.html?title="+level["Name"];
+            download.dataset.dl = dl;
+            download.dataset.href = dl;
+            newDownload.dataset.dl = dl_new;
+            newDownload.dataset.href = dl_new;
+            expBtn.dataset.href = exp;
+            card.addEventListener("click",(e)=>{
+                if (e.target.classList.contains("div-button")) return;
+                const oldSel = document.querySelectorAll(".level-card-selected");
+                // if (oldSel != null)
+                //     oldSel.classList.remove("level-card-selected");
+                if ([...oldSel].includes(card)) {
+                    card.classList.remove("level-card-selected");
+                } else {
+                    card.classList.add("level-card-selected");
+                }
+                
+                const dur = 800;
+                const start = performance.now();
+                const initScale = .85;
+                card.style.scale = initScale;
+                function step(time) {
+                    let elapsed = time - start;
+                    let prog = Math.min(elapsed / dur, 1);
+                    let eased = easeOutElastic(prog);
+                    card.style.scale = initScale + (1-initScale) * eased;
+                    if (prog < 1) {
+                        window.requestAnimationFrame(step);
                     } else {
-                        rowData[heading[i]] = v.replaceAll("$comma",",").split("|");
-                        v.replaceAll("$comma",",").split("|").forEach((tag)=>{
-                            if (levelTags[tag] == null) levelTags[tag] = {};
-                        });
+                        card.style.scale = 1;
                     }
-                };
-                levelData.push(rowData);
+                }
+                window.requestAnimationFrame(step);
             });
-            const cardTemplate = document.getElementById("level-card-template");
-            levelData.forEach((level)=>{
-                const card = cardTemplate.cloneNode(true);
-                const title = card.querySelector(".title");
-                var titleText = level["Name"];
-                title.title = titleText;
-                title.textContent = titleText;
-                const artist = card.querySelector(".subtext");
-                var artistText = level["Artist"].replaceAll("|",", ");
-                artist.title = artistText;
-                artist.textContent = artistText;
-                const icon = card.querySelector(".level-icon");
-                // var iconSrc = "assets/adofai-levels/"+level["Name"]+"-1.png";
-                var iconSrc = "https://assets.datbogie.org/"+level["Name"]+"-1.png";
-                icon.src = iconSrc;
-                const download = card.querySelector("#dl");
-                const newDownload = card.querySelector("#dl-new");
-                var dl = "https://drive.usercontent.google.com/download?id="+level["DLCode"];
-                var dl_new = "https://assets.datbogie.org/levels/"+level["Name"]+".zip";
-                download.dataset.dl = dl;
-                newDownload.dataset.dl = dl_new;
-                card.addEventListener("click",(e)=>{
-                    if (e.target.classList.contains("div-button")) return;
-                    const oldSel = document.querySelectorAll(".level-card-selected");
-                    // if (oldSel != null)
-                    //     oldSel.classList.remove("level-card-selected");
-                    if ([...oldSel].includes(card)) {
-                        card.classList.remove("level-card-selected");
-                    } else {
-                        card.classList.add("level-card-selected");
-                    }
-                    
-                    const dur = 800;
-                    const start = this.performance.now();
-                    const initScale = .85;
-                    card.style.scale = initScale;
-                    function step(time) {
-                        let elapsed = time - start;
-                        let prog = Math.min(elapsed / dur, 1);
-                        let eased = easeOutElastic(prog);
-                        card.style.scale = initScale + (1-initScale) * eased;
-                        if (prog < 1) {
-                            window.requestAnimationFrame(step);
-                        } else {
-                            card.style.scale = 1;
-                        }
-                    }
-                    window.requestAnimationFrame(step);
+            const perspective = 500; // px
+            card.addEventListener("mousemove",(m)=>{
+                const constraint = 45 * (window.innerWidth/1920);
+                window.requestAnimationFrame(()=>{
+                    let rect = card.getBoundingClientRect();
+                    let rotX = -(m.y - rect.y - (rect.height / 2)) / constraint;
+                    let rotY = (m.x - rect.x - (rect.width / 2)) / constraint;
+                    let out = "perspective("+perspective+"px) rotateX("+rotX+"deg) rotateY("+rotY+"deg)";
+                    card.style.transform = out;
                 });
-                const perspective = 500; // px
-                card.addEventListener("mousemove",(m)=>{
-                    const constraint = 45 * (this.window.innerWidth/1920);
-                    window.requestAnimationFrame(()=>{
-                        let rect = card.getBoundingClientRect();
-                        let rotX = -(m.y - rect.y - (rect.height / 2)) / constraint;
-                        let rotY = (m.x - rect.x - (rect.width / 2)) / constraint;
-                        let out = "perspective("+perspective+"px) rotateX("+rotX+"deg) rotateY("+rotY+"deg)";
-                        card.style.transform = out;
-                    });
-                    const highlight = card.querySelector(".card-highlight");
-                    if (highlight) {
-                        highlight.style.opacity = "35%";
-                        let rect = card.querySelector("div:has(.card-highlight)").getBoundingClientRect();
-                        let radius = highlight.offsetWidth / 2;
-                        highlight.style.left = (m.x - rect.x - radius) + "px";
-                        highlight.style.top  = (m.y - rect.y - radius) + "px";
-                        // highlight.style.left = m.x-(rect.x+(rect.width/2))+"px";
-                        // highlight.style.top = m.y-(rect.y+(rect.height/2))+"px";
-                    }
-                });
-                card.addEventListener("mouseleave",()=>{
-                    card.style.transform = "perspective("+perspective+"px)";
-                    const highlight = card.querySelector(".card-highlight");
-                    if (highlight)
-                        highlight.style.opacity = "0%";
-                });
-                card.querySelector("#dl").addEventListener("click",()=>{
-                    embedOpen(dl);
-                });
-                card.querySelector("#dl-new").addEventListener("click",()=>{
-                    open(dl_new);
-                });
-                var triggered = false;
-                card.querySelector("#dl").addEventListener("mousedown",(e)=>{
-                    if (e.button != 1) return;
-                    triggered = true;
-                });
-                card.querySelector("#dl").addEventListener("mouseup",(e)=>{
-                    if (e.button != 1 || !triggered) return;
-                    triggered = false;
-                    open(dl);
-                });
-                card.querySelector("#dl-new").addEventListener("mousedown",(e)=>{
-                    if (e.button != 1) return;
-                    triggered = true;
-                });
-                card.querySelector("#dl-new").addEventListener("mouseup",(e)=>{
-                    if (e.button != 1 || !triggered) return;
-                    triggered = false;
-                    open(dl);
-                });
-                cardTemplate.parentElement.appendChild(card);
+                const highlight = card.querySelector(".card-highlight");
+                if (highlight) {
+                    highlight.style.opacity = "35%";
+                    let rect = card.querySelector("div:has(.card-highlight)").getBoundingClientRect();
+                    let radius = highlight.offsetWidth / 2;
+                    highlight.style.left = (m.x - rect.x - radius) + "px";
+                    highlight.style.top  = (m.y - rect.y - radius) + "px";
+                    // highlight.style.left = m.x-(rect.x+(rect.width/2))+"px";
+                    // highlight.style.top = m.y-(rect.y+(rect.height/2))+"px";
+                }
             });
-            cardTemplate.remove();
+            card.addEventListener("mouseleave",()=>{
+                card.style.transform = "perspective("+perspective+"px)";
+                const highlight = card.querySelector(".card-highlight");
+                if (highlight)
+                    highlight.style.opacity = "0%";
+            });
+            card.querySelector("#dl").addEventListener("click",()=>{
+                embedOpen(dl);
+            });
+            card.querySelector("#dl-new").addEventListener("click",()=>{
+                open(dl_new);
+            });
+            card.querySelector("#exp").addEventListener("click",()=>{
+                embedOpen(exp);
+            });
+            cardTemplate.parentElement.appendChild(card);
         });
-    }).catch((error)=>{
-        alert("An error occured whilst trying to load `leveldata.csv`: '"+error.toString()+"'\nPlease report this at 'https://github.com/DatBogie/datbogie.github.io/issues'!");
+        cardTemplate.remove();
     });
+
+    const levelData = _levelData[0];
+    const levelTags = _levelData[1];
 
     var dltriggered = false;
     document.getElementById("dl-adofai").addEventListener("mousedown",(e)=>{
@@ -455,11 +468,11 @@ window.addEventListener("mousemove",function(m) {
 });
 
 window.addEventListener("mousedown",function() {
-    let cur = this.document.querySelector(".cursor");
+    let cur = document.querySelector(".cursor");
     cur.style.scale = .85;
 });
 
 window.addEventListener("mouseup",function() {
-    let cur = this.document.querySelector(".cursor");
+    let cur = document.querySelector(".cursor");
     cur.style.scale = 1;
 });

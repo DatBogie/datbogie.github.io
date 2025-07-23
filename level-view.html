@@ -5,270 +5,40 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --rosewater: #f4dbd6;
-            --flamingo: #f0c6c6;
-            --pink: #f5bde6;
-            --mauve: #c6a0f6;
-            --red: #ed8796;
-            --maroon: #ee99a0;
-            --peach: #f5a97f;
-            --yellow: #eed49f;
-            --green: #a6da95;
-            --teal: #8bd5ca;
-            --sky: #91d7e3;
-            --sapphire: #7dc4e4;
-            --blue: #8aadf4;
-            --lavender: #b7bdf8;
-            --text: #cad3f5;
-            --subtext1: #b8c0e0;
-            --subtext0: #a5adcb;
-            --overlay2: #939ab7;
-            --overlay1: #8087a2;
-            --overlay0: #6e738d;
-            --surface2: #5b6078;
-            --surface1: #494d64;
-            --surface0: #363a4f;
-            --base: #24273a;
-            --mantle: #1e2030;
-            --crust: #181926;
-            --accent: var(--lavender);
-        }
-
-        * {
-            cursor: none !important;
-            font-family: "Nunito", serif;
-        }
-
-        #hide-pointer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            cursor: none !important;
-            z-index: -1000;
-        }
-
-        body {
-            background-color: var(--base);
-            color: var(--text);
-            font-family: "Nunito", serif;
-            font-optical-sizing: auto;
-            opacity: 0%;
-            margin-top: 25px;
-            margin-left: 25%;
-            margin-right: 25%;
-        }
-
-        h1 {
-            font-weight: 900;
-        }
-
-        hr {
-            color: var(--text);
-            border-width: .01vw;
-            margin: 0;
-            margin-top: 1vh;
-        }
-
-        .display {
-            font-family: "Nunito", serif;
-            font-size: 1.5rem;
-            /* transition: all 200ms cubic-bezier(0,1,1,1); */
-            color: var(--text);
-        }
-
-        .cursor {
-            position: fixed;
-            transition: all 200ms cubic-bezier(0,1,1,1);
-            pointer-events: none;
-            display: none;
-            z-index: 100;
-        }
-
-        blockquote {
-            border-left: 4px solid var(--text);
-            padding-left: 1em;
-            padding-top: 1em;
-            padding-bottom: 1em;
-            margin-left: 0;
-            margin-right: 0;
-            background-color: var(--crust);
-        }
-
-        a {
-            /* color: #04a5e5; */
-            color: var(--accent);
-            border-color: #b7bdf800;
-            background-color: #b7bdf800;
-            border-radius: 2vw;
-            transition-property: border-color padding background-color;
-            transition-duration: 200ms;
-            transition-timing-function: ease;
-        }
-
-        a:hover {
-            padding-left: 3.5px;
-            padding-right: 3.5px;
-            background-color: #b7bef817;
-        }
-
-        p {
-            text-align: left;
-        }
-
-        body > div:not(#hide-pointer) {
-            width: 100%;
-            height: calc(100vh - 16px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: .35vw;
-        }
-
-        body > div > div {
-            background-color: var(--surface1);
-            width: 50%;
-            height: 50%;
-            border-radius: 2vw;
-            padding: 5%;
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-        
-        span {
-            font-size: 1.25vw;
-        }
-
-        .h1 {
-            font-weight: 900;
-            font-size: 2.75vw;
-        }
-
-        h1 {
-            font-size: 1.75vw;
-        }
-
-        .tag-container {
-            display: flex;
-        }
-
-        .tag {
-            background-color: var(--base);
-            display: flex;
-            width: auto;
-            height: auto;
-            border-radius: 2vw;
-            padding-top: 1%;
-            padding-bottom: 1%;
-            padding-left: 4%;
-            padding-right: 4%;
-            justify-content: center;
-            align-items: center;
-            gap: .3vw;
-        }
-
-        .tag-icon {
-            width: 1vw;
-            height: 1vw;
-            border-radius: 50%;
-            background-color: var(--red);
-        }
-
-        .tag-label {
-            font-size: 1vw;
-        }
-
-        .level-icon {
-            width: 100%;
-            object-position: center;
-            aspect-ratio: 1;
-            object-fit: cover;
-            display: block;
-        }
-    </style>
+    <link rel="stylesheet" href="./level-view.css">
 </head>
 <body>
     <div id="hide-pointer"></div>
     <img src="cursor.svg" class="cursor" width="35px">
-    <div id="">
-        <div>
-            <span class="h1" id="title">Title</span><br>
-            <span id="artist">Artist</span>
-            <hr>
-            <h1>Tags:</h1>
-            <div class="tag-container" id="tags">
-                <div class="tag" id="template-tag">
-                    <div class="tag-icon"></div>
-                    <span class="tag-label">Tag</span>
+    <div style="flex-wrap: wrap;">
+        <div style="width: 100%;">
+            <div>
+                <span class="h1" id="title">Title</span><br>
+                <span id="artist">Artist</span>
+                <hr>
+                <h1 style="margin-top: 14px; margin-bottom: 14px;">Tags:</h1>
+                <div class="tag-container" id="tags">
+                    <div class="tag" id="template-tag">
+                        <div class="tag-icon"></div>
+                            <span class="tag-label">Tag</span>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <img src="https://placehold.co/1000x1000/png" class="level-icon" id="icon">
+                <div class="carousel-controls">
+                    <button id="left"><</button>
+                    <span id="label"> 0 / 0 </span>
+                    <button id="right">></button>
                 </div>
             </div>
         </div>
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <img src="https://placehold.co/1000x1000/png" class="level-icon">
+        <div class="video-container">
+            <h1 style="margin-top: 0; margin-bottom: 0;">Video Showcase</h1>
+            <hr>
+            <p style="margin-bottom: 0;"><iframe class="video" id="video" frameborder="0" allowfullscreen></iframe></p>
         </div>
     </div>
 </body>
-<script>
-    var xVel = 0;
-    var lastX = 0;
-
-    const xOffset = 9;
-    const yOffset = 2;
-    window.addEventListener("load",function() {
-        document.body.style.transition = "margin-top 1s ease, opacity 1s ease-out";
-        document.body.style.marginTop = "8px";
-        document.body.style.opacity = "100%";
-        const cur = document.querySelector(".cursor");
-        setInterval(function() {
-            if (xVel < 0) {
-                xVel+=700;
-                if (xVel > 0) {
-                    xVel = 0;
-                }
-            } else {
-                xVel-=700;
-                if (xVel < 0) {
-                    xVel = 0
-                }
-            }
-            cur.style.rotate = xVel+"deg";
-        },100);
-    });
-    window.addEventListener("mousemove",function(m) {
-        let cur = document.querySelector(".cursor");
-        cur.style.left = m.x-xOffset + "px";
-        cur.style.top = m.y-yOffset + "px";
-        cur.style.display = "block";
-
-        xVel += (m.x-lastX)/12;
-        if (xVel > 90) {
-            xVel = 90;
-        } else if (xVel < -90) {
-            xVel = -90;
-        }
-
-        if (justLoaded) {
-            xVel = 0;
-        }
-
-        cur.style.rotate = xVel+"deg";
-
-        lastX = m.x;
-
-        justLoaded = false;
-    });
-    window.addEventListener("mousedown",function() {
-        let cur = this.document.querySelector(".cursor");
-        cur.style.scale = .85;
-    });
-
-    window.addEventListener("mouseup",function() {
-        let cur = this.document.querySelector(".cursor");
-        cur.style.scale = 1;
-    });
-</script>
+<script type="module" src="./level-view.js"></script>
 </html>

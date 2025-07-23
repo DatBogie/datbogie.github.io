@@ -1,11 +1,11 @@
 Category,Tag,Description,Color
 Steam,steam,Is on Steam Workshop,#0b457a
-Speed,slow,Slow tile BPM,#6568ff
-Speed,moderate,Moderate tile BPM,#b45eff
-Speed,fast,Fast tile BPM,#ff6568
-Completion,finished,Level is 100% complete,#65ff68
-Completion,unfinished,Level is partially complete,#edff4e
-Completion,camera finished,Camera movement is 100% complete,#378b38
-Completion,camera unfinished,Camera movement is partially complete,#818b2b
-Completion,deco finished,Decoration and/or VFX are 100% complete,#
-Completion,deco unfinished,Decoration and/or VFX are partially complete,#
+Speed,slow,Slow tile BPM,#78444c
+Speed,moderate,Moderate tile BPM,#b66773
+Speed,fast,Fast tile BPM,#ed8796
+Completion,finished,Level is 100% complete,#c6a0f6
+Completion,unfinished,Level is partially complete,#6c5887
+Completion,camera finished,Camera movement is 100% complete,#91d7e3
+Completion,camera unfinished,Camera movement is partially complete,#547d83
+Completion,deco finished,Decoration and/or VFX are 100% complete,#a6da95
+Completion,deco unfinished,Decoration and/or VFX are partially complete,#729566

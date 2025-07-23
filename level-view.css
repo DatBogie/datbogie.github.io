@@ -1,0 +1,244 @@
+:root {
+    --rosewater: #f4dbd6;
+    --flamingo: #f0c6c6;
+    --pink: #f5bde6;
+    --mauve: #c6a0f6;
+    --red: #ed8796;
+    --maroon: #ee99a0;
+    --peach: #f5a97f;
+    --yellow: #eed49f;
+    --green: #a6da95;
+    --teal: #8bd5ca;
+    --sky: #91d7e3;
+    --sapphire: #7dc4e4;
+    --blue: #8aadf4;
+    --lavender: #b7bdf8;
+    --text: #cad3f5;
+    --subtext1: #b8c0e0;
+    --subtext0: #a5adcb;
+    --overlay2: #939ab7;
+    --overlay1: #8087a2;
+    --overlay0: #6e738d;
+    --surface2: #5b6078;
+    --surface1: #494d64;
+    --surface0: #363a4f;
+    --base: #24273a;
+    --mantle: #1e2030;
+    --crust: #181926;
+    --accent: var(--lavender);
+}
+
+* {
+    cursor: none !important;
+    font-family: "Nunito", serif;
+}
+
+#hide-pointer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    cursor: none !important;
+    z-index: -1000;
+}
+
+body {
+    background-color: var(--base);
+    color: var(--text);
+    font-family: "Nunito", serif;
+    font-optical-sizing: auto;
+    opacity: 0%;
+    margin-top: 25px;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+h1 {
+    font-weight: 900;
+}
+
+hr {
+    color: var(--text);
+    border-width: .01vw;
+    margin: 0;
+    margin-top: 1vh;
+}
+
+.display {
+    font-family: "Nunito", serif;
+    font-size: 1.5rem;
+    /* transition: all 200ms cubic-bezier(0,1,1,1); */
+    color: var(--text);
+}
+
+.cursor {
+    position: fixed;
+    transition: all 200ms cubic-bezier(0,1,1,1);
+    pointer-events: none;
+    display: none;
+    z-index: 100;
+}
+
+blockquote {
+    border-left: 4px solid var(--text);
+    padding-left: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    background-color: var(--crust);
+}
+
+a {
+    /* color: #04a5e5; */
+    color: var(--accent);
+    border-color: #b7bdf800;
+    background-color: #b7bdf800;
+    border-radius: 2vw;
+    transition-property: border-color padding background-color;
+    transition-duration: 200ms;
+    transition-timing-function: ease;
+}
+
+a:hover {
+    padding-left: 3.5px;
+    padding-right: 3.5px;
+    background-color: #b7bef817;
+}
+
+p {
+    text-align: left;
+}
+
+body > div:not(#hide-pointer) {
+    width: 100%;
+    height: calc(100vh - 16px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .35vw;
+}
+
+body > div > div {
+    background-color: var(--surface0);
+    width: 100%;
+    border-radius: 2vw;
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+}
+
+body > div > div > div {
+    background-color: var(--surface0);
+    width: 50%;
+    height: 50%;
+    border-radius: 2vw;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.video-container {
+    width: 100%;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.video {
+    width: 100%;
+    border-radius: 1vw;
+    display: block;
+    aspect-ratio: 21 / 9;
+}
+
+span {
+    font-size: 1.25vw;
+}
+
+.h1 {
+    font-weight: 900;
+    font-size: 1.75vw;
+}
+
+h1 {
+    font-size: 1.75vw;
+}
+
+.tag-container {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+
+.tag {
+    background-color: var(--base);
+    display: flex;
+    width: auto;
+    height: auto;
+    border-radius: 2vw;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 4%;
+    padding-right: 4%;
+    justify-content: center;
+    align-items: center;
+    gap: .3vw;
+}
+
+.tag-icon {
+    width: 1vw;
+    height: 1vw;
+    border-radius: 50%;
+    background-color: var(--red);
+}
+
+.tag-label {
+    font-size: 1vw;
+}
+
+.level-icon {
+    width: 100%;
+    object-position: center;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+}
+
+.carousel-controls {
+    background-color: var(--base);
+    width: 100%;
+    display: flex;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    min-height: 2vh;
+}
+
+.carousel-controls > span {
+    font-size: 1rem;
+}
+
+.carousel-controls > button {
+    border-radius: 2vw;
+    width: 15%;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    background-color: var(--surface0);
+    color: var(--text);
+    transition: scale 200ms ease-out;
+    font-weight: 900;
+}
+.carousel-controls > button:hover {
+    scale: 1.07;
+}
+.carousel-controls > button:active {
+    scale: .965;
+}

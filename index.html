@@ -46,11 +46,12 @@
             This site contains information about all of my projects; from games and software, to ADOFAI levels and more.<br>
             Click through the tabs at the top to explore!
         </p>
-        <br><br>
+        <br>
         <p>
             Color palette: <span class="link" data-href="https://catppuccin.com/palette/">Catppuccin Macchiato</span>.<br>
-            Everything here spaghetti-coded by <a href="https://github.com/DatBogie">me</a>.<br>
             Card rotating effect: <span class="link" data-href="https://armandocanals.com/posts/CSS-transform-rotating-a-3D-object-perspective-based-on-mouse-position.html">Armando Canals</span>.<br>
+            JSZip: <span class="link" data-href="https://stuk.github.io/jszip/">Stuart Knightley</span>.<br>
+            Everything here spaghetti-coded by <a href="https://github.com/DatBogie">me</a>.<br>
             Repository: <a href="https://github.com/DatBogie/datbogie.github.io">GitHub</a>.<br>
             <code style="display: none;">Warning: Uploaded artifact size of 1080922598 bytes exceeds the allowed size of 1 GB. Deployment might fail</code>
         </p>
@@ -97,9 +98,9 @@
                 <img src="https://placehold.co/1000x1000/png" class="level-icon">
                 <div class="card-tags"></div>
                 <div>
-                    <div class="div-button" id="dl-new" title="Download from assets.datbogie.org.&#13;Use GDrive if this isn't working." class="functional-link">Download</div>
-                    <div class="div-button" id="dl" title="Download from Google Drive.&#13;Use if the normal link isn't working." class="functional-link">GDrive</div>
-                    <!-- <div class="div-button" id="exp" title="Expand">Expand</div> -->
+                    <div class="div-button functional-link" data-disableclick="true" id="dl-new" title="Download from assets.datbogie.org.&#13;Use GDrive if this isn't working.">Download</div>
+                    <div class="div-button functional-link" data-disableclick="true" id="dl" title="Download from Google Drive.&#13;Use if the normal link isn't working.">GD</div>
+                    <div class="div-button functional-link" data-disableclick="true" id="exp" title="View more information about this level.">Expand</div>
                 </div>
             </div>
         </div>
@@ -127,5 +128,5 @@
     </div>
 </body>
 <script src="./modules/jszip.js"></script>
-<script src="index.js"></script>
+<script src="index.js" type="module"></script>
 </html>
