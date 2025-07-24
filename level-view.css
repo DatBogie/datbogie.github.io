@@ -121,7 +121,7 @@ body > div:not(#hide-pointer) {
 }
 
 body > div > div {
-    background-color: var(--surface0);
+    background-color: var(--crust);
     width: 100%;
     border-radius: 2vw;
     display: flex;
@@ -130,7 +130,7 @@ body > div > div {
 }
 
 body > div > div > div {
-    background-color: var(--surface0);
+    background-color: var(--crust);
     width: 50%;
     height: 50%;
     border-radius: 2vw;
@@ -176,13 +176,11 @@ h1 {
 .tag {
     background-color: var(--base);
     display: flex;
-    width: auto;
-    height: auto;
     border-radius: 2vw;
     padding-top: 1%;
     padding-bottom: 1%;
-    padding-left: 4%;
-    padding-right: 4%;
+    padding-left: 2%;
+    padding-right: 2%;
     justify-content: center;
     align-items: center;
     gap: .3vw;
@@ -192,7 +190,7 @@ h1 {
     width: 1vw;
     height: 1vw;
     border-radius: 50%;
-    background-color: var(--red);
+    background-color: var(--accent);
 }
 
 .tag-label {
@@ -205,6 +203,17 @@ h1 {
     aspect-ratio: 1;
     object-fit: cover;
     display: block;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    animation: "none";
+}
+
+@keyframes level-icon-change {
+    from {
+        filter: blur(10px);
+    } to {
+        filter: unset;
+    }
 }
 
 .carousel-controls {
@@ -228,17 +237,20 @@ h1 {
 .carousel-controls > button {
     border-radius: 2vw;
     width: 15%;
-    border: none;
-    cursor: pointer;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #b7bdf800;
     z-index: 2;
-    background-color: var(--surface0);
+    background-color: var(--crust);
     color: var(--text);
-    transition: scale 200ms ease-out;
+    transition: scale 200ms ease, border-color 200ms ease, background-color 200ms ease;
     font-weight: 900;
 }
 .carousel-controls > button:hover {
-    scale: 1.07;
+    scale: 1.05;
+    transition: scale 200ms ease, background-color 200ms ease;
+    border-color: var(--accent);
 }
 .carousel-controls > button:active {
-    scale: .965;
+    scale: .95;
 }

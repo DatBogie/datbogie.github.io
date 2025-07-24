@@ -11,6 +11,25 @@
     <div class="blur-bg"></div>
     <div id="hide-pointer"></div>
     <img src="cursor.svg" class="cursor" width="35px">
+    <div id="level-filter-popup" class="closed">
+        <div style="overflow: scroll; width: 100%; height: 100%;">
+            <span class="title" style="margin-top: 2.5%; text-align: center;">Filter Tags</span>
+            <hr style="margin-left: 5%; margin-right: 5%; margin-top: 0;">
+            <div id="pointer" style="position: absolute; top: 0; left: 100%; width: 0; height: 0; border: solid 20px; border-color: transparent transparent transparent var(--mantle);"></div>
+            <div class="level-filter-popup-controls">
+                <button id="all-tags">Toggle All</button>
+                <button id="invert-tags">Invert Selection</button>
+                <button id="tag-filter-type">Filter Type: ${type}</button>
+            </div>
+            <div class="filter-tags">
+                <div class="filter-tag" id="template-tag">
+                    <input id="enabled" type="checkbox">
+                    <div class="tag-icon"></div>
+                    <span class="tag-label">Tag</span>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="if-popup">
         <div class="if-bar">
             <button id="if-close"></button>
@@ -96,7 +115,9 @@
                 <div><div class="card-highlight"></div></div>
                 <b class="title">Title</b><br><span class="subtext">Artist</span><hr>
                 <img src="https://placehold.co/1000x1000/png" class="level-icon">
-                <div class="card-tags"></div>
+                <div class="card-tags">
+                    <div class="tag-icon card-tag" id="card-tag-template" title="${TagName}"></div>
+                </div>
                 <div>
                     <div class="div-button functional-link" data-disableclick="true" id="dl-new" title="Download from assets.datbogie.org.&#13;Use GDrive if this isn't working.">Download</div>
                     <div class="div-button functional-link" data-disableclick="true" id="dl" title="Download from Google Drive.&#13;Use if the normal link isn't working.">GD</div>

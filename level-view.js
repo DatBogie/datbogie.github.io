@@ -67,11 +67,15 @@ window.addEventListener("load",function() {
                 let img = new Image();
                 img.src = `https://assets.datbogie.org/${Title}-${i}.png`;
             }
-            function updateIcon() {
+            function updateIcon(skipAnimation) {
                 icon.src = `https://assets.datbogie.org/${Title}-${currentImage}.png`;
-                label.textContent = ` ${currentImage} / ${images} `
+                label.textContent = ` ${currentImage} / ${images} `;
+                if (skipAnimation) return;
+                icon.style.animation = "none";
+                void icon.offsetHeight;
+                icon.style.animation = "level-icon-change .25s ease";
             }
-            updateIcon()
+            updateIcon(true);
             left.addEventListener("click",()=>{
                 currentImage--;
                 if (currentImage < 1) currentImage = images;
@@ -83,6 +87,14 @@ window.addEventListener("load",function() {
                 updateIcon();
             });
         }
+    });
+    document.querySelectorAll("iframe").forEach((ifr)=>{
+        ifr.addEventListener("mouseenter",()=>{
+            cur.style.display = "none";
+        });
+        ifr.addEventListener("mouseleave",()=>{
+            cur.style.display = "block";
+        });
     });
 });
 window.addEventListener("mousemove",function(m) {

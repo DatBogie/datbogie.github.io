@@ -1,4 +1,4 @@
-export function getLevelData(doSomething) {
+export async function getLevelData(doSomething) {
     const ret = new Array(2);
     var levelData = [];
     var levelTags = {};

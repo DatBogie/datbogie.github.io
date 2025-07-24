@@ -10,6 +10,176 @@ var justLoaded = true;
 
 var selectedTab = "t-1";
 
+const LevelData = await getLevelData(function(levelData,levelTags){
+    const cardTemplate = document.getElementById("level-card-template");
+    levelData.forEach((level)=>{
+        const card = cardTemplate.cloneNode(true);
+        card.id = "";
+        const cardTagTemplate = card.querySelector("#card-tag-template");
+        const title = card.querySelector(".title");
+        var titleText = level["Name"];
+        title.title = titleText;
+        title.textContent = titleText;
+        const artist = card.querySelector(".subtext");
+        var artistText = level["Artist"].replaceAll("|",", ");
+        artist.title = artistText;
+        artist.textContent = artistText;
+        const icon = card.querySelector(".level-icon");
+        // var iconSrc = "assets/adofai-levels/"+level["Name"]+"-1.png";
+        var iconSrc = "https://assets.datbogie.org/"+level["Name"]+"-1.png";
+        icon.src = iconSrc;
+        level["Tags"].forEach(tag=>{
+            const newTag = cardTagTemplate.cloneNode(true);
+            newTag.id = "";
+            newTag.title = tag;
+            cardTagTemplate.parentElement.appendChild(newTag);
+        });
+        cardTagTemplate.remove();
+        const download = card.querySelector("#dl");
+        const newDownload = card.querySelector("#dl-new");
+        const expBtn = card.querySelector("#exp");
+        var dl = "https://drive.usercontent.google.com/download?id="+level["DLCode"];
+        var dl_new = "https://assets.datbogie.org/levels/"+level["Name"]+".zip";
+        var exp = "level-view.html?title="+level["Name"];
+        download.dataset.dl = dl;
+        download.dataset.href = dl;
+        newDownload.dataset.dl = dl_new;
+        newDownload.dataset.href = dl_new;
+        expBtn.dataset.href = exp;
+        card.addEventListener("click",(e)=>{
+            if (e.target.classList.contains("div-button")) return;
+            const oldSel = document.querySelectorAll(".level-card-selected");
+            // if (oldSel != null)
+            //     oldSel.classList.remove("level-card-selected");
+            if ([...oldSel].includes(card)) {
+                card.classList.remove("level-card-selected");
+            } else {
+                card.classList.add("level-card-selected");
+            }
+            
+            const dur = 800;
+            const start = performance.now();
+            const initScale = .85;
+            card.style.scale = initScale;
+            function step(time) {
+                let elapsed = time - start;
+                let prog = Math.min(elapsed / dur, 1);
+                let eased = easeOutElastic(prog);
+                card.style.scale = initScale + (1-initScale) * eased;
+                if (prog < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    card.style.scale = 1;
+                }
+            }
+            window.requestAnimationFrame(step);
+        });
+        const perspective = 500; // px
+        card.addEventListener("mousemove",(m)=>{
+            const constraint = 45 * (window.innerWidth/1920);
+            window.requestAnimationFrame(()=>{
+                let rect = card.getBoundingClientRect();
+                let rotX = -(m.y - rect.y - (rect.height / 2)) / constraint;
+                let rotY = (m.x - rect.x - (rect.width / 2)) / constraint;
+                let out = "perspective("+perspective+"px) rotateX("+rotX+"deg) rotateY("+rotY+"deg)";
+                card.style.transform = out;
+            });
+            const highlight = card.querySelector(".card-highlight");
+            if (highlight) {
+                highlight.style.opacity = "35%";
+                let rect = card.querySelector("div:has(.card-highlight)").getBoundingClientRect();
+                let radius = highlight.offsetWidth / 2;
+                highlight.style.left = (m.x - rect.x - radius) + "px";
+                highlight.style.top  = (m.y - rect.y - radius) + "px";
+                // highlight.style.left = m.x-(rect.x+(rect.width/2))+"px";
+                // highlight.style.top = m.y-(rect.y+(rect.height/2))+"px";
+            }
+        });
+        card.addEventListener("mouseleave",()=>{
+            card.style.transform = "perspective("+perspective+"px)";
+            const highlight = card.querySelector(".card-highlight");
+            if (highlight)
+                highlight.style.opacity = "0%";
+        });
+        card.querySelector("#dl").addEventListener("click",()=>{
+            embedOpen(dl);
+        });
+        card.querySelector("#dl-new").addEventListener("click",()=>{
+            open(dl_new);
+        });
+        card.querySelector("#exp").addEventListener("click",()=>{
+            embedOpen(exp);
+        });
+        cardTemplate.parentElement.appendChild(card);
+    });
+    const tempTag = document.getElementById("template-tag");
+    for (const tag in levelTags) {
+        const newTag = tempTag.cloneNode(true);
+        newTag.id = "";
+        const checkBox = newTag.querySelector("#enabled");
+        newTag.querySelector(".tag-label").textContent = tag;
+        newTag.addEventListener("click",()=>{
+            checkBox.checked = !checkBox.checked;
+            filterByCurrentTerm()
+        });
+        tempTag.parentElement.appendChild(newTag);
+    };
+    tempTag.remove();
+    cardTemplate.remove();
+});
+
+var filterTypeIndex = 0;
+const filterTypes = ["Include","Exclude"];
+
+
+function filterByCurrentTerm() {
+    filterByText(document.getElementById("level-search").value.toLowerCase());
+}
+
+function filterByText(term) {
+    document.getElementById("level-cards").querySelectorAll(".level-card").forEach((card)=>{
+        if (term == "") {card.style.display = "block"; return};
+        const title = card.querySelector(".title").textContent.toLowerCase();
+        const artist = card.querySelector(".subtext").textContent.toLowerCase();
+        if (title.indexOf(term) != -1 || artist.indexOf(term) != -1)
+            card.style.display = "block";
+        else
+            card.style.display = "none";
+    });
+    filterByTags();
+};
+
+function filterByTags() {
+    const selTags = [];
+    const tags = document.querySelector(".filter-tags").querySelectorAll(".filter-tag");
+    const filterType = filterTypes[filterTypeIndex];
+    tags.forEach(tag=>{
+        const checkBox = tag.querySelector("#enabled");
+        if (!checkBox.checked) return;
+        selTags.push(tag.querySelector(".tag-label").textContent);
+    });
+    if (selTags.length === tags.length && filterType === "Include") return; // works
+    document.getElementById("level-cards").querySelectorAll(".level-card").forEach((card)=>{
+        if (card.style.display == "none") return;
+        if (selTags.length === tags.length && filterType === "Exclude") { card.style.display = "none"; return; } // works
+        const title = card.querySelector(".title").textContent;
+        const _data = LevelData[0].find(level => level["Name"] === title);
+        if (!_data) return;
+        var next = false;
+        for (const tag of selTags) {
+            if (filterType === "Include" && !_data["Tags"].includes(tag)) {
+                next = true;
+                break;
+            } else if (filterType === "Exclude" && _data["Tags"].includes(tag)) {
+                next = true;
+                break;
+            }
+        }
+        if (next)
+            card.style.display = "none";
+    });
+}
+
 function embedOpen(url) {
     const blur = document.querySelector(".blur-bg");
     blur.style.animationName = "blur-bg-open";
@@ -143,7 +313,75 @@ observer.observe(document.body, {
     subtree: true,
 });
 
+var popupHidden = true;
+
+const searchTags = document.getElementById("level-search-tags");
+const searchPopup = document.getElementById("level-filter-popup");
+function updatePopupPos() {
+    if (popupHidden) return;
+    const rect = searchTags.getBoundingClientRect();
+    searchPopup.style.top = `${rect.top + window.scrollY}px`;
+    searchPopup.style.left = `${rect.left - searchPopup.getBoundingClientRect().width - 30}px`;
+}
+
+searchTags.addEventListener("click",()=>{
+    if (searchPopup.classList.contains("closed")) {
+        popupHidden = false;
+        searchPopup.classList.remove("closed");
+        searchPopup.style.animation = "level-filter-popup-unroll .25s ease";
+    } else {
+        popupHidden = true;
+        searchPopup.classList.add("closed");
+        searchPopup.style.animation = "level-filter-popup-roll .25s ease";
+    }
+    updatePopupPos();
+});
+
+const resizeObserver = new ResizeObserver(updatePopupPos);
+resizeObserver.observe(searchTags);
+window.addEventListener("scroll",updatePopupPos,true);
+window.addEventListener("resize",updatePopupPos);
+
 window.addEventListener("load",function() {
+    updatePopupPos();
+    document.getElementById("all-tags").addEventListener("click",()=>{
+        var value = false;
+        const tags = document.querySelector(".filter-tags").querySelectorAll(".filter-tag");
+        for (const tag of tags) {
+            const checkBox = tag.querySelector("#enabled");
+            if (!checkBox.checked) {
+                value = true;
+                break;
+            }
+        }
+        tags.forEach(tag=>{
+            const checkBox = tag.querySelector("#enabled");
+            checkBox.checked = value;
+        });
+        filterByCurrentTerm();
+    });
+    document.getElementById("invert-tags").addEventListener("click",()=>{
+        const tags = document.querySelector(".filter-tags").querySelectorAll(".filter-tag");
+        tags.forEach(tag=>{
+            const checkBox = tag.querySelector("#enabled");
+            checkBox.checked = !checkBox.checked;
+        });
+        filterByCurrentTerm();
+    });
+    const filterType = document.getElementById("tag-filter-type");
+    function updateFilterType(changeValue=true) {
+        if (changeValue) {
+            filterTypeIndex++;
+            if (filterTypeIndex >= filterTypes.length)
+                filterTypeIndex = 0;
+        }
+        filterType.textContent = `Filter Type: ${filterTypes[filterTypeIndex]}`;
+    }
+    filterType.addEventListener("click",()=>{
+        updateFilterType();
+        filterByCurrentTerm();
+    });
+    updateFilterType(false);
     const links = document.querySelectorAll(".link, .functional-link");
     links.forEach((link)=>{
         link.addEventListener("click",()=>{
@@ -237,105 +475,6 @@ window.addEventListener("load",function() {
         });
     });
 
-    const _levelData = getLevelData(function(levelData){
-        const cardTemplate = document.getElementById("level-card-template");
-        levelData.forEach((level)=>{
-            const card = cardTemplate.cloneNode(true);
-            const title = card.querySelector(".title");
-            var titleText = level["Name"];
-            title.title = titleText;
-            title.textContent = titleText;
-            const artist = card.querySelector(".subtext");
-            var artistText = level["Artist"].replaceAll("|",", ");
-            artist.title = artistText;
-            artist.textContent = artistText;
-            const icon = card.querySelector(".level-icon");
-            // var iconSrc = "assets/adofai-levels/"+level["Name"]+"-1.png";
-            var iconSrc = "https://assets.datbogie.org/"+level["Name"]+"-1.png";
-            icon.src = iconSrc;
-            const download = card.querySelector("#dl");
-            const newDownload = card.querySelector("#dl-new");
-            const expBtn = card.querySelector("#exp");
-            var dl = "https://drive.usercontent.google.com/download?id="+level["DLCode"];
-            var dl_new = "https://assets.datbogie.org/levels/"+level["Name"]+".zip";
-            var exp = "./level-view.html?title="+level["Name"];
-            download.dataset.dl = dl;
-            download.dataset.href = dl;
-            newDownload.dataset.dl = dl_new;
-            newDownload.dataset.href = dl_new;
-            expBtn.dataset.href = exp;
-            card.addEventListener("click",(e)=>{
-                if (e.target.classList.contains("div-button")) return;
-                const oldSel = document.querySelectorAll(".level-card-selected");
-                // if (oldSel != null)
-                //     oldSel.classList.remove("level-card-selected");
-                if ([...oldSel].includes(card)) {
-                    card.classList.remove("level-card-selected");
-                } else {
-                    card.classList.add("level-card-selected");
-                }
-                
-                const dur = 800;
-                const start = performance.now();
-                const initScale = .85;
-                card.style.scale = initScale;
-                function step(time) {
-                    let elapsed = time - start;
-                    let prog = Math.min(elapsed / dur, 1);
-                    let eased = easeOutElastic(prog);
-                    card.style.scale = initScale + (1-initScale) * eased;
-                    if (prog < 1) {
-                        window.requestAnimationFrame(step);
-                    } else {
-                        card.style.scale = 1;
-                    }
-                }
-                window.requestAnimationFrame(step);
-            });
-            const perspective = 500; // px
-            card.addEventListener("mousemove",(m)=>{
-                const constraint = 45 * (window.innerWidth/1920);
-                window.requestAnimationFrame(()=>{
-                    let rect = card.getBoundingClientRect();
-                    let rotX = -(m.y - rect.y - (rect.height / 2)) / constraint;
-                    let rotY = (m.x - rect.x - (rect.width / 2)) / constraint;
-                    let out = "perspective("+perspective+"px) rotateX("+rotX+"deg) rotateY("+rotY+"deg)";
-                    card.style.transform = out;
-                });
-                const highlight = card.querySelector(".card-highlight");
-                if (highlight) {
-                    highlight.style.opacity = "35%";
-                    let rect = card.querySelector("div:has(.card-highlight)").getBoundingClientRect();
-                    let radius = highlight.offsetWidth / 2;
-                    highlight.style.left = (m.x - rect.x - radius) + "px";
-                    highlight.style.top  = (m.y - rect.y - radius) + "px";
-                    // highlight.style.left = m.x-(rect.x+(rect.width/2))+"px";
-                    // highlight.style.top = m.y-(rect.y+(rect.height/2))+"px";
-                }
-            });
-            card.addEventListener("mouseleave",()=>{
-                card.style.transform = "perspective("+perspective+"px)";
-                const highlight = card.querySelector(".card-highlight");
-                if (highlight)
-                    highlight.style.opacity = "0%";
-            });
-            card.querySelector("#dl").addEventListener("click",()=>{
-                embedOpen(dl);
-            });
-            card.querySelector("#dl-new").addEventListener("click",()=>{
-                open(dl_new);
-            });
-            card.querySelector("#exp").addEventListener("click",()=>{
-                embedOpen(exp);
-            });
-            cardTemplate.parentElement.appendChild(card);
-        });
-        cardTemplate.remove();
-    });
-
-    const levelData = _levelData[0];
-    const levelTags = _levelData[1];
-
     var dltriggered = false;
     document.getElementById("dl-adofai").addEventListener("mousedown",(e)=>{
         if (e.button != 1) return;
@@ -376,7 +515,7 @@ window.addEventListener("load",function() {
                 a.remove();
             });
         } else {
-            open(selLevels[0].querySelector("#dl-new").dataset.dl);
+            open(selLevels.querySelector("#dl-new").dataset.dl);
         }
     });
 
@@ -420,18 +559,6 @@ window.addEventListener("load",function() {
             });
         }
     });
-
-    function filterByText(term) {
-        document.getElementById("level-cards").querySelectorAll(".level-card").forEach((card)=>{
-            if (term == "") {card.style.display = "block"; return};
-            const title = card.querySelector(".title").textContent.toLowerCase();
-            const artist = card.querySelector(".subtext").textContent.toLowerCase();
-            if (title.indexOf(term) != -1 || artist.indexOf(term) != -1)
-                card.style.display = "block";
-            else
-                card.style.display = "none";
-        });
-    };
 
     document.getElementById("level-search").addEventListener("input",(e)=>{
         const term = e.target.value.toLowerCase();

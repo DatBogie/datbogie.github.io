@@ -261,6 +261,7 @@
     padding-right: 14px;
     padding-top: 7px;
     padding-bottom: 7px;
+    position: relative;
 }
 
 .tabpage > div > button:hover:not(button:disabled) {
@@ -479,6 +480,8 @@ p {
     aspect-ratio: 1;
     object-fit: cover;
     display: block;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
 }
 
 .title {
@@ -501,15 +504,121 @@ p {
     overflow: hidden;
 }
 
+#level-filter-popup {
+    background-color: var(--mantle);
+    top: 0;
+    left: 0;
+    width: 500px;
+    height: 500px;
+    z-index: 10;
+    position: absolute;
+    margin-right: 8px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    filter: drop-shadow(0px 20px 20px black);
+}
+
+#level-filter-popup.closed {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes level-filter-popup-roll {
+    from {
+        opacity: 100%;
+    } to {
+        opacity: 0;
+    }
+}
+
+@keyframes level-filter-popup-unroll {
+    from {
+        opacity: 0;
+    } to {
+        opacity: 100%;
+    }
+}
+
+.filter-tags {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 7px;
+}
+
+.filter-tag {
+    background-color: var(--base);
+    display: flex;
+    border-radius: 2vw;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+    justify-content: center;
+    align-items: center;
+    gap: .3vw;
+}
+
+.tag-icon {
+    width: 1vw;
+    height: 1vw;
+    border-radius: 50%;
+    background-color: var(--accent);
+}
+
+.tag-label {
+    font-size: 1vw;
+}
+
+.level-filter-popup-controls {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 7px;
+}
+
+#level-filter-popup button {
+    border-radius: 50px;
+    background-color: var(--crust);
+    color: var(--text);
+    border-width: 2px;
+    border-style: solid;
+    border-color: #b7bdf800;
+    transition: scale 200ms ease, border-color 200ms ease, background-color 200ms ease;
+    font-size: 1rem;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    position: relative;
+}
+
+#level-filter-popup button:hover {
+    scale: 1.05;
+    transition: scale 200ms ease, background-color 200ms ease;
+    border-color: var(--accent);
+}
+
+#level-filter-popup button:active {
+    scale: .95;
+}
+
 .card-tags {
     background-color: var(--base);
-    width: 100%;
+    width: calc(100% - 25px);
     height: 10%;
     border-radius: 0;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
     min-height: 15px;
-    display: inline-block;
+    margin-bottom: 7px;
+    display: flex;
+    padding-left: 12.5px;
+    padding-right: 12.5px;
+    align-items: center;
+    overflow: scroll;
 }
 
 .card-tags.collapsed {
@@ -520,7 +629,8 @@ p {
 }
 
 .card-tag {
-    border-radius: 50%;
+    scale: .9;
+    flex-shrink: 0;
 }
 
 .level-card > div:has(.card-highlight) {
