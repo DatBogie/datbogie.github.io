@@ -175,8 +175,7 @@ function filterByTags() {
                 break;
             }
         }
-        if (next)
-            card.style.display = "none";
+        if (next) card.style.display = "none";
     });
 }
 
@@ -342,8 +341,60 @@ resizeObserver.observe(searchTags);
 window.addEventListener("scroll",updatePopupPos,true);
 window.addEventListener("resize",updatePopupPos);
 
+const cur = document.querySelector(".cursor");
+setInterval(function() {
+    if (xVel < 0) {
+        xVel+=700;
+        if (xVel > 0) {
+            xVel = 0;
+        }
+    } else {
+        xVel-=700;
+        if (xVel < 0) {
+            xVel = 0
+        }
+    }
+    cur.style.rotate = xVel+"deg";
+},100);
+
+var iterNum = -1;
+const loadingCircle = document.getElementById("loading-circle");
+const dots = document.querySelectorAll(".loading-dot");
+const intervalId = setInterval(()=>{
+    iterNum++;
+    if (iterNum % 500 == 0) {
+        console.log(iterNum);
+        let circ = loadingCircle.cloneNode();
+        circ.classList.add("pulse");
+        loadingCircle.parentElement.appendChild(circ);
+        circ.offsetHeight;
+        circ.style.scale = "10";
+        circ.style.opacity = "0";
+        setTimeout(()=>{
+            circ.remove();
+        },650);
+    }
+});
+function loadingDotJump(i) {
+    dots[i].style.animation = "none";
+    void dots[i].offsetHeight;
+    dots[i].style.animation = "loading-dot-jump 1s linear";
+}
+const intervalId1 = setInterval(()=>{
+    for (let i=0; i<3; i++) {
+        setTimeout(()=>{
+            loadingDotJump(i);
+        },i*500);
+    }
+},3*500);
+
 window.addEventListener("load",function() {
-    updatePopupPos();
+    clearInterval(intervalId);
+    clearInterval(intervalId1);
+    document.getElementById("loading").remove();
+    document.body.style.opacity = "0";
+    void document.body.offsetHeight;
+    document.getElementById("tabbar-bg").style.opacity = "100%";
     document.getElementById("all-tags").addEventListener("click",()=>{
         var value = false;
         const tags = document.querySelector(".filter-tags").querySelectorAll(".filter-tag");
@@ -434,27 +485,12 @@ window.addEventListener("load",function() {
     document.querySelectorAll(".expanding-hr").forEach((el)=>{
         el.style.animationName = "hr-expand";
     });
-    const cur = document.querySelector(".cursor");
     document.querySelector(".if-popup").addEventListener("mouseenter",() => {
         cur.style.display = "none";
     });
     document.querySelector(".if-popup").addEventListener("mouseleave",() => {
         cur.style.display = "block";
     });
-    setInterval(function() {
-        if (xVel < 0) {
-            xVel+=700;
-            if (xVel > 0) {
-                xVel = 0;
-            }
-        } else {
-            xVel-=700;
-            if (xVel < 0) {
-                xVel = 0
-            }
-        }
-        cur.style.rotate = xVel+"deg";
-    },100);
     document.body.style.transition = "margin-top 1s ease, opacity 1s ease-out";
     document.body.style.marginTop = "8px";
     document.body.style.opacity = "100%";
