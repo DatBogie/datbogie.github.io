@@ -26,7 +26,7 @@ const LevelData = await getLevelData(function(levelData,levelTags){
         artist.textContent = artistText;
         const icon = card.querySelector(".level-icon");
         // var iconSrc = "assets/adofai-levels/"+level["Name"]+"-1.png";
-        var iconSrc = "https://assets.datbogie.org/"+level["Name"]+"-1.png?ts="+Date.now();
+        var iconSrc = "https://assets.datbogie.org/"+level["Name"]+"-1.png";
         icon.src = iconSrc;
         level["Tags"].forEach(tag=>{
             const newTag = cardTagTemplate.cloneNode(true);
