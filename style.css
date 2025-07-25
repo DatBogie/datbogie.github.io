@@ -634,14 +634,14 @@ p {
 }
 
 .tag-icon {
-    width: 1vw;
-    height: 1vw;
+    width: 1rem;
+    height: 1rem;
     border-radius: 50%;
     background-color: var(--accent);
 }
 
 .tag-label {
-    font-size: 1vw;
+    font-size: 1rem;
 }
 
 .level-filter-popup-controls {
