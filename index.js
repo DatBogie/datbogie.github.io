@@ -526,6 +526,13 @@ window.addEventListener("load",function() {
         });
     });
 
+    document.getElementById("adofai-select-all").addEventListener("click",()=>{
+        document.getElementById("level-cards").querySelectorAll(".level-card").forEach(card=>{
+            if (!card.classList.contains("level-card-selected"))
+                card.classList.add("level-card-selected");
+        });
+    });
+
     var dltriggered = false;
     document.getElementById("dl-adofai").addEventListener("mousedown",(e)=>{
         if (e.button != 1) return;
