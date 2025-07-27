@@ -38,11 +38,15 @@ const LevelData = await getLevelData(function(levelData,levelTags){
         const download = card.querySelector("#dl");
         const newDownload = card.querySelector("#dl-new");
         const expBtn = card.querySelector("#exp");
-        var dl = "https://drive.usercontent.google.com/download?id="+level["DLCode"];
+        var dl = (level["DLCode"] != "")? "https://drive.usercontent.google.com/download?id="+level["DLCode"] : null;
         var dl_new = "https://assets.datbogie.org/levels/"+level["Name"]+".zip";
         var exp = "level-view.html?title="+level["Name"];
-        download.dataset.dl = dl;
-        download.dataset.href = dl;
+        if (dl) {
+            download.dataset.dl = dl;
+            download.dataset.href = dl;
+        } else {
+            download.remove();
+        }
         newDownload.dataset.dl = dl_new;
         newDownload.dataset.href = dl_new;
         expBtn.dataset.href = exp;
@@ -101,9 +105,11 @@ const LevelData = await getLevelData(function(levelData,levelTags){
             if (highlight)
                 highlight.style.opacity = "0%";
         });
-        card.querySelector("#dl").addEventListener("click",()=>{
-            embedOpen(dl);
-        });
+        if (dl) {
+            card.querySelector("#dl").addEventListener("click",()=>{
+                embedOpen(dl);
+            });
+        }
         card.querySelector("#dl-new").addEventListener("click",()=>{
             open(dl_new);
         });
@@ -365,7 +371,6 @@ const dots = document.querySelectorAll(".loading-dot");
 const intervalId = setInterval(()=>{
     iterNum++;
     if (iterNum % 500 == 0) {
-        console.log(iterNum);
         let circ = loadingCircle.cloneNode();
         circ.classList.add("pulse");
         loadingCircle.parentElement.appendChild(circ);
