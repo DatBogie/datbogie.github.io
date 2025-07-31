@@ -10,6 +10,11 @@ var justLoaded = true;
 
 var selectedTab = "t-1";
 
+const urlParams = new URLSearchParams(document.location.search);
+
+if (urlParams.get("tab"))
+    selectedTab=urlParams.get("tab");
+
 const LevelData = await getLevelData(function(levelData,levelTags){
     const cardTemplate = document.getElementById("level-card-template");
     levelData.forEach((level)=>{
