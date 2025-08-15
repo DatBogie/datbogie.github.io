@@ -537,6 +537,22 @@ p {
     filter: drop-shadow(0px 0px 10px black);
 }
 
+#difficulty-indicator {
+    position: absolute;
+    width: 25%;
+    aspect-ratio: 1;
+    bottom: 0;
+    right: 0;
+    filter: drop-shadow(0px 0px 10px black);
+    margin: 2%;
+    opacity: 50%;
+    transition: opacity 200ms ease;
+}
+
+#difficulty-indicator:hover {
+    opacity: 100%;
+}
+
 .level-card {
     border-radius: 25px;
     background-color: var(--crust);
