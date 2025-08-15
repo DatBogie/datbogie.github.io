@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="992.25458"
+   height="992.25458"
+   viewBox="0 0 262.53402 262.53402"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(-1.024643,-1.024643)">
+    <circle
+       style="fill:#eed49f;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:19.304;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:0"
+       id="path1"
+       cx="132.29166"
+       cy="132.29166"
+       r="121.61501" />
+    <path
+       d="m 340.14414,622.95945 q -18.8,0 -28.8,-10 -10,-10.4 -10,-29.2 v -211.6 q 0,-18.8 10.8,-28.8 10.8,-10.4 30.4,-10.4 16.4,0 26,6.4 9.6,6.4 17.6,20.8 l 71.2,125.6 71.2,-125.6 q 8,-14.4 17.6,-20.8 10,-6.4 26,-6.4 18.8,0 28.8,10.4 10.4,10 10.4,28.8 v 211.6 q 0,18.8 -10,29.2 -10,10 -28.8,10 -18.8,0 -28.8,-10 -10,-10.4 -10,-29.2 v -97.6 l -45.6,75.6 q -6,10 -13.6,15.2 -7.2,4.8 -18.8,4.8 -11.6,0 -19.2,-4.8 -7.2,-5.2 -13.2,-15.2 l -44.4,-73.6 v 95.6 q 0,18.8 -10,29.2 -10,10 -28.8,10 z"
+       id="text1"
+       style="font-weight:900;font-size:400px;font-family:'Nunito Heavy';-inkscape-font-specification:'Nunito Heavy, Heavy';white-space:pre;fill:#ffffff;stroke-width:72.96;stroke-linecap:round;stroke-linejoin:round"
+       transform="matrix(0.32582556,0,0,0.32582556,-16.396848,-23.439792)"
+       aria-label="M" />
+    <path
+       d="m 397.74414,606.95945 q -28.4,0 -28.4,-28.8 v -46.8 h -45.6 q -27.6,0 -27.6,-27.2 0,-27.2 27.6,-27.2 h 45.6 v -44.4 q 0,-28.8 28.4,-28.8 28.4,0 28.4,28.8 v 44.4 h 45.6 q 27.6,0 27.6,27.2 0,27.2 -27.6,27.2 h -45.6 v 46.8 q 0,28.8 -28.4,28.8 z"
+       id="text2"
+       style="font-weight:900;font-size:400px;font-family:'Nunito Heavy';-inkscape-font-specification:'Nunito Heavy, Heavy';white-space:pre;fill:#ffffff;stroke-width:72.96;stroke-linecap:round;stroke-linejoin:round"
+       transform="matrix(0.32582556,0,0,0.32582556,92.697192,-97.342114)"
+       aria-label="+" />
+  </g>
+</svg>

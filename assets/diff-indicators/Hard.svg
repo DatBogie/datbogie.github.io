@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="992.25458"
+   height="992.25458"
+   viewBox="0 0 262.53402 262.53402"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(-1.024643,-1.024643)">
+    <circle
+       style="fill:#ee99a0;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:19.304;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:0"
+       id="path1"
+       cx="132.29166"
+       cy="132.29166"
+       r="121.61501" />
+    <path
+       d="m 343.74414,622.95945 q -20.8,0 -32,-11.2 -11.2,-11.6 -11.2,-32.8 v -202 q 0,-21.2 11.2,-32.4 11.2,-11.6 32,-11.6 20.8,0 31.6,11.6 11.2,11.2 11.2,32.4 v 64 h 100 v -64 q 0,-21.2 11.2,-32.4 11.2,-11.6 32,-11.6 20.8,0 31.6,11.6 11.2,11.2 11.2,32.4 v 202 q 0,21.2 -11.2,32.8 -10.8,11.2 -31.6,11.2 -20.8,0 -32,-11.2 -11.2,-11.6 -11.2,-32.8 v -67.6 h -100 v 67.6 q 0,21.2 -10.8,32.8 -10.8,11.2 -32,11.2 z"
+       id="text1"
+       style="font-weight:900;font-size:400px;font-family:'Nunito Heavy';-inkscape-font-specification:'Nunito Heavy, Heavy';white-space:pre;fill:#ffffff;stroke-width:72.96;stroke-linecap:round;stroke-linejoin:round"
+       transform="matrix(0.32582556,0,0,0.32582556,-9.9456095,-23.439792)"
+       aria-label="H" />
+  </g>
+</svg>
