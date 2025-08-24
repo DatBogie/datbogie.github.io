@@ -43,6 +43,7 @@ window.addEventListener("load",function() {
             if (level["Name"] != Title) return;
             Artist = level["Artist"];
             Tags = level["Tags"];
+            console.log(Tags);
             yt = level["YTCode"];
             images = level["ImageCount"];
         });
@@ -65,10 +66,10 @@ window.addEventListener("load",function() {
             // Pre-load images
             for (let i=2; i <= images; i++) {
                 let img = new Image();
-                img.src = `https://assets.datbogie.org/${Title}-${i}.png`;
+                img.src = encodeURI(`https://assets.datbogie.org/${Title}-${i}.webp`).replaceAll("?","%3F");
             }
             function updateIcon(skipAnimation) {
-                icon.src = `https://assets.datbogie.org/${Title}-${currentImage}.png`;
+                icon.src = encodeURI(`https://assets.datbogie.org/${Title}-${currentImage}.webp`).replaceAll("?","%3F");
                 label.textContent = ` ${currentImage} / ${images} `;
                 if (skipAnimation) return;
                 icon.style.animation = "none";

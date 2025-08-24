@@ -1,11 +1,38 @@
-Category,Tag,Description,Color
-Steam,steam,Is on Steam Workshop,#0b457a
-Speed,slow,Slow tile BPM,#78444c
-Speed,moderate,Moderate tile BPM,#b66773
-Speed,fast,Fast tile BPM,#ed8796
-Completion,finished,Level is 100% complete,#c6a0f6
-Completion,unfinished,Level is partially complete,#6c5887
-Completion,camera finished,Camera movement is 100% complete,#91d7e3
-Completion,camera unfinished,Camera movement is partially complete,#547d83
-Completion,deco finished,Decoration and/or VFX are 100% complete,#a6da95
-Completion,deco unfinished,Decoration and/or VFX are partially complete,#729566
+Tag,Category,Description,Color
+steam,Steam,Is on Steam Workshop,#0b457a
+slow,Speed,Slow tile BPM,#78444c
+moderate,Speed,Moderate tile BPM,#b66773
+fast,Speed,Fast tile BPM,#ed8796
+finished,Completion,Level is 100% complete,#c6a0f6
+unfinished,Completion,Level is partially complete,#6c5887
+camera finished,Completion,Camera movement is 100% complete,#91d7e3
+camera unfinished,Completion,Camera movement is partially complete,#547d83
+deco finished,Completion,Decoration and/or VFX are 100% complete,#a6da95
+deco unfinished,Completion,Decoration and/or VFX are partially complete,#729566
+chart finished,Completion,Chart is 100% complete,#f5c2e7
+chart unfinished,Completion,Chart is partially complete,#c17e91
+difficulty: very-easy,Difficulty,Very Easy difficulty level,#f0f0f0
+difficulty: very-easy+,Difficulty,Very Easy+ difficulty level,#f0f0f0
+difficulty: easy,Difficulty,Easy difficulty level,#d4f8ff
+difficulty: easy+,Difficulty,Easy+ difficulty level,#d4f8ff
+difficulty: medium,Difficulty,Medium difficulty level,#b8e6ff
+difficulty: medium+,Difficulty,Medium+ difficulty level,#b8e6ff
+difficulty: hard,Difficulty,Hard difficulty level,#9cd4ff
+difficulty: hard+,Difficulty,Hard+ difficulty level,#9cd4ff
+difficulty: very-hard,Difficulty,Very Hard difficulty level,#80c2ff
+difficulty: very-hard+,Difficulty,Very Hard+ difficulty level,#80c2ff
+seizure,Warning,Contains flashing lights or other potentially seizure-inducing effects,#ff0000
+one-shot,Difficulty,No checkpoints$comma harder,#ffb86c
+checkpoints,Difficulty,Contains checkpoints$comma easier,#ffb86c
+short,Length,<3 minutes,#ffb86c
+medium,Length,3–5 minutes,#ffb86c
+long,Length,5-7 minutes,#ffb86c
+very long,Length,7+ minutes,#ffb86c
+difficulty spike,Difficulty,Contains a sudden spike in difficulty,#ff5555
+pseudos,Difficulty,Contains pseudos (press two keys almost at once),#ff79c6
+heavy vfx,VFX,Contains heavy visual effects,#8be9fd
+light vfx,VFX,Contains light visual effects,#8be9fd
+no vfx,VFX,Contains little or no visual effects,#8be9fd
+holds,Difficulty,Contains hold tiles,#50fa7b
+dlc,Other,Requires DLC to play,#bd93f9
+3ball,Difficulty,Contains 3-ball gameplay,#ff6ac1

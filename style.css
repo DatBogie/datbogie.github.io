@@ -537,6 +537,10 @@ p {
     filter: drop-shadow(0px 0px 10px black);
 }
 
+.level-card-icon:not(#difficulty-indicator) {
+    pointer-events: none;
+}
+
 #difficulty-indicator {
     position: absolute;
     width: 25%;
@@ -643,10 +647,56 @@ p {
     }
 }
 
+.details > .summary::before {
+    content: ">";
+    display: inline-block;
+    margin-right: .5rem;
+    transition: transform 200ms ease;
+}
+
+.details.open > .summary::before {
+    transform: rotate(90deg);
+}
+
+.details > .content {
+    overflow: hidden;
+    opacity: 100%;
+    transform-origin: top;
+    transform: scaleY(1);
+    transition: display 300ms ease, transform 300ms ease, opacity 300ms ease;
+    /* clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); */
+}
+
+.details:not(.open) > .content {
+    transform: scaleY(0);
+    opacity: 0;
+    /* clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); */
+    display: none;
+}
+
+#filter-category-title {
+    column-span: all;
+    width: 100%;
+    display: block;
+    text-align: left;
+    background-color: transparent !important;
+}
+
+#filter-category-title:hover {
+    scale: 1.02;
+    transition: scale 200ms ease, background-color 200ms ease;
+    border-color: var(--accent);
+}
+
+#filter-category-title:active {
+    scale: .98;
+}
+
+.filter-category > .content {
+    columns: 2;
+}
+
 .filter-tags {
-    display: flex;
-    gap: 7px;
-    flex-wrap: wrap;
     margin-left: 5%;
     margin-right: 5%;
     margin-bottom: 7px;
@@ -660,7 +710,7 @@ p {
     padding-bottom: 1%;
     padding-left: 2%;
     padding-right: 2%;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
     gap: .3vw;
 }
@@ -698,13 +748,13 @@ p {
     position: relative;
 }
 
-#level-filter-popup button:hover {
+#level-filter-popup button:hover:not(#filter-category-title) {
     scale: 1.05;
     transition: scale 200ms ease, background-color 200ms ease;
     border-color: var(--accent);
 }
 
-#level-filter-popup button:active {
+#level-filter-popup button:active:not(#filter-category-title) {
     scale: .95;
 }
 
