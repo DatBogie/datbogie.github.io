@@ -37,13 +37,13 @@ const LevelData = await getLevelData(function(levelData,levelTags,tagData){
         level["Tags"].push(`difficulty: ${level["Difficulty"].toLowerCase().replaceAll(" ","-")}`);
         const icon = card.querySelector(".level-icon");
         // var iconSrc = "assets/adofai-levels/"+level["Name"]+"-1.png";
-        var iconSrc = encodeURI("https://assets.datbogie.org/"+level["Name"]+"-1.webp").replaceAll("?","%3F");
+        var iconSrc = encodeURI("https://assets.datbogie.org/"+level["Name"].replaceAll(":","-")+"-1.webp").replaceAll("?","%3F");
         icon.src = iconSrc;
         level["Tags"].forEach(tag=>{
             const newTag = cardTagTemplate.cloneNode(true);
             newTag.id = "";
-            newTag.title = tag;
-            newTag.style.backgroundColor = tag["Color"] || "var(--accent)";
+            newTag.title = tagData[tag]? tagData[tag]["Category"]+": "+tag : tag;
+            newTag.style.backgroundColor = (tagData[tag])? tagData[tag]["Color"] : "var(--accent)";
             cardTagTemplate.parentElement.appendChild(newTag);
         });
         cardTagTemplate.remove();
@@ -660,7 +660,7 @@ window.addEventListener("load",function() {
         }
     });
 
-    const compact = document.getElementById("compact-adofai");
+    /* const compact = document.getElementById("compact-adofai");
     compact.addEventListener("click",()=>{
         let levelCards = document.getElementById("level-cards");
         if (compact.textContent == "Compact View") {
@@ -681,7 +681,7 @@ window.addEventListener("load",function() {
                 card.querySelector(".card-tags").classList.remove("collapsed");
             });
         }
-    });
+    }); */
 
     document.getElementById("level-search").addEventListener("input",(e)=>{
         const term = e.target.value.toLowerCase();

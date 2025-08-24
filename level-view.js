@@ -28,7 +28,7 @@ window.addEventListener("load",function() {
         cur.style.rotate = xVel+"deg";
     },100);
 
-    getLevelData(function(levelData) {
+    getLevelData(function(levelData,levelTags,tagData) {
         const Title = urlParams.get("title");
         var Artist;
         var Tags;
@@ -53,6 +53,8 @@ window.addEventListener("load",function() {
         Tags?.forEach((tagN)=>{
             const tag = tempTag.cloneNode(true);
             tag.querySelector(".tag-label").textContent = tagN;
+            tag.querySelector(".tag-icon").style.backgroundColor = tagData[tagN]? tagData[tagN]["Color"] : "var(--accent)";
+            tag.title = tagData[tagN]? tagData[tagN]["Category"]+": "+tagData[tagN]["Description"] : "";
             tempTag.parentElement.appendChild(tag);
         });
         tempTag.remove();

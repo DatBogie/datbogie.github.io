@@ -854,3 +854,7 @@ code {
 .level-card .div-button:active {
     scale: .95;
 }
+
+span > img, a > img {
+    vertical-align: middle;
+}
