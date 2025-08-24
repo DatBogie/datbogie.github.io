@@ -772,6 +772,7 @@ p {
     padding-right: 12.5px;
     align-items: center;
     overflow: scroll;
+    scrollbar-width: none;
 }
 
 .card-tags.collapsed {
