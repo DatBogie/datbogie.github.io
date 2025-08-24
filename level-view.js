@@ -94,6 +94,9 @@ window.addEventListener("load",function() {
                 if (currentImage > images) currentImage = 1;
                 updateIcon();
             });
+            icon.addEventListener("click",()=>{
+                open(icon.src);
+            });
         }
     });
     document.querySelectorAll("iframe").forEach((ifr)=>{
