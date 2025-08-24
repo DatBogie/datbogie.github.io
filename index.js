@@ -590,6 +590,13 @@ window.addEventListener("load",function() {
                 card.classList.add("level-card-selected");
         });
     });
+    
+    document.getElementById("adofai-deselect-all").addEventListener("click",()=>{
+        document.getElementById("level-cards").querySelectorAll(".level-card").forEach(card=>{
+            if (card.classList.contains("level-card-selected"))
+                card.classList.remove("level-card-selected");
+        });
+    });
 
     var dltriggered = false;
     document.getElementById("dl-adofai").addEventListener("mousedown",(e)=>{
