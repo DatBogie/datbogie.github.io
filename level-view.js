@@ -34,10 +34,12 @@ window.addEventListener("load",function() {
         var Tags;
         var yt;
         var images;
+        var diff;
         try {
             Artist = urlParams.get("artist");
             Tags = urlParams.get("tags").split(",");
             yt = urlParams.get("ytcode");
+            diff = urlParams.get("difficulty");
         } catch {}
         levelData.forEach((level)=>{
             if (level["Name"] != Title) return;
@@ -46,17 +48,20 @@ window.addEventListener("load",function() {
             console.log(Tags);
             yt = level["YTCode"];
             images = level["ImageCount"];
+            diff = level["Difficulty"];
         });
         document.getElementById("title").textContent = Title;
         document.getElementById("artist").textContent = Artist;
         const tempTag = document.getElementById("template-tag");
-        Tags?.forEach((tagN)=>{
+        function mkTag(tagN) {
             const tag = tempTag.cloneNode(true);
             tag.querySelector(".tag-label").textContent = tagN;
             tag.querySelector(".tag-icon").style.backgroundColor = tagData[tagN]? tagData[tagN]["Color"] : "var(--accent)";
             tag.title = tagData[tagN]? tagData[tagN]["Category"]+": "+tagData[tagN]["Description"] : "";
             tempTag.parentElement.appendChild(tag);
-        });
+        }
+        Tags?.forEach(mkTag);
+        mkTag("difficulty: "+diff.toLowerCase().replaceAll(" ","-"));
         tempTag.remove();
         document.getElementById("video").src = "https://youtube.com/embed/"+yt;
         const icon = document.getElementById("icon");
