@@ -28,7 +28,7 @@
     --accent: var(--lavender);
 }
 
-* {
+*:not(.if-popup):not(.if-popup *) {
     cursor: none !important;
     font-family: "Nunito", serif;
 }
@@ -90,7 +90,7 @@ blockquote {
     background-color: var(--crust);
 }
 
-a {
+a, .link {
     /* color: #04a5e5; */
     color: var(--accent);
     border-color: #b7bdf800;
@@ -101,9 +101,22 @@ a {
     transition-timing-function: ease;
 }
 
-a:hover {
+a:hover, .link:not(.tag):hover {
     padding-left: 3.5px;
     padding-right: 3.5px;
+    background-color: #b7bef817;
+}
+
+.link.tag {
+    transition-property: border-color background-color transform;
+}
+
+.link.tag:hover {
+    transform: translateY(-3.5px);
+    background-color: #b7bef817;
+}
+.link.tag:active {
+    transform: translateY(1.75px);
     background-color: #b7bef817;
 }
 
@@ -111,7 +124,7 @@ p {
     text-align: left;
 }
 
-body > div:not(#hide-pointer) {
+body > .content {
     width: 100%;
     height: calc(100vh - 16px);
     display: flex;
@@ -129,7 +142,7 @@ body > div > div {
     gap: 0;
 }
 
-body > div > div > div {
+body > .content > div > div {
     background-color: var(--crust);
     width: 50%;
     height: 50%;
@@ -173,6 +186,12 @@ h1 {
     flex-wrap: wrap;
 }
 
+#links::before {
+    content: "Links: ";
+    font-weight: 900;
+    font-size: 1.75vw;
+}
+
 .tag {
     background-color: var(--base);
     display: flex;
@@ -211,6 +230,169 @@ h1 {
     border-style: solid;
     border-color: #b7bdf800;
     border-bottom: none;
+}
+
+.blur-bg {
+    z-index: 1000;
+    position: fixed;
+    backdrop-filter: blur(5px);
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    animation-timing-function: ease;
+    animation-duration: 700ms;
+}
+
+.blur-bg-closing {
+    backdrop-filter: unset;
+}
+
+@keyframes blur-bg-open {
+    from {
+        backdrop-filter: unset;
+    } to {
+        backdrop-filter: blur(5px);
+    }
+}
+
+/* Add open in new tab button to popup */
+
+@keyframes blur-bg-close {
+    from {
+        backdrop-filter: blur(5px);
+        pointer-events: none;
+    } to {
+        backdrop-filter: unset;
+        pointer-events: none;
+    }
+}
+
+.if-popup {
+    position: fixed;
+    width: 75vw;
+    height: 75vh;
+    background-color: var(--crust);
+    left: calc(50vw - (75vw / 2));
+    top: calc(50vh - (75vh / 2));
+    border: .15vw solid var(--accent);
+    border-radius: 1vw;
+    z-index: 1001;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    cursor: default;
+    animation-timing-function: ease;
+    animation-duration: .5s;
+    display: none;
+}
+
+.if-closing {
+    width: 0vw;
+    height: 0vh;
+}
+
+@keyframes if-popup-close {
+    0% {
+        width: 75vw;
+        height: 75vh;
+        left: calc(50vw - (75vw / 2));
+        top: calc(50vh - (75vh / 2));
+    } 50% {
+        width: 75vw;
+        height: 0vh;
+        left: calc(50vw - (75vw / 2));
+        top: 50vh;
+    } 100% {
+        width: 0vw;
+        height: 0vw;
+        left: 50vw;
+        top: 50vh;
+    }
+}
+
+@keyframes if-popup-open {
+    100% {
+        width: 75vw;
+        height: 75vh;
+        left: calc(50vw - (75vw / 2));
+        top: calc(50vh - (75vh / 2));
+    } 50% {
+        width: 75vw;
+        height: 0vh;
+        left: calc(50vw - (75vw / 2));
+        top: 50vh;
+    } 0% {
+        width: 0vw;
+        height: 0vw;
+        left: 50vw;
+        top: 50vh;
+    }
+}
+
+.if-bar {
+    width: 75vw;
+    height: 5vh;
+    position: absolute;
+    display: flex;
+    align-items: center;
+}
+
+.if-bar > button {
+    border-radius: 50%;
+    width: 5vh;
+    height: 5vh;
+    scale: .5;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    transition: scale 200ms ease-out;
+}
+
+#if-close {
+    background-color: var(--red);
+}
+
+#if-open {
+    background-color: var(--green);
+}
+
+.if-bar > button:hover {
+    scale: .535;
+}
+
+.if-bar > button:active {
+    scale: .465;
+}
+
+.if-bar #if-url {
+    background-color: var(--base);
+    border-radius: 1vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    font-family: "Nunito", serif;
+    padding-top: .5vh;
+    padding-bottom: .5vh;
+}
+
+.if-bar * {
+    font-size: 1vw;
+}
+
+.if-bar > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75vw;
+    height: 5vh;
+    position: absolute;
+}
+
+.if-popup > iframe {
+    width: 75vw;
+    height: 70vh;
+    border: none;
+    display: block;
+    padding-top: 5vh;
 }
 
 .level-icon:hover {

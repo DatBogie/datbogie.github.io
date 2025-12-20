@@ -1,4 +1,4 @@
-import { getLevelData } from "./modules/utils.js";
+import { getLevelData, embedOpen, isMobile, getFavicon } from "./modules/utils.js";
 var justLoaded = true;
 
 const urlParams = new URLSearchParams(document.location.search);
@@ -28,6 +28,23 @@ window.addEventListener("load",function() {
         cur.style.rotate = xVel+"deg";
     },100);
 
+    const links = document.querySelectorAll(".link, .functional-link");
+    links.forEach((link)=>{
+        link.addEventListener("click",()=>{
+            embedOpen(link.dataset.href);
+        });
+        var targetted = false;
+        link.addEventListener("mousedown",(e)=>{
+            if (e.button != 1) return;
+            targetted = true;
+        });
+        link.addEventListener("mouseup",(e)=>{
+            if (e.button != 1 || !targetted) return;
+            targetted = false;
+            open(link.dataset.href);
+        });
+    });
+
     getLevelData(function(levelData,levelTags,tagData) {
         const Title = urlParams.get("title");
         var Artist;
@@ -35,20 +52,22 @@ window.addEventListener("load",function() {
         var yt;
         var images;
         var diff;
+        var Links;
         try {
             Artist = urlParams.get("artist");
             Tags = urlParams.get("tags").split(",");
             yt = urlParams.get("ytcode");
             diff = urlParams.get("difficulty");
+            Links = urlParams.get("links").split(",");
         } catch {}
         levelData.forEach((level)=>{
             if (level["Name"] != Title) return;
             Artist = level["Artist"];
             Tags = level["Tags"];
-            console.log(Tags);
             yt = level["YTCode"];
             images = level["ImageCount"];
             diff = level["Difficulty"];
+            Links = level["Links"] || [];
         });
         document.getElementById("title").textContent = Title;
         document.getElementById("artist").textContent = Artist;
@@ -60,9 +79,24 @@ window.addEventListener("load",function() {
             tag.title = tagData[tagN]? tagData[tagN]["Category"]+": "+tagData[tagN]["Description"] : "";
             tempTag.parentElement.appendChild(tag);
         }
+        const tempLink = document.getElementById("template-link");
+        function mkLink(url) {
+            const link = tempLink.cloneNode(true);
+            // link.querySelector(".tag-label").textContent = "Link";
+            link.title = url;
+            link.querySelector("img").src = getFavicon(url);
+            link.querySelector(".tag-icon").style.backgroundColor = "transparent";
+            link.dataset.href = url;
+            link.dataset.opennew = "true";
+            tempLink.parentElement.appendChild(link);
+        }
         Tags?.forEach(mkTag);
+        Links?.forEach(mkLink);
+        if (Links && Links.length === 0)
+            tempLink.parentElement.style.display = "none";
         mkTag("difficulty: "+diff.toLowerCase().replaceAll(" ","-"));
         tempTag.remove();
+        tempLink.remove();
         document.getElementById("video").src = "https://youtube.com/embed/"+yt;
         const icon = document.getElementById("icon");
         if (images > 0) {
@@ -95,7 +129,7 @@ window.addEventListener("load",function() {
                 updateIcon();
             });
             icon.addEventListener("click",()=>{
-                open(icon.src);
+                embedOpen(icon.src);
             });
         }
     });
@@ -107,6 +141,38 @@ window.addEventListener("load",function() {
             cur.style.display = "block";
         });
     });
+    document.getElementById("if-open").addEventListener("click",() => {
+        const url = document.querySelector(".if-popup").querySelector("#if-url").textContent;
+        open(url);
+        document.getElementById("if-close").click();
+    });
+    document.getElementById("if-close").addEventListener("click",() => {
+        const blur = document.querySelector(".blur-bg");
+        blur.style.animationName = "blur-bg-close";
+        blur.classList.add("blur-bg-closing");
+        setTimeout(() => {
+            blur.style.display = "none";
+            blur.classList.remove("blur-bg-closing");
+        },Number(getComputedStyle(blur).animationDuration.slice(0,-1))*1000);
+
+        const popup = document.querySelector(".if-popup");
+        popup.style.animationName = "if-popup-close";
+        popup.classList.add("if-closing");
+        setTimeout(() => {
+            popup.style.display = "none";
+            popup.classList.remove("if-closing");
+            popup.querySelector("iframe").src = "";
+            document.getElementById("if-url").textContent = "";
+        },Number(getComputedStyle(popup).animationDuration.slice(0,-1))*1000);
+    });
+    if (!isMobile()) {
+        document.querySelector(".if-popup").addEventListener("mouseenter",() => {
+            cur.style.display = "none";
+        });
+        document.querySelector(".if-popup").addEventListener("mouseleave",() => {
+            cur.style.display = "block";
+        });
+    }
 });
 window.addEventListener("mousemove",function(m) {
     let cur = document.querySelector(".cursor");
@@ -139,4 +205,53 @@ window.addEventListener("mousedown",function() {
 window.addEventListener("mouseup",function() {
     let cur = this.document.querySelector(".cursor");
     cur.style.scale = 1;
+});
+
+const observer = new MutationObserver((mL)=>{
+    mL.forEach((m)=>{
+        if (m.type == "childList" && m.addedNodes.length > 0) {
+            m.addedNodes.forEach((n)=>{
+                if (n.nodeType == Node.ELEMENT_NODE) {
+                    var links;
+                    if (n.classList?.contains("link")) {
+                        links = [n];
+                    } else {
+                        let _links = n.querySelectorAll(".link");
+                        if (_links.length > 0) {
+                            links = _links
+                        }
+                    }
+                    if (!links) return;
+                    links.forEach((link)=>{
+                        if (link.dataset.disableclick != "true") {
+                            if (link.dataset.opennew == "true") {
+                                link.addEventListener("click",()=>{
+                                    open(link.dataset.href);
+                                });
+                            } else {
+                                link.addEventListener("click",()=>{
+                                    embedOpen(link.dataset.href);
+                                });
+                            }
+                        }
+                        var targetted = false;
+                        link.addEventListener("mousedown",(e)=>{
+                            if (e.button != 1) return;
+                            targetted = true;
+                        });
+                        link.addEventListener("mouseup",(e)=>{
+                            if (e.button != 1 || !targetted) return;
+                            targetted = false;
+                            open(link.dataset.href);
+                        });
+                    });
+                }
+            });
+        }
+    });
+});
+
+observer.observe(document.body, {
+    childList: true,
+    subtree: true,
 });

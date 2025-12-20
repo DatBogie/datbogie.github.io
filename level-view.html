@@ -8,24 +8,41 @@
     <link rel="stylesheet" href="./level-view.css">
 </head>
 <body>
+    <div class="blur-bg"></div>
     <div id="hide-pointer"></div>
     <img src="cursor.svg" class="cursor" width="35px">
-    <div style="flex-wrap: wrap;">
-        <div style="width: 100%;">
+    <div class="if-popup">
+        <div class="if-bar">
+            <button id="if-close"></button>
+            <div>
+                <span id="if-url"></span>
+            </div>
+            <button id="if-open"></button>
+        </div>
+        <iframe></iframe>
+    </div>
+    <div class="content" style="flex-wrap: wrap;">
+        <div>
             <div>
                 <span class="h1" id="title">Title</span><br>
                 <span id="artist">Artist</span>
                 <hr>
+                <div style="margin-top: 14px;" class="tag-container" id="links">
+                    <div class="tag link" id="template-link">
+                        <div class="tag-icon"><img></div>
+                        <!-- <span class="tag-label">Link</span> -->
+                    </div>
+                </div>
                 <h1 style="margin-top: 14px; margin-bottom: 14px;">Tags:</h1>
                 <div class="tag-container" id="tags">
                     <div class="tag" id="template-tag">
                         <div class="tag-icon"></div>
-                            <span class="tag-label">Tag</span>
+                        <span class="tag-label">Tag</span>
                     </div>
                 </div>
             </div>
             <div style="display: flex; justify-content: center; align-items: center;">
-                <img src="https://placehold.co/1000x1000/png" class="level-icon" id="icon" title="Click to view raw">
+                <img src="https://placehold.co/1000x1000/png" class="level-icon" id="icon" title="Click to view raw image">
                 <div class="carousel-controls">
                     <button id="left"><</button>
                     <span id="label"> 0 / 0 </span>
