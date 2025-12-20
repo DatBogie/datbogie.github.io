@@ -60,6 +60,8 @@ window.addEventListener("load",function() {
             diff = urlParams.get("difficulty");
             Links = urlParams.get("links").split(",");
         } catch {}
+        var dl;
+        var dl_new;
         levelData.forEach((level)=>{
             if (level["Name"] != Title) return;
             Artist = level["Artist"];
@@ -68,7 +70,12 @@ window.addEventListener("load",function() {
             images = level["ImageCount"];
             diff = level["Difficulty"];
             Links = level["Links"] || [];
+            dl = (level["DLCode"] != "")? "https://drive.usercontent.google.com/download?id="+level["DLCode"] : null;
+            dl_new = "https://assets.datbogie.org/levels/"+level["Name"]+".zip";
         });
+        if (dl)
+            Links.splice(0,0,dl);
+        Links.splice(0,0,dl_new);
         document.getElementById("title").textContent = Title;
         document.getElementById("artist").textContent = Artist;
         const tempTag = document.getElementById("template-tag");

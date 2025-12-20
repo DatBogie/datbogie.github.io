@@ -148,5 +148,9 @@ export function isMobile() {
 }
 
 export function getFavicon(url) {
+    if (url.indexOf("drive.usercontent.google.com") !== -1)
+        return "https://s2.googleusercontent.com/s2/favicons?domain=drive.google.com"
+    if (url.indexOf("assets.datbogie.org") !== -1)
+        return "../assets/favicon-dl.png";
     return "https://s2.googleusercontent.com/s2/favicons?domain_url=" + url;
 }
