@@ -71,7 +71,7 @@ window.addEventListener("load",function() {
             diff = level["Difficulty"];
             Links = level["Links"] || [];
             dl = (level["DLCode"] != "")? "https://drive.usercontent.google.com/download?id="+level["DLCode"] : null;
-            dl_new = "https://assets.datbogie.org/levels/"+level["Name"]+".zip";
+            dl_new = encodeURI("https://assets.datbogie.org/levels/"+level["Name"]+".zip").replaceAll("?","%3F");
         });
         if (dl)
             Links.splice(0,0,dl);

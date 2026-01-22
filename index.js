@@ -37,7 +37,7 @@ const LevelData = await getLevelData(function(levelData,levelTags,tagData){
         level["Tags"].push(`difficulty: ${level["Difficulty"].toLowerCase().replaceAll(" ","-")}`);
         const icon = card.querySelector(".level-icon");
         // var iconSrc = "assets/adofai-levels/"+level["Name"]+"-1.png";
-        var iconSrc = encodeURI("https://assets.datbogie.org/"+level["Name"].replaceAll(":","-")+"-1.webp").replaceAll("?","%3F");
+        var iconSrc = encodeURI("https://assets.datbogie.org/"+level["Name"]+"-1.webp").replaceAll("?","%3F");
         icon.src = iconSrc;
         level["Tags"].forEach(tag=>{
             const newTag = cardTagTemplate.cloneNode(true);
@@ -51,7 +51,7 @@ const LevelData = await getLevelData(function(levelData,levelTags,tagData){
         const newDownload = card.querySelector("#dl-new");
         const expBtn = card.querySelector("#exp");
         var dl = (level["DLCode"] != "")? "https://drive.usercontent.google.com/download?id="+level["DLCode"] : null;
-        var dl_new = "https://assets.datbogie.org/levels/"+level["Name"]+".zip";
+        var dl_new = encodeURI("https://assets.datbogie.org/levels/"+level["Name"]+".zip").replaceAll("?","%3F");
         var exp = "level-view.html?title="+level["Name"];
         if (dl) {
             download.dataset.dl = dl;
