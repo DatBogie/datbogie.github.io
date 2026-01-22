@@ -13,20 +13,22 @@ window.addEventListener("load",function() {
     document.body.style.marginTop = "3px";
     document.body.style.opacity = "100%";
     const cur = document.querySelector(".cursor");
-    setInterval(function() {
-        if (xVel < 0) {
-            xVel+=700;
-            if (xVel > 0) {
-                xVel = 0;
-            }
-        } else {
-            xVel-=700;
+    if (!isMobile) {
+        setInterval(function() {
             if (xVel < 0) {
-                xVel = 0
+                xVel+=700;
+                if (xVel > 0) {
+                    xVel = 0;
+                }
+            } else {
+                xVel-=700;
+                if (xVel < 0) {
+                    xVel = 0
+                }
             }
-        }
-        cur.style.rotate = xVel+"deg";
-    },100);
+            cur.style.rotate = xVel+"deg";
+        },100);
+    }
 
     const links = document.querySelectorAll(".link, .functional-link");
     links.forEach((link)=>{
