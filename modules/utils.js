@@ -68,7 +68,11 @@ export function embedOpen(url) {
     popup.style.animationName = "if-popup-open";
     popup.style.display = "block";
     const urlBar = document.getElementById("if-url");
-    urlBar.textContent = url;
+    if (url.startsWith("level-view.html?title="))
+        urlBar.textContent = `https://datbogie.org/level/${url.substring(22)}`;
+    else
+        urlBar.textContent = url;
+    urlBar.href = urlBar.textContent;
     const iframe = popup.querySelector("iframe");
     iframe.src = url;
 
