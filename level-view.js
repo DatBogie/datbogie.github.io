@@ -98,7 +98,13 @@ window.addEventListener("load",function() {
         const tempLink = document.getElementById("template-link");
         function mkLink(url) {
             const link = tempLink.cloneNode(true);
-            // link.querySelector(".tag-label").textContent = "Link";
+            const linkLbl = link.querySelector(".tag-label")
+            if (url.startsWith("https://assets.datbogie.org/levels/"))
+                linkLbl.textContent = "Download";
+            else if (url.startsWith("https://steamcommunity.com/sharedfiles/filedetails/?id="))
+                linkLbl.textContent = "Workshop";
+            else
+                linkLbl.style.display = "none";
             link.title = url;
             link.querySelector("img").src = getFavicon(url);
             link.querySelector(".tag-icon").style.backgroundColor = "transparent";
