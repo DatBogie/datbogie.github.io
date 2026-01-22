@@ -29,7 +29,7 @@ const tempLink = document.getElementById("template-link");
 function mkLink(name, url) {
     const link = tempLink.cloneNode(true);
     link.querySelector(".link-label").textContent = name;
-    link.title = name;
+    link.title = url;
     link.querySelector("img").src = getFavicon(url);
     link.querySelector(".link-icon").style.backgroundColor = "transparent";
     link.dataset.href = url;
