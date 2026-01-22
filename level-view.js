@@ -44,6 +44,13 @@ window.addEventListener("load",function() {
             open(link.dataset.href);
         });
     });
+    document.onclick = function(x) {
+        if (x.target.tagName === "A") {
+            const url = x.target.href;
+            open(url);
+            return false;
+        }
+    }
 
     getLevelData(function(levelData,levelTags,tagData) {
         const Title = urlParams.get("title");

@@ -483,6 +483,7 @@ hr {
 blockquote {
     border-left: 4px solid var(--text);
     padding-left: 1em;
+    padding-right: 1em;
     padding-top: 1em;
     padding-bottom: 1em;
     margin-left: 0;
@@ -502,10 +503,51 @@ a, .link {
     text-decoration-line: underline;
 }
 
-a:hover, .link:hover {
+a:hover, .link:not(.tag):hover {
     padding-left: 3.5px;
     padding-right: 3.5px;
     background-color: #b7bef817;
+}
+
+.link-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    height: max-content;
+}
+
+.link-label {
+    font-size: 1rem;
+}
+
+.link.tag {
+    transition-property: border-color background-color transform;
+    width: max-content;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.link.tag:hover {
+    transform: translateY(-3.5px);
+    background-color: #b7bef817;
+}
+.link.tag:active {
+    transform: translateY(1.75px);
+    background-color: #b7bef817;
+}
+
+.link.tag > .link-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: max-content;
+    width: max-content;
+    gap: 5px;
+}
+
+.link.tag > .link-icon > img {
+    height: 50%;
 }
 
 p {

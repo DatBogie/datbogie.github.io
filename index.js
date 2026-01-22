@@ -1,4 +1,4 @@
-import { getLevelData, embedOpen, isMobile } from "./modules/utils.js";
+import { getLevelData, embedOpen, isMobile, getFavicon } from "./modules/utils.js";
 
 var xVel = 0;
 var lastX = 0;
@@ -14,6 +14,33 @@ const urlParams = new URLSearchParams(document.location.search);
 
 if (urlParams.get("tab"))
     selectedTab=urlParams.get("tab");
+
+const Accounts = {
+    Youtube: "https://youtube.com/@datbogie",
+    GitHub: "https://github.com/DatBogie",
+    Steam: "https://steamcommunity.com/id/DatBogie",
+    BlueSky: "https://bsky.app/profile/datbogie.bsky.social",
+    Roblox: "https://www.roblox.com/users/479943271/profile",
+    "Roblox Group": "https://www.roblox.com/communities/7789323/x",
+    "PROJECT DΣNTΔ": "https://www.roblox.com/communities/17161898/x"
+};
+
+const tempLink = document.getElementById("template-link");
+function mkLink(name, url) {
+    const link = tempLink.cloneNode(true);
+    link.querySelector(".link-label").textContent = name;
+    link.title = name;
+    link.querySelector("img").src = getFavicon(url);
+    link.querySelector(".link-icon").style.backgroundColor = "transparent";
+    link.dataset.href = url;
+    link.dataset.opennew = "true";
+    tempLink.parentElement.appendChild(link);
+}
+
+for (const [name, url] of Object.entries(Accounts)) {
+    mkLink(name,url);
+}
+tempLink.remove();
 
 const LevelData = await getLevelData(function(levelData,levelTags,tagData){
     const cardTemplate = document.getElementById("level-card-template");
@@ -419,7 +446,10 @@ window.addEventListener("load",function() {
     const links = document.querySelectorAll(".link, .functional-link");
     links.forEach((link)=>{
         link.addEventListener("click",()=>{
-            embedOpen(link.dataset.href);
+            if (!link.classList.contains("functional-a"))
+                embedOpen(link.dataset.href);
+            else
+                open(link.dataset.href);
         });
         var targetted = false;
         link.addEventListener("mousedown",(e)=>{
@@ -432,6 +462,14 @@ window.addEventListener("load",function() {
             open(link.dataset.href);
         });
     });
+    document.onclick = function(x) {
+        if (x.target.tagName === "A") {
+            const url = x.target.href;
+            if (url.startsWith("mailto:")) return true;
+            open(url);
+            return false;
+        }
+    }
     document.querySelectorAll(".tabpage").forEach((tab)=>{
         tab.querySelectorAll("div:has(input)").forEach((div)=>{
             div.firstElementChild.classList.add("first-el");

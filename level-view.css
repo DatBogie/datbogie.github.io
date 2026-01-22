@@ -120,6 +120,16 @@ a:hover, .link:not(.tag):hover {
     background-color: #b7bef817;
 }
 
+.link.tag > .tag-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.link.tag > .tag-icon > img {
+    height: 100%;
+}
+
 p {
     text-align: left;
 }
