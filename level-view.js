@@ -13,7 +13,7 @@ window.addEventListener("load",function() {
     document.body.style.marginTop = "3px";
     document.body.style.opacity = "100%";
     const cur = document.querySelector(".cursor");
-    if (!isMobile) {
+    if (!isMobile()) {
         setInterval(function() {
             if (xVel < 0) {
                 xVel+=700;
