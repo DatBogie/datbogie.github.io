@@ -523,7 +523,7 @@ a:hover, .link:not(.tag):hover {
 }
 
 .link.tag {
-    transition-property: border-color background-color transform;
+    transition-property: border-color background-color transform filter;
     width: max-content;
     padding-left: 8px;
     padding-right: 8px;
@@ -532,6 +532,7 @@ a:hover, .link:not(.tag):hover {
 .link.tag:hover {
     transform: translateY(-3.5px);
     background-color: #b7bef817;
+    filter: drop-shadow(0 5px 5px black);
 }
 .link.tag:active {
     transform: translateY(1.75px);
