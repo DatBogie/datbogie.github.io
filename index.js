@@ -236,7 +236,7 @@ function filterByTags() {
     tags.forEach(tag=>{
         const checkBox = tag.querySelector("#enabled");
         if (tag.id === "filter-tag-Other-hq")
-            document.getElementById("featured-adofai").textContent = (checkBox.checked && filterTypeIndex !== 2)? "Show All" : "Show Featured Only";
+            document.getElementById("featured-adofai").textContent = (checkBox.checked && filterTypeIndex === 0)? "Show All" : "Show Featured Only";
         if (!checkBox.checked) return;
         selTags.push(tag.querySelector(".tag-label").textContent);
     });
