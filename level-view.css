@@ -383,6 +383,10 @@ h1 {
     font-family: "Nunito", serif;
     padding-top: .5vh;
     padding-bottom: .5vh;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 75%;
+    text-wrap: nowrap;
 }
 
 .if-bar * {

@@ -57,7 +57,7 @@ const LevelData = await getLevelData(function(levelData,levelTags,tagData){
         artist.title = artistText;
         artist.textContent = artistText;
         const seizure = card.querySelector("#seizure-warning");
-        if (!level["Tags"].includes("seizure")) seizure.style.display = "none";
+        if (!level["Tags"].includes("seizure")) { seizure.style.display = "none"; seizure.parentElement.title = ""; }
         const diff = card.querySelector("#difficulty-indicator");
         diff.title = `Difficulty: ${level["Difficulty"]}`;
         diff.src = `./assets/diff-indicators/${level["Difficulty"]}.svg`;
@@ -177,7 +177,7 @@ const LevelData = await getLevelData(function(levelData,levelTags,tagData){
             tempCat.parentElement.appendChild(cat);
         }
         const newTag = tempTag.cloneNode(true);
-        newTag.id = "";
+        newTag.id = `filter-tag-${category}-${tag}`;
         newTag.querySelector(".tag-icon").style.backgroundColor = tagColor;
         newTag.title = tagDesc;
         const checkBox = newTag.querySelector("#enabled");
@@ -208,6 +208,7 @@ const LevelData = await getLevelData(function(levelData,levelTags,tagData){
 });
 
 var filterTypeIndex = 0;
+var previousFilterType = undefined;
 const filterTypes = ["Strict","Include","Exclude"];
 
 
@@ -234,6 +235,8 @@ function filterByTags() {
     const filterType = filterTypes[filterTypeIndex];
     tags.forEach(tag=>{
         const checkBox = tag.querySelector("#enabled");
+        if (tag.id === "filter-tag-Other-hq")
+            document.getElementById("featured-adofai").textContent = (checkBox.checked && filterTypeIndex !== 2)? "Show All" : "Show Featured Only";
         if (!checkBox.checked) return;
         selTags.push(tag.querySelector(".tag-label").textContent);
     });
@@ -321,7 +324,48 @@ var popupHidden = true;
 
 const searchTags = document.getElementById("level-search-tags");
 const searchPopup = document.getElementById("level-filter-popup");
+const expand = document.getElementById("expand-adofai");
+const levelCards = document.getElementById("level-cards");
 function updatePopupPos() {
+    const enabled = document.querySelector(".tabpage").classList.contains("mobile");
+    if (window.innerWidth <= 700) {
+        if (!enabled) {
+            document.querySelectorAll(".tabpage").forEach(tabpage=>{
+                tabpage.classList.add("mobile");
+            });
+        }
+    } else {
+        if (enabled) {
+            document.querySelectorAll(".tabpage").forEach(tabpage=>{
+                if (tabpage.classList.contains("mobile"))
+                    tabpage.classList.remove("mobile");
+            });
+        }
+    }
+
+    if (window.innerWidth < 800) {
+        expand.style.display = "none";
+        levelCards.style.gridTemplateColumns = "repeat(1,1fr)";
+        levelCards.style.marginLeft = "unset";
+        levelCards.style.marginRight = "unset";
+    } else if (window.innerWidth < 1174 ) {
+        expand.style.display = "none";
+        levelCards.style.gridTemplateColumns = "repeat(2,1fr)";
+        levelCards.style.marginLeft = "unset";
+        levelCards.style.marginRight = "unset";
+    } else {
+        expand.style.display = "block";
+        if (expand.textContent !== "Expand View") {
+            levelCards.style.gridTemplateColumns = "repeat(6,1fr)";
+            levelCards.style.marginLeft = "-45%";
+            levelCards.style.marginRight = "-45%";
+        } else {
+            levelCards.style.gridTemplateColumns = "repeat(3, 1fr)";
+            levelCards.style.gridAutoColumns = "unset";
+            levelCards.style.marginLeft = "unset";
+            levelCards.style.marginRight = "unset";
+        }
+    }
     if (popupHidden) return;
     const rect = searchTags.getBoundingClientRect();
     searchPopup.style.top = `${rect.top + window.scrollY}px`;
@@ -398,6 +442,15 @@ if (isMobile()) {
     cur.remove();
 }
 
+function disableAllTags(filter=true) {
+    const tags = document.querySelector(".filter-tags").querySelectorAll(".filter-tag");
+    tags.forEach(tag=>{
+        const checkBox = tag.querySelector("#enabled");
+        checkBox.checked = false;
+    });
+    if (filter) filterByCurrentTerm();
+}
+
 window.addEventListener("load",function() {
     clearInterval(intervalId);
     clearInterval(intervalId1);
@@ -433,6 +486,7 @@ window.addEventListener("load",function() {
     function updateFilterType(changeValue=true) {
         if (changeValue) {
             filterTypeIndex++;
+            previousFilterType = undefined;
             if (filterTypeIndex >= filterTypes.length)
                 filterTypeIndex = 0;
         }
@@ -592,15 +646,12 @@ window.addEventListener("load",function() {
         }
     });
 
-    const expand = document.getElementById("expand-adofai");
     expand.addEventListener("click",()=>{
-        let levelCards = document.getElementById("level-cards");
         if (expand.textContent == "Expand View") {
             expand.textContent = "Collapse View";
             levelCards.style.gridTemplateColumns = "repeat(6,1fr)";
             levelCards.style.marginLeft = "-45%";
             levelCards.style.marginRight = "-45%";
-            
         } else {
             expand.textContent = "Expand View";
             levelCards.style.gridTemplateColumns = "repeat(3, 1fr)";
@@ -610,28 +661,37 @@ window.addEventListener("load",function() {
         }
     });
 
-    /* const compact = document.getElementById("compact-adofai");
+    const compact = document.getElementById("compact-adofai");
     compact.addEventListener("click",()=>{
-        let levelCards = document.getElementById("level-cards");
         if (compact.textContent == "Compact View") {
             compact.textContent = "Normal View";
             levelCards.querySelectorAll(".level-card").forEach((card)=>{
-                card.style.aspectRatio = "unset";
-                card.querySelector("hr").style.display = "none";
-                card.querySelector(".level-icon").style.display = "none";
-                card.querySelector(".card-tags").classList.add("collapsed");
+                card.classList.add("collapsed");
             });
-            
         } else {
             compact.textContent = "Compact View";
             levelCards.querySelectorAll(".level-card").forEach((card)=>{
-                card.style.aspectRatio = "1";
-                card.querySelector("hr").style.display = "block";
-                card.querySelector(".level-icon").style.display = "block";
-                card.querySelector(".card-tags").classList.remove("collapsed");
+                card.classList.remove("collapsed");
             });
         }
-    }); */
+    });
+
+    const featured = document.getElementById("featured-adofai");
+    const hqTag = document.getElementById("filter-tag-Other-hq").querySelector("#enabled");
+    featured.addEventListener("click",()=>{
+        const enabled = !hqTag.checked;
+        hqTag.checked = enabled;
+        if (enabled && filterTypeIndex !== 0) {
+            previousFilterType = filterTypeIndex;
+            filterTypeIndex = 0;
+            updateFilterType(false);
+        } else if (!enabled && previousFilterType !== undefined) {
+            filterTypeIndex = previousFilterType;
+            previousFilterType = undefined;
+            updateFilterType(false);
+        }
+        filterByCurrentTerm();
+    });
 
     document.getElementById("level-search").addEventListener("input",(e)=>{
         const term = e.target.value.toLowerCase();
