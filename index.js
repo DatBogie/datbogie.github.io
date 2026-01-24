@@ -724,7 +724,6 @@ window.addEventListener("load",function() {
         filterByText("");
     });
     document.querySelector(".blur-bg").addEventListener("click",()=>{
-        console.log("test");
         document.getElementById("if-close").click()
     });
 });
