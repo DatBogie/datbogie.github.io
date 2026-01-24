@@ -19,7 +19,7 @@ const Accounts = {
     Youtube: "https://youtube.com/@datbogie",
     GitHub: "https://github.com/DatBogie",
     Steam: "https://steamcommunity.com/id/DatBogie",
-    BlueSky: "https://bsky.app/profile/datbogie.bsky.social",
+    BlueSky: "https://bsky.app/profile/datbogie.org",
     Roblox: "https://www.roblox.com/users/479943271/profile",
     "Roblox Group": "https://www.roblox.com/communities/7789323/x",
     "PROJECT DΣNTΔ": "https://www.roblox.com/communities/17161898/x"
