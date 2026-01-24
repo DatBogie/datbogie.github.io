@@ -195,6 +195,9 @@ window.addEventListener("load",function() {
             cur.style.display = "block";
         });
     }
+    document.querySelector(".blur-bg").addEventListener("click",()=>{
+        document.getElementById("if-close").click()
+    });
 });
 window.addEventListener("mousemove",function(m) {
     let cur = document.querySelector(".cursor");

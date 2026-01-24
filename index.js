@@ -80,6 +80,8 @@ const LevelData = await getLevelData(function(levelData,levelTags,tagData){
         const newDownload = card.querySelector("#dl-new");
         const expBtn = card.querySelector("#exp");
         var dl = (level["DLCode"] != "")? "https://drive.usercontent.google.com/download?id="+level["DLCode"] : null;
+        if (!dl)
+            newDownload.title = "Download from assets.datbogie.org."
         var dl_new = encodeURI("https://assets.datbogie.org/levels/"+level["Name"]+".zip").replaceAll("?","%3F");
         var exp = "level-view.html?title="+level["Name"];
         if (dl) {
@@ -207,12 +209,29 @@ const LevelData = await getLevelData(function(levelData,levelTags,tagData){
                 det.classList.add("open");
         });
     });
+
+    document.querySelectorAll(".fetch-link-icon").forEach(icon=>{
+        const url = icon.parentElement.dataset.href;
+        icon.querySelector("img").src = getFavicon(url);
+    });
+    
+    document.querySelectorAll(".footnote").forEach(footnote=>{
+        const parent = footnote.parentElement;
+        parent.classList.add("footnote-container");
+        parent.addEventListener("mouseenter",()=>{
+            footnote.classList.add("hover");
+            parent.classList.add("hover");
+        });
+        parent.addEventListener("mouseleave",()=>{
+            footnote.classList.remove("hover");
+            parent.classList.remove("hover");
+        });
+    });
 });
 
 var filterTypeIndex = 0;
 var previousFilterType = undefined;
 const filterTypes = ["Strict","Include","Exclude"];
-
 
 function filterByCurrentTerm() {
     filterByText(document.getElementById("level-search").value.toLowerCase());
@@ -322,6 +341,25 @@ observer.observe(document.body, {
     subtree: true,
 });
 
+function updateExpandView() {
+    if (expand.textContent !== "Expand View") {
+        if (window.innerWidth > 2681)
+            levelCards.style.gridTemplateColumns = "repeat(8, 1fr)";
+        else
+            levelCards.style.gridTemplateColumns = "repeat(6, 1fr)";
+        levelCards.style.marginLeft = "-45%";
+        levelCards.style.marginRight = "-45%";
+    } else {
+        if (window.innerWidth > 2681)
+            levelCards.style.gridTemplateColumns = "repeat(4, 1fr)";
+        else
+            levelCards.style.gridTemplateColumns = "repeat(3, 1fr)";
+        levelCards.style.gridAutoColumns = "unset";
+        levelCards.style.marginLeft = "unset";
+        levelCards.style.marginRight = "unset";
+    }
+}
+
 var popupHidden = true;
 
 const searchTags = document.getElementById("level-search-tags");
@@ -357,16 +395,7 @@ function updatePopupPos() {
         levelCards.style.marginRight = "unset";
     } else {
         expand.style.display = "block";
-        if (expand.textContent !== "Expand View") {
-            levelCards.style.gridTemplateColumns = "repeat(6,1fr)";
-            levelCards.style.marginLeft = "-45%";
-            levelCards.style.marginRight = "-45%";
-        } else {
-            levelCards.style.gridTemplateColumns = "repeat(3, 1fr)";
-            levelCards.style.gridAutoColumns = "unset";
-            levelCards.style.marginLeft = "unset";
-            levelCards.style.marginRight = "unset";
-        }
+        updateExpandView();
     }
     if (popupHidden) return;
     const rect = searchTags.getBoundingClientRect();
@@ -649,18 +678,8 @@ window.addEventListener("load",function() {
     });
 
     expand.addEventListener("click",()=>{
-        if (expand.textContent == "Expand View") {
-            expand.textContent = "Collapse View";
-            levelCards.style.gridTemplateColumns = "repeat(6,1fr)";
-            levelCards.style.marginLeft = "-45%";
-            levelCards.style.marginRight = "-45%";
-        } else {
-            expand.textContent = "Expand View";
-            levelCards.style.gridTemplateColumns = "repeat(3, 1fr)";
-            levelCards.style.gridAutoColumns = "unset";
-            levelCards.style.marginLeft = "unset";
-            levelCards.style.marginRight = "unset";
-        }
+        expand.textContent = (expand.textContent !== "Expand View")? "Expand View" : "Collapse View";
+        updateExpandView();
     });
 
     const compact = document.getElementById("compact-adofai");
@@ -701,7 +720,12 @@ window.addEventListener("load",function() {
     });
     document.getElementById("level-search-clear").addEventListener("click",() => {
         document.getElementById("level-search").value = "";
+        disableAllTags(false);
         filterByText("");
+    });
+    document.querySelector(".blur-bg").addEventListener("click",()=>{
+        console.log("test");
+        document.getElementById("if-close").click()
     });
 });
 
