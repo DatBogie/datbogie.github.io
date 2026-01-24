@@ -20,9 +20,11 @@ const Accounts = {
     GitHub: "https://github.com/DatBogie",
     Steam: "https://steamcommunity.com/id/DatBogie",
     BlueSky: "https://bsky.app/profile/datbogie.org",
-    Roblox: "https://www.roblox.com/users/479943271/profile",
-    "Roblox Group": "https://www.roblox.com/communities/7789323/x",
-    "PROJECT DΣNTΔ": "https://www.roblox.com/communities/17161898/x"
+    "Apple Music": "https://music.apple.com/profile/datbogie",
+    "My Playlist": "https://music.apple.com/us/playlist/best-of-the-best/pl.u-BNA6rkRCe45Kprp",
+    Roblox: "https://roblox.com/users/479943271/profile",
+    "Roblox Group": "https://roblox.com/communities/7789323/x",
+    "PROJECT DΣNTΔ": "https://roblox.com/communities/17161898/x"
 };
 
 const tempLink = document.getElementById("template-link");
