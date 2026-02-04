@@ -16,6 +16,7 @@ if (urlParams.get("tab"))
     selectedTab=urlParams.get("tab");
 
 const Accounts = {
+    "Pronouns.page": "https://en.pronouns.page/@DatBogie",
     Youtube: "https://youtube.com/@datbogie",
     GitHub: "https://github.com/DatBogie",
     Steam: "https://steamcommunity.com/id/DatBogie",
