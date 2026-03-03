@@ -22,7 +22,8 @@ const Accounts = {
     Steam: "https://steamcommunity.com/id/DatBogie",
     BlueSky: "https://bsky.app/profile/datbogie.org",
     "Apple Music": "https://music.apple.com/profile/datbogie",
-    "My Playlist": "https://music.apple.com/us/playlist/best-of-the-best/pl.u-BNA6rkRCe45Kprp",
+    "Sample Playlist": "https://music.apple.com/us/playlist/sample-platter/pl.u-LdbqEoBF2JRYkyk",
+    "Main Playlist": "https://music.apple.com/us/playlist/best-of-the-best/pl.u-BNA6rkRCe45Kprp",
     Roblox: "https://roblox.com/users/479943271/profile",
     "Roblox Group": "https://roblox.com/communities/7789323/x",
     "PROJECT DΣNTΔ": "https://roblox.com/communities/17161898/x"
