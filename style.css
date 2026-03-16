@@ -413,7 +413,7 @@ hr {
     color: var(--text);
 }
 
-#title {
+.main-title {
     font-size: 2rem;
     text-align: center;
 }
