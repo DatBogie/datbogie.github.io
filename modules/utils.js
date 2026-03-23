@@ -70,6 +70,8 @@ export function embedOpen(url) {
     const urlBar = document.getElementById("if-url");
     if (url.startsWith("level-view.html?title="))
         urlBar.textContent = `https://datbogie.org/level/${url.substring(22)}`;
+    else if (url.startsWith("image-view.html?img="))
+        urlBar.textContent = `https://datbogie.org/image/${url.substring(28)}`;
     else
         urlBar.textContent = url;
     urlBar.href = urlBar.textContent;

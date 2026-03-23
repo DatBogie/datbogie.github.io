@@ -151,7 +151,7 @@ window.addEventListener("load",function() {
                 updateIcon();
             });
             icon.addEventListener("click",()=>{
-                embedOpen(icon.src);
+                embedOpen(`image-view.html?img=${icon.src}`);
             });
         }
     });
