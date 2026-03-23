@@ -1,6 +1,6 @@
 const urlParams = new URLSearchParams(document.location.search);
 let imgSrc = urlParams.get("img");
-if (imgSrc === undefined)
+if (imgSrc === undefined || imgSrc === "")
     imgSrc = "https://placehold.co/3440x1440";
 else if (!imgSrc.startsWith("https://"))
     imgSrc = `https://assets.datbogie.org/${imgSrc}`;
