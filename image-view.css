@@ -43,7 +43,8 @@ body {
     );
     background-repeat: repeat;
     background-size: 60px 60px;
-    background-position: center;
+    background-position: top left;
+    cursor: grab;
 }
 
 .center {
@@ -68,9 +69,65 @@ img:not(.shift):not(.ctrl):not(.drag) {
 img.shift:not(.ctrl):not(.drag), img.ctrl:not(.shift):not(.drag) {
     cursor: zoom-out;
 }
-img.drag {
+body:has(img.drag), img.drag {
     cursor: grabbing;
 }
 img.reset {
     transition: none !important;
+}
+
+.bottom {
+    position: fixed;
+    top: 0;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: start;
+    align-items: end;
+    pointer-events: none;
+}
+.bottom > * {
+    pointer-events: all;
+}
+#controls {
+    background-color: #363a4faa;
+    backdrop-filter: blur(20px) saturate(300%);
+    width: auto;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 50px;
+}
+
+button {
+    border-radius: 50px;
+    background-color: #181926aa;
+    color: var(--text);
+    border-width: 2px;
+    border-style: solid;
+    border-color: #b7bdf800;
+    height: calc(100% - 7px);
+    transition: scale 200ms ease, border-color 200ms ease, background-color 200ms ease;
+    font-size: 1.5rem;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    position: relative;
+}
+
+button:hover:not(button:disabled) {
+    cursor: pointer;
+    scale: 1.05;
+    transition: scale 200ms ease, background-color 200ms ease;
+    border-color: var(--accent);
+    z-index: 1;
+}
+
+button:active:not(button:disabled) {
+    scale: .95;
+}
+
+button:disabled {
+    background-color: var(--base);
+    text-decoration: line-through;
 }

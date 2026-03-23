@@ -100,13 +100,18 @@ window.addEventListener("keyup",ev=>{
     }
 });
 
-window.addEventListener("mousedown",ev=>{
-    ev.preventDefault();
+function mouseDown(ev) {
     if (ev.button !== 0) return;
     if (down || drag) return;
     down = true;
     startVector = Vector.fromEvent(ev);
+}
+img.addEventListener("mousedown",ev=>{
+    if (ev.button !== 0) return;
+    mouseDown(ev);
+    ev.preventDefault();
 });
+window.addEventListener("mousedown",mouseDown);
 window.addEventListener("mousemove",ev=>{
     if (!drag && !down) return;
     let scaleDiff = scale/lastScale;
@@ -120,29 +125,50 @@ window.addEventListener("mousemove",ev=>{
     const scaledDist = distVector.clone().mul(1/scale)
     img.style.transform = `translate(${scaledDist.X}px,${scaledDist.Y}px)`;
 });
+let wasDragging = false;
 window.addEventListener("mouseup",ev=>{
     if (ev.button !== 0) return;
     down = false;
     if (drag) {
+        wasDragging = true;
         lastVector = distVector.clone();
         drag = false;
         img.classList.remove("drag");
         return;
     }
-    if (ctrl) {
-        scale = 1;
-        lastScale = scale;
-        startVector.set();
-        lastVector.set();
-        distVector.set();
-        img.classList.add("reset");
-        img.style.scale = scale;
-        img.style.transform = "none";
-        setTimeout(()=>{
-            img.classList.remove("reset");
-        },1);
+    if (wasDragging) {
+        wasDragging = false;
         return;
     }
+});
+function resetZoom() {
+    scale = 1;
+    lastScale = scale;
+    startVector.set();
+    lastVector.set();
+    distVector.set();
+    img.classList.add("reset");
+    img.style.scale = scale;
+    img.style.transform = "none";
+    setTimeout(()=>{
+        img.classList.remove("reset");
+    },1);
+}
+img.addEventListener("mouseup",ev=>{
+    if (ev.button !== 0) return;
+    if (drag) {
+        wasDragging = true;
+        lastVector = distVector.clone();
+        drag = false;
+        img.classList.remove("drag");
+        return;
+    }
+    if (wasDragging) {
+        wasDragging = false;
+        return;
+    }
+    if (ctrl)
+        return resetZoom();
     scale = clamp(scale+(!shift? 1 : -1),1);
     img.style.scale = scale;
 });
@@ -151,3 +177,20 @@ window.addEventListener("wheel",ev=>{
     scale = clamp(scale+(ev.deltaY >= 0? -1 : 1),1);
     img.style.scale = scale;
 });
+
+const controls = document.getElementById("controls");
+const zi = document.getElementById("z+");
+const zo = document.getElementById("z-");
+const zr = document.getElementById("z%");
+
+zi.addEventListener("click",ev=>{
+    ev.preventDefault();
+    scale = clamp(scale+1,1);
+    img.style.scale = scale;
+});
+zo.addEventListener("click",ev=>{
+    ev.preventDefault();
+    scale = clamp(scale-1,1);
+    img.style.scale = scale;
+});
+zr.addEventListener("click",resetZoom);
