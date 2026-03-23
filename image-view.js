@@ -173,7 +173,7 @@ img.addEventListener("mouseup",ev=>{
     img.style.scale = scale;
 });
 window.addEventListener("wheel",ev=>{
-    if (drag) return;
+    if (drag || ctrl) return;
     scale = clamp(scale+(ev.deltaY >= 0? -1 : 1),1);
     img.style.scale = scale;
 });
