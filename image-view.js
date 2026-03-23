@@ -1,11 +1,35 @@
 const urlParams = new URLSearchParams(document.location.search);
+const placeholder = "https://placehold.co/3440x1440"
 let imgSrc = urlParams.get("img");
 if (!imgSrc || imgSrc === "")
-    imgSrc = "https://placehold.co/3440x1440";
+    imgSrc = placeholder;
 else if (!imgSrc.startsWith("https://"))
     imgSrc = `https://assets.datbogie.org/${imgSrc}`;
 const img = document.getElementById("image");
+img.addEventListener("load",()=>{
+    img.style.aspectRatio = `${img.naturalWidth}/${img.naturalHeight}`;
+});
 img.src = imgSrc;
+
+
+if (imgSrc === placeholder) {
+    document.querySelectorAll(".hidden").forEach(el=>{
+        el.classList.remove("hidden");
+    });
+    document.querySelectorAll(".inline-container").forEach(el=>{
+        el.firstElementChild.classList.add("first");
+        el.lastElementChild.classList.add("last");
+    });
+    const urlBox = document.getElementById("url");
+    urlBox.addEventListener("focus",()=>{
+        urlBox.select();
+    });
+    document.getElementById("load").addEventListener("click",()=>{
+        let nUrl = urlBox.value;
+        if (!nUrl || nUrl === "") nUrl = placeholder;
+        img.src = nUrl;
+    });
+}
 
 function clamp(x,min,max) {
     const minR = Math.min(max ?? x,x);
