@@ -180,7 +180,7 @@ function resetZoom() {
     img.style.transform = "none";
     setTimeout(()=>{
         img.classList.remove("reset");
-    },1);
+    },10);
 }
 img.addEventListener("mouseup",ev=>{
     if (ev.button !== 0) return;
