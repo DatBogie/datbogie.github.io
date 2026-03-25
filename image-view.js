@@ -7,7 +7,11 @@ else if (!imgSrc.startsWith("https://"))
     imgSrc = `https://assets.datbogie.org/${imgSrc}`;
 const img = document.getElementById("image");
 img.addEventListener("load",()=>{
+    console.log(img.naturalWidth,img.naturalHeight);
     img.style.aspectRatio = `${img.naturalWidth}/${img.naturalHeight}`;
+    const cond = img.naturalWidth > img.naturalHeight;
+    img.style.width = cond? "100%" : "auto";
+    img.style.height = cond? "auto" : "100%";
 });
 img.src = imgSrc;
 
